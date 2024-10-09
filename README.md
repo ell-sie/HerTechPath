@@ -1,50 +1,83 @@
-# React + TypeScript + Vite
+# HerTechPath
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**HerTechPath** is an AI-driven platform designed to help integrate women into the tech industry by curating personalized learning paths. The platform offers tailored mentorship and education, empowering women to become market-ready software engineers.
 
-Currently, two official plugins are available:
+## GitHub Repository
+- Repository link: [HerTechPath GitHub Repo](https://github.com/ell-sie/HerTechPath)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project Setup
 
-## Expanding the ESLint configuration
+### Prerequisites
+- Node.js (v16.x.x or higher)
+- npm (v7.x.x or higher)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Clone the repository
+```bash
+git clone https://github.com/ell-sie/HerTechPath.git
+cd hertechpath
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### Install dependencies
+```bash
+npm install
 ```
+
+### Running the Project
+To run the project locally:
+```bash
+npm dev
+```
+This will start the development server on \`http://localhost:5173/\`.
+
+### Build for Production
+To build the app for production:
+```bash
+npm run build
+```
+
+## Design Mockups
+
+The following resources detail the platform’s design:
+
+- **Figma Mockups**: [View Figma Designs](https://www.figma.com/design/VWeyp1IIKPVtQPbhBPA6Z0/HerTech-Path-Figma?node-id=0-1&t=JhEs1P5omLXCxP3s-1)
+- **Designs**: 
+  - Dashboard
+  - Learning Path Overview
+  - Mentorship Section
+  - Signup/ Login Pages
+
+## Deployment Plan
+
+1. **Frontend**:
+   - Deployed via a cloud service like Vercel or Netlify.
+   - Ensure environment variables for the production API are set in the hosting platform.
+
+2. **Backend**:
+   - Deployed using AWS Amplify or any preferred backend hosting provider.
+   - API gateway and serverless functions to manage requests and data.
+
+3. **CI/CD**:
+   - Automate deployment using GitHub Actions or another CI/CD pipeline tool.
+   - Ensure auto-deployment is triggered on push to the main branch.
+
+4. **DNS & SSL**:
+   - Configure custom domain and SSL certificates for secure access.
+
+## Video Demo
+
+Watch a walkthrough of **HerTechPath** showcasing its core functionalities and user experience:
+
+[Video Demo](#) *(replace with actual link)*
+
+
+## Code Structure
+
+Here's an overview of the main files:
+
+- `src/`
+  - `components/`: Reusable UI components.
+  - `hooks/`: Custom hooks for API calls and state management.
+  - `pages/`: Main pages of the application.
+  - `services/`: API service calls.
+  - `types/`: TypeScript types and enums.
+  - `App.tsx`: Entry point for the app.
