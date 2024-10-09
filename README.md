@@ -67,7 +67,7 @@ The following resources detail the platform’s design:
 
 Watch a walkthrough of **HerTechPath** showcasing its core functionalities and user experience:
 
-[Video Demo](#) *(replace with actual link)*
+[Video Demo](https://www.loom.com/share/6af8725b31484064b0ad8ed6bad6b93f?sid=bbd08455-aae7-4c38-8d2b-f61d80096a13)
 
 
 ## Code Structure
