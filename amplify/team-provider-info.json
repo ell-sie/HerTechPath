@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hertechpath-dev-9748d-authRole",
+      "UnauthRoleArn": "arn:aws:iam::590184131451:role/amplify-hertechpath-dev-9748d-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::590184131451:role/amplify-hertechpath-dev-9748d-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-hertechpath-dev-9748d-deployment",
+      "UnauthRoleName": "amplify-hertechpath-dev-9748d-unauthRole",
+      "StackName": "amplify-hertechpath-dev-9748d",
+      "StackId": "arn:aws:cloudformation:us-east-2:590184131451:stack/amplify-hertechpath-dev-9748d/c7c96f00-8a3d-11ef-8b04-0af10d9c7e93",
+      "AmplifyAppId": "d3mr7hdatz0fvc"
+    },
+    "categories": {
+      "auth": {
+        "hertechpathe3c2f87e": {}
+      }
+    }
+  }
+}
