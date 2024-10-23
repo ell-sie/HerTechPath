@@ -1,0 +1,60 @@
+type Comment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  text: String
+  like: Int
+  postID: ID! @index(name: "byPost")
+}
+
+enum Level {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  STARTED
+  INPROGRESS
+  DONE
+}
+
+type Path @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  status: Status
+  Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
+  userID: ID! @index(name: "byUser")
+  Posts: [Post] @hasMany(indexName: "byPath", fields: ["id"])
+}
+
+type Resources @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  description: String
+  link: String
+  level: Level
+  pathID: ID! @index(name: "byPath")
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  role: Role
+  email: AWSEmail
+  password: String
+  Paths: [Path] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type Post @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  bloID: ID! @index(name: "byUser")
+  description: String
+  Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
+  pathID: ID! @index(name: "byPath")
+}
+ 
