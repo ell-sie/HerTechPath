@@ -11,6 +11,7 @@ import awsExports from "./aws-exports";
 import { generateClient } from "aws-amplify/api";
 import { QueryClientProvider } from "@tanstack/react-query";
 import QueryClient from "./context/QueryClient.ts";
+import RegistrationPage from "./pages/RegistrationPage.tsx";
 
 // Graphql client for Amplify
 export const client = generateClient({ authMode: "userPool" });
@@ -27,7 +28,8 @@ function App() {
                 <Navigation singOut={signOut} />
                 <div className="sm:col-span-7 lg:col-span-8">
                   <Routes>
-                    <Route path="/" element={<HomePage />} />
+                    <Route path="/" element={<RegistrationPage />} />
+                    <Route path="/home" element={<HomePage />} />
                     <Route path="/courses" element={<CoursesPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/discussions" element={<DiscussionPage />} />

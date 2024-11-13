@@ -8,54 +8,73 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createBlog = /* GraphQL */ `mutation CreateBlog(
-  $input: CreateBlogInput!
-  $condition: ModelBlogConditionInput
+export const createComment = /* GraphQL */ `mutation CreateComment(
+  $input: CreateCommentInput!
+  $condition: ModelCommentConditionInput
 ) {
-  createBlog(input: $input, condition: $condition) {
+  createComment(input: $input, condition: $condition) {
     id
-    name
-    posts {
-      nextToken
-      __typename
-    }
+    text
+    like
+    postID
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateBlogMutationVariables,
-  APITypes.CreateBlogMutation
+  APITypes.CreateCommentMutationVariables,
+  APITypes.CreateCommentMutation
 >;
-export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
-  $input: UpdateBlogInput!
-  $condition: ModelBlogConditionInput
+export const updateComment = /* GraphQL */ `mutation UpdateComment(
+  $input: UpdateCommentInput!
+  $condition: ModelCommentConditionInput
 ) {
-  updateBlog(input: $input, condition: $condition) {
+  updateComment(input: $input, condition: $condition) {
     id
-    name
-    posts {
-      nextToken
-      __typename
-    }
+    text
+    like
+    postID
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateBlogMutationVariables,
-  APITypes.UpdateBlogMutation
+  APITypes.UpdateCommentMutationVariables,
+  APITypes.UpdateCommentMutation
 >;
-export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
-  $input: DeleteBlogInput!
-  $condition: ModelBlogConditionInput
+export const deleteComment = /* GraphQL */ `mutation DeleteComment(
+  $input: DeleteCommentInput!
+  $condition: ModelCommentConditionInput
 ) {
-  deleteBlog(input: $input, condition: $condition) {
+  deleteComment(input: $input, condition: $condition) {
     id
-    name
-    posts {
+    text
+    like
+    postID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteCommentMutationVariables,
+  APITypes.DeleteCommentMutation
+>;
+export const createPath = /* GraphQL */ `mutation CreatePath(
+  $input: CreatePathInput!
+  $condition: ModelPathConditionInput
+) {
+  createPath(input: $input, condition: $condition) {
+    id
+    status
+    Resources {
+      nextToken
+      __typename
+    }
+    userID
+    Posts {
       nextToken
       __typename
     }
@@ -65,8 +84,199 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteBlogMutationVariables,
-  APITypes.DeleteBlogMutation
+  APITypes.CreatePathMutationVariables,
+  APITypes.CreatePathMutation
+>;
+export const updatePath = /* GraphQL */ `mutation UpdatePath(
+  $input: UpdatePathInput!
+  $condition: ModelPathConditionInput
+) {
+  updatePath(input: $input, condition: $condition) {
+    id
+    status
+    Resources {
+      nextToken
+      __typename
+    }
+    userID
+    Posts {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdatePathMutationVariables,
+  APITypes.UpdatePathMutation
+>;
+export const deletePath = /* GraphQL */ `mutation DeletePath(
+  $input: DeletePathInput!
+  $condition: ModelPathConditionInput
+) {
+  deletePath(input: $input, condition: $condition) {
+    id
+    status
+    Resources {
+      nextToken
+      __typename
+    }
+    userID
+    Posts {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeletePathMutationVariables,
+  APITypes.DeletePathMutation
+>;
+export const createResources = /* GraphQL */ `mutation CreateResources(
+  $input: CreateResourcesInput!
+  $condition: ModelResourcesConditionInput
+) {
+  createResources(input: $input, condition: $condition) {
+    id
+    title
+    description
+    link
+    level
+    pathID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateResourcesMutationVariables,
+  APITypes.CreateResourcesMutation
+>;
+export const updateResources = /* GraphQL */ `mutation UpdateResources(
+  $input: UpdateResourcesInput!
+  $condition: ModelResourcesConditionInput
+) {
+  updateResources(input: $input, condition: $condition) {
+    id
+    title
+    description
+    link
+    level
+    pathID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateResourcesMutationVariables,
+  APITypes.UpdateResourcesMutation
+>;
+export const deleteResources = /* GraphQL */ `mutation DeleteResources(
+  $input: DeleteResourcesInput!
+  $condition: ModelResourcesConditionInput
+) {
+  deleteResources(input: $input, condition: $condition) {
+    id
+    title
+    description
+    link
+    level
+    pathID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteResourcesMutationVariables,
+  APITypes.DeleteResourcesMutation
+>;
+export const createUser = /* GraphQL */ `mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  createUser(input: $input, condition: $condition) {
+    id
+    name
+    posts {
+      nextToken
+      __typename
+    }
+    role
+    email
+    password
+    Paths {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateUserMutationVariables,
+  APITypes.CreateUserMutation
+>;
+export const updateUser = /* GraphQL */ `mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    name
+    posts {
+      nextToken
+      __typename
+    }
+    role
+    email
+    password
+    Paths {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateUserMutationVariables,
+  APITypes.UpdateUserMutation
+>;
+export const deleteUser = /* GraphQL */ `mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    name
+    posts {
+      nextToken
+      __typename
+    }
+    role
+    email
+    password
+    Paths {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteUserMutationVariables,
+  APITypes.DeleteUserMutation
 >;
 export const createPost = /* GraphQL */ `mutation CreatePost(
   $input: CreatePostInput!
@@ -75,22 +285,15 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
   createPost(input: $input, condition: $condition) {
     id
     title
+    bloID
     description
-    blog {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    comments {
+    Comments {
       nextToken
       __typename
     }
-    likes
+    pathID
     createdAt
     updatedAt
-    blogPostsId
     __typename
   }
 }
@@ -105,22 +308,15 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
   updatePost(input: $input, condition: $condition) {
     id
     title
+    bloID
     description
-    blog {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    comments {
+    Comments {
       nextToken
       __typename
     }
-    likes
+    pathID
     createdAt
     updatedAt
-    blogPostsId
     __typename
   }
 }
@@ -135,107 +331,19 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
   deletePost(input: $input, condition: $condition) {
     id
     title
+    bloID
     description
-    blog {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    comments {
+    Comments {
       nextToken
       __typename
     }
-    likes
+    pathID
     createdAt
     updatedAt
-    blogPostsId
     __typename
   }
 }
 ` as GeneratedMutation<
   APITypes.DeletePostMutationVariables,
   APITypes.DeletePostMutation
->;
-export const createComment = /* GraphQL */ `mutation CreateComment(
-  $input: CreateCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  createComment(input: $input, condition: $condition) {
-    id
-    post {
-      id
-      title
-      description
-      likes
-      createdAt
-      updatedAt
-      blogPostsId
-      __typename
-    }
-    content
-    createdAt
-    updatedAt
-    postCommentsId
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateCommentMutationVariables,
-  APITypes.CreateCommentMutation
->;
-export const updateComment = /* GraphQL */ `mutation UpdateComment(
-  $input: UpdateCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  updateComment(input: $input, condition: $condition) {
-    id
-    post {
-      id
-      title
-      description
-      likes
-      createdAt
-      updatedAt
-      blogPostsId
-      __typename
-    }
-    content
-    createdAt
-    updatedAt
-    postCommentsId
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateCommentMutationVariables,
-  APITypes.UpdateCommentMutation
->;
-export const deleteComment = /* GraphQL */ `mutation DeleteComment(
-  $input: DeleteCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  deleteComment(input: $input, condition: $condition) {
-    id
-    post {
-      id
-      title
-      description
-      likes
-      createdAt
-      updatedAt
-      blogPostsId
-      __typename
-    }
-    content
-    createdAt
-    updatedAt
-    postCommentsId
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteCommentMutationVariables,
-  APITypes.DeleteCommentMutation
 >;

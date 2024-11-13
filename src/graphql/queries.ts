@@ -8,100 +8,14 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
-  getBlog(id: $id) {
-    id
-    name
-    posts {
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetBlogQueryVariables, APITypes.GetBlogQuery>;
-export const listBlogs = /* GraphQL */ `query ListBlogs(
-  $filter: ModelBlogFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListBlogsQueryVariables, APITypes.ListBlogsQuery>;
-export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
-  getPost(id: $id) {
-    id
-    title
-    description
-    blog {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    comments {
-      nextToken
-      __typename
-    }
-    likes
-    createdAt
-    updatedAt
-    blogPostsId
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetPostQueryVariables, APITypes.GetPostQuery>;
-export const listPosts = /* GraphQL */ `query ListPosts(
-  $filter: ModelPostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      title
-      description
-      likes
-      createdAt
-      updatedAt
-      blogPostsId
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
 export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
   getComment(id: $id) {
     id
-    post {
-      id
-      title
-      description
-      likes
-      createdAt
-      updatedAt
-      blogPostsId
-      __typename
-    }
-    content
+    text
+    like
+    postID
     createdAt
     updatedAt
-    postCommentsId
     __typename
   }
 }
@@ -117,10 +31,11 @@ export const listComments = /* GraphQL */ `query ListComments(
   listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      content
+      text
+      like
+      postID
       createdAt
       updatedAt
-      postCommentsId
       __typename
     }
     nextToken
@@ -130,4 +45,322 @@ export const listComments = /* GraphQL */ `query ListComments(
 ` as GeneratedQuery<
   APITypes.ListCommentsQueryVariables,
   APITypes.ListCommentsQuery
+>;
+export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
+  $postID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByPostID(
+    postID: $postID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      text
+      like
+      postID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CommentsByPostIDQueryVariables,
+  APITypes.CommentsByPostIDQuery
+>;
+export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
+  getPath(id: $id) {
+    id
+    status
+    Resources {
+      nextToken
+      __typename
+    }
+    userID
+    Posts {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetPathQueryVariables, APITypes.GetPathQuery>;
+export const listPaths = /* GraphQL */ `query ListPaths(
+  $filter: ModelPathFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPaths(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      status
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListPathsQueryVariables, APITypes.ListPathsQuery>;
+export const pathsByUserID = /* GraphQL */ `query PathsByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPathFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  pathsByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      status
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PathsByUserIDQueryVariables,
+  APITypes.PathsByUserIDQuery
+>;
+export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
+  getResources(id: $id) {
+    id
+    title
+    description
+    link
+    level
+    pathID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetResourcesQueryVariables,
+  APITypes.GetResourcesQuery
+>;
+export const listResources = /* GraphQL */ `query ListResources(
+  $filter: ModelResourcesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listResources(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      description
+      link
+      level
+      pathID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListResourcesQueryVariables,
+  APITypes.ListResourcesQuery
+>;
+export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
+  $pathID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelResourcesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  resourcesByPathID(
+    pathID: $pathID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      description
+      link
+      level
+      pathID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ResourcesByPathIDQueryVariables,
+  APITypes.ResourcesByPathIDQuery
+>;
+export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    name
+    posts {
+      nextToken
+      __typename
+    }
+    role
+    email
+    password
+    Paths {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;
+export const listUsers = /* GraphQL */ `query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      role
+      email
+      password
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
+  getPost(id: $id) {
+    id
+    title
+    bloID
+    description
+    Comments {
+      nextToken
+      __typename
+    }
+    pathID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetPostQueryVariables, APITypes.GetPostQuery>;
+export const listPosts = /* GraphQL */ `query ListPosts(
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      bloID
+      description
+      pathID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
+export const postsByBloID = /* GraphQL */ `query PostsByBloID(
+  $bloID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  postsByBloID(
+    bloID: $bloID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      bloID
+      description
+      pathID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PostsByBloIDQueryVariables,
+  APITypes.PostsByBloIDQuery
+>;
+export const postsByPathID = /* GraphQL */ `query PostsByPathID(
+  $pathID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  postsByPathID(
+    pathID: $pathID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      bloID
+      description
+      pathID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PostsByPathIDQueryVariables,
+  APITypes.PostsByPathIDQuery
 >;

@@ -4,7 +4,7 @@ import CourseCard from "../components/shared/CourseCard"
 
 function CoursesPage() {
   return (
-    <div className="flex flex-col gap-2 py-8">
+    <div className="flex flex-col gap-2 py-10">
         <div className="border-primary-100 border-b-2 flex fle-col p-4">
         <div className="flex w-full items-center justify-between">
         <div className="text-2xl font-bold font-poppins">Hi elsie !</div>
