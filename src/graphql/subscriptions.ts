@@ -66,6 +66,7 @@ export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: Mo
       nextToken
       __typename
     }
+    name
     createdAt
     updatedAt
     __typename
@@ -88,6 +89,7 @@ export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: Mo
       nextToken
       __typename
     }
+    name
     createdAt
     updatedAt
     __typename
@@ -110,6 +112,7 @@ export const onDeletePath = /* GraphQL */ `subscription OnDeletePath($filter: Mo
       nextToken
       __typename
     }
+    name
     createdAt
     updatedAt
     __typename

@@ -90,6 +90,7 @@ export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
       nextToken
       __typename
     }
+    name
     createdAt
     updatedAt
     __typename
@@ -106,6 +107,7 @@ export const listPaths = /* GraphQL */ `query ListPaths(
       id
       status
       userID
+      name
       createdAt
       updatedAt
       __typename
@@ -133,6 +135,7 @@ export const pathsByUserID = /* GraphQL */ `query PathsByUserID(
       id
       status
       userID
+      name
       createdAt
       updatedAt
       __typename

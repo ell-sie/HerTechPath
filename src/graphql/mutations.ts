@@ -78,6 +78,7 @@ export const createPath = /* GraphQL */ `mutation CreatePath(
       nextToken
       __typename
     }
+    name
     createdAt
     updatedAt
     __typename
@@ -103,6 +104,7 @@ export const updatePath = /* GraphQL */ `mutation UpdatePath(
       nextToken
       __typename
     }
+    name
     createdAt
     updatedAt
     __typename
@@ -128,6 +130,7 @@ export const deletePath = /* GraphQL */ `mutation DeletePath(
       nextToken
       __typename
     }
+    name
     createdAt
     updatedAt
     __typename

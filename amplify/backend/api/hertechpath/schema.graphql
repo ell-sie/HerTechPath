@@ -28,6 +28,7 @@ type Path @model @auth(rules: [{allow: public}]) {
   Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
   userID: ID! @index(name: "byUser")
   Posts: [Post] @hasMany(indexName: "byPath", fields: ["id"])
+  name: String
 }
 
 type Resources @model @auth(rules: [{allow: public}]) {

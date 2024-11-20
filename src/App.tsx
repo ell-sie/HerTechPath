@@ -12,6 +12,7 @@ import { generateClient } from "aws-amplify/api";
 import { QueryClientProvider } from "@tanstack/react-query";
 import QueryClient from "./context/QueryClient.ts";
 import RegistrationPage from "./pages/RegistrationPage.tsx";
+import ResourcesPage from "./pages/ResourcePage.tsx";
 
 // Graphql client for Amplify
 export const client = generateClient({ authMode: "userPool" });
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/courses" element={<CoursesPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/discussions" element={<DiscussionPage />} />
+                    <Route path="/resources" element={<ResourcesPage />} />
                   </Routes>
                 </div>
               </div>
