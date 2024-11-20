@@ -15,6 +15,7 @@ async function updateComment(input: UpdateCommentInput) {
         text: input.text,
         like: input.like,
         postID: input.postID,
+        userID: input.userID,
       },
     },
   })

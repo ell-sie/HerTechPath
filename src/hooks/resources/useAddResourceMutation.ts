@@ -14,6 +14,7 @@ async function addResources(input: CreateResourcesInput) {
         description: input.description,
         link: input.link,
         level: input.level,
+        logo: input.logo,
         pathID: input.pathID,
       },
     },

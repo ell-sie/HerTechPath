@@ -7,12 +7,14 @@ export type CreateCommentInput = {
   text?: string | null,
   like?: number | null,
   postID: string,
+  userID: string,
 };
 
 export type ModelCommentConditionInput = {
   text?: ModelStringInput | null,
   like?: ModelIntInput | null,
   postID?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelCommentConditionInput | null > | null,
   or?: Array< ModelCommentConditionInput | null > | null,
   not?: ModelCommentConditionInput | null,
@@ -94,6 +96,7 @@ export type Comment = {
   text?: string | null,
   like?: number | null,
   postID: string,
+  userID: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -103,6 +106,7 @@ export type UpdateCommentInput = {
   text?: string | null,
   like?: number | null,
   postID?: string | null,
+  userID?: string | null,
 };
 
 export type DeleteCommentInput = {
@@ -143,38 +147,13 @@ export type Path = {
   __typename: "Path",
   id: string,
   status?: Status | null,
-  Resources?: ModelResourcesConnection | null,
   userID: string,
   Posts?: ModelPostConnection | null,
   name?: string | null,
+  Resources?: ModelResourcesConnection | null,
   createdAt: string,
   updatedAt: string,
 };
-
-export type ModelResourcesConnection = {
-  __typename: "ModelResourcesConnection",
-  items:  Array<Resources | null >,
-  nextToken?: string | null,
-};
-
-export type Resources = {
-  __typename: "Resources",
-  id: string,
-  title?: string | null,
-  description?: string | null,
-  link?: string | null,
-  level?: Level | null,
-  pathID: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export enum Level {
-  BEGINNER = "BEGINNER",
-  INTERMEDIATE = "INTERMEDIATE",
-  ADVANCED = "ADVANCED",
-}
-
 
 export type ModelPostConnection = {
   __typename: "ModelPostConnection",
@@ -200,6 +179,32 @@ export type ModelCommentConnection = {
   nextToken?: string | null,
 };
 
+export type ModelResourcesConnection = {
+  __typename: "ModelResourcesConnection",
+  items:  Array<Resources | null >,
+  nextToken?: string | null,
+};
+
+export type Resources = {
+  __typename: "Resources",
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  link?: string | null,
+  level?: Level | null,
+  pathID: string,
+  logo?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export enum Level {
+  BEGINNER = "BEGINNER",
+  INTERMEDIATE = "INTERMEDIATE",
+  ADVANCED = "ADVANCED",
+}
+
+
 export type UpdatePathInput = {
   id: string,
   status?: Status | null,
@@ -218,6 +223,7 @@ export type CreateResourcesInput = {
   link?: string | null,
   level?: Level | null,
   pathID: string,
+  logo?: string | null,
 };
 
 export type ModelResourcesConditionInput = {
@@ -226,6 +232,7 @@ export type ModelResourcesConditionInput = {
   link?: ModelStringInput | null,
   level?: ModelLevelInput | null,
   pathID?: ModelIDInput | null,
+  logo?: ModelStringInput | null,
   and?: Array< ModelResourcesConditionInput | null > | null,
   or?: Array< ModelResourcesConditionInput | null > | null,
   not?: ModelResourcesConditionInput | null,
@@ -245,6 +252,7 @@ export type UpdateResourcesInput = {
   link?: string | null,
   level?: Level | null,
   pathID?: string | null,
+  logo?: string | null,
 };
 
 export type DeleteResourcesInput = {
@@ -257,6 +265,7 @@ export type CreateUserInput = {
   role?: Role | null,
   email?: string | null,
   password?: string | null,
+  level?: Level | null,
 };
 
 export enum Role {
@@ -270,6 +279,7 @@ export type ModelUserConditionInput = {
   role?: ModelRoleInput | null,
   email?: ModelStringInput | null,
   password?: ModelStringInput | null,
+  level?: ModelLevelInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
@@ -291,6 +301,8 @@ export type User = {
   email?: string | null,
   password?: string | null,
   Paths?: ModelPathConnection | null,
+  Comments?: ModelCommentConnection | null,
+  level?: Level | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -307,6 +319,7 @@ export type UpdateUserInput = {
   role?: Role | null,
   email?: string | null,
   password?: string | null,
+  level?: Level | null,
 };
 
 export type DeleteUserInput = {
@@ -350,6 +363,7 @@ export type ModelCommentFilterInput = {
   text?: ModelStringInput | null,
   like?: ModelIntInput | null,
   postID?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelCommentFilterInput | null > | null,
@@ -382,6 +396,7 @@ export type ModelResourcesFilterInput = {
   link?: ModelStringInput | null,
   level?: ModelLevelInput | null,
   pathID?: ModelIDInput | null,
+  logo?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelResourcesFilterInput | null > | null,
@@ -395,6 +410,7 @@ export type ModelUserFilterInput = {
   role?: ModelRoleInput | null,
   email?: ModelStringInput | null,
   password?: ModelStringInput | null,
+  level?: ModelLevelInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
@@ -426,6 +442,7 @@ export type ModelSubscriptionCommentFilterInput = {
   text?: ModelSubscriptionStringInput | null,
   like?: ModelSubscriptionIntInput | null,
   postID?: ModelSubscriptionIDInput | null,
+  userID?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
@@ -492,6 +509,7 @@ export type ModelSubscriptionResourcesFilterInput = {
   link?: ModelSubscriptionStringInput | null,
   level?: ModelSubscriptionStringInput | null,
   pathID?: ModelSubscriptionIDInput | null,
+  logo?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionResourcesFilterInput | null > | null,
@@ -504,6 +522,7 @@ export type ModelSubscriptionUserFilterInput = {
   role?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   password?: ModelSubscriptionStringInput | null,
+  level?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
@@ -534,6 +553,7 @@ export type CreateCommentMutation = {
     text?: string | null,
     like?: number | null,
     postID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -551,6 +571,7 @@ export type UpdateCommentMutation = {
     text?: string | null,
     like?: number | null,
     postID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -568,6 +589,7 @@ export type DeleteCommentMutation = {
     text?: string | null,
     like?: number | null,
     postID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -583,16 +605,16 @@ export type CreatePathMutation = {
     __typename: "Path",
     id: string,
     status?: Status | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
     userID: string,
     Posts?:  {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    Resources?:  {
+      __typename: "ModelResourcesConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -608,16 +630,16 @@ export type UpdatePathMutation = {
     __typename: "Path",
     id: string,
     status?: Status | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
     userID: string,
     Posts?:  {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    Resources?:  {
+      __typename: "ModelResourcesConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -633,16 +655,16 @@ export type DeletePathMutation = {
     __typename: "Path",
     id: string,
     status?: Status | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
     userID: string,
     Posts?:  {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    Resources?:  {
+      __typename: "ModelResourcesConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -662,6 +684,7 @@ export type CreateResourcesMutation = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    logo?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -681,6 +704,7 @@ export type UpdateResourcesMutation = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    logo?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -700,6 +724,7 @@ export type DeleteResourcesMutation = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    logo?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -726,6 +751,11 @@ export type CreateUserMutation = {
       __typename: "ModelPathConnection",
       nextToken?: string | null,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
+    level?: Level | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -752,6 +782,11 @@ export type UpdateUserMutation = {
       __typename: "ModelPathConnection",
       nextToken?: string | null,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
+    level?: Level | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -778,6 +813,11 @@ export type DeleteUserMutation = {
       __typename: "ModelPathConnection",
       nextToken?: string | null,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
+    level?: Level | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -860,6 +900,7 @@ export type GetCommentQuery = {
     text?: string | null,
     like?: number | null,
     postID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -880,6 +921,7 @@ export type ListCommentsQuery = {
       text?: string | null,
       like?: number | null,
       postID: string,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -904,6 +946,32 @@ export type CommentsByPostIDQuery = {
       text?: string | null,
       like?: number | null,
       postID: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommentsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommentsByUserIDQuery = {
+  commentsByUserID?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      text?: string | null,
+      like?: number | null,
+      postID: string,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -920,16 +988,16 @@ export type GetPathQuery = {
     __typename: "Path",
     id: string,
     status?: Status | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
     userID: string,
     Posts?:  {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    Resources?:  {
+      __typename: "ModelResourcesConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -994,6 +1062,7 @@ export type GetResourcesQuery = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    logo?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1016,6 +1085,7 @@ export type ListResourcesQuery = {
       link?: string | null,
       level?: Level | null,
       pathID: string,
+      logo?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1042,6 +1112,7 @@ export type ResourcesByPathIDQuery = {
       link?: string | null,
       level?: Level | null,
       pathID: string,
+      logo?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1069,6 +1140,11 @@ export type GetUserQuery = {
       __typename: "ModelPathConnection",
       nextToken?: string | null,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
+    level?: Level | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1090,6 +1166,7 @@ export type ListUsersQuery = {
       role?: Role | null,
       email?: string | null,
       password?: string | null,
+      level?: Level | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1202,6 +1279,7 @@ export type OnCreateCommentSubscription = {
     text?: string | null,
     like?: number | null,
     postID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1218,6 +1296,7 @@ export type OnUpdateCommentSubscription = {
     text?: string | null,
     like?: number | null,
     postID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1234,6 +1313,7 @@ export type OnDeleteCommentSubscription = {
     text?: string | null,
     like?: number | null,
     postID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1248,16 +1328,16 @@ export type OnCreatePathSubscription = {
     __typename: "Path",
     id: string,
     status?: Status | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
     userID: string,
     Posts?:  {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    Resources?:  {
+      __typename: "ModelResourcesConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1272,16 +1352,16 @@ export type OnUpdatePathSubscription = {
     __typename: "Path",
     id: string,
     status?: Status | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
     userID: string,
     Posts?:  {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    Resources?:  {
+      __typename: "ModelResourcesConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1296,16 +1376,16 @@ export type OnDeletePathSubscription = {
     __typename: "Path",
     id: string,
     status?: Status | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
     userID: string,
     Posts?:  {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    Resources?:  {
+      __typename: "ModelResourcesConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1324,6 +1404,7 @@ export type OnCreateResourcesSubscription = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    logo?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1342,6 +1423,7 @@ export type OnUpdateResourcesSubscription = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    logo?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1360,6 +1442,7 @@ export type OnDeleteResourcesSubscription = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    logo?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1385,6 +1468,11 @@ export type OnCreateUserSubscription = {
       __typename: "ModelPathConnection",
       nextToken?: string | null,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
+    level?: Level | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1410,6 +1498,11 @@ export type OnUpdateUserSubscription = {
       __typename: "ModelPathConnection",
       nextToken?: string | null,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
+    level?: Level | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1435,6 +1528,11 @@ export type OnDeleteUserSubscription = {
       __typename: "ModelPathConnection",
       nextToken?: string | null,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
+    level?: Level | null,
     createdAt: string,
     updatedAt: string,
   } | null,

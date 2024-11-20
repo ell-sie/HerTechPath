@@ -14,6 +14,7 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
     text
     like
     postID
+    userID
     createdAt
     updatedAt
     __typename
@@ -34,6 +35,7 @@ export const listComments = /* GraphQL */ `query ListComments(
       text
       like
       postID
+      userID
       createdAt
       updatedAt
       __typename
@@ -65,6 +67,7 @@ export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
       text
       like
       postID
+      userID
       createdAt
       updatedAt
       __typename
@@ -77,20 +80,52 @@ export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
   APITypes.CommentsByPostIDQueryVariables,
   APITypes.CommentsByPostIDQuery
 >;
+export const commentsByUserID = /* GraphQL */ `query CommentsByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      text
+      like
+      postID
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CommentsByUserIDQueryVariables,
+  APITypes.CommentsByUserIDQuery
+>;
 export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
   getPath(id: $id) {
     id
     status
-    Resources {
-      nextToken
-      __typename
-    }
     userID
     Posts {
       nextToken
       __typename
     }
     name
+    Resources {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -156,6 +191,7 @@ export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
     link
     level
     pathID
+    logo
     createdAt
     updatedAt
     __typename
@@ -178,6 +214,7 @@ export const listResources = /* GraphQL */ `query ListResources(
       link
       level
       pathID
+      logo
       createdAt
       updatedAt
       __typename
@@ -211,6 +248,7 @@ export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
       link
       level
       pathID
+      logo
       createdAt
       updatedAt
       __typename
@@ -238,6 +276,11 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
       nextToken
       __typename
     }
+    Comments {
+      nextToken
+      __typename
+    }
+    level
     createdAt
     updatedAt
     __typename
@@ -256,6 +299,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       role
       email
       password
+      level
       createdAt
       updatedAt
       __typename

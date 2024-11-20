@@ -17,6 +17,7 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
     text
     like
     postID
+    userID
     createdAt
     updatedAt
     __typename
@@ -35,6 +36,7 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
     text
     like
     postID
+    userID
     createdAt
     updatedAt
     __typename
@@ -53,6 +55,7 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
     text
     like
     postID
+    userID
     createdAt
     updatedAt
     __typename
@@ -69,16 +72,16 @@ export const createPath = /* GraphQL */ `mutation CreatePath(
   createPath(input: $input, condition: $condition) {
     id
     status
-    Resources {
-      nextToken
-      __typename
-    }
     userID
     Posts {
       nextToken
       __typename
     }
     name
+    Resources {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -95,16 +98,16 @@ export const updatePath = /* GraphQL */ `mutation UpdatePath(
   updatePath(input: $input, condition: $condition) {
     id
     status
-    Resources {
-      nextToken
-      __typename
-    }
     userID
     Posts {
       nextToken
       __typename
     }
     name
+    Resources {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -121,16 +124,16 @@ export const deletePath = /* GraphQL */ `mutation DeletePath(
   deletePath(input: $input, condition: $condition) {
     id
     status
-    Resources {
-      nextToken
-      __typename
-    }
     userID
     Posts {
       nextToken
       __typename
     }
     name
+    Resources {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -151,6 +154,7 @@ export const createResources = /* GraphQL */ `mutation CreateResources(
     link
     level
     pathID
+    logo
     createdAt
     updatedAt
     __typename
@@ -171,6 +175,7 @@ export const updateResources = /* GraphQL */ `mutation UpdateResources(
     link
     level
     pathID
+    logo
     createdAt
     updatedAt
     __typename
@@ -191,6 +196,7 @@ export const deleteResources = /* GraphQL */ `mutation DeleteResources(
     link
     level
     pathID
+    logo
     createdAt
     updatedAt
     __typename
@@ -218,6 +224,11 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
       nextToken
       __typename
     }
+    Comments {
+      nextToken
+      __typename
+    }
+    level
     createdAt
     updatedAt
     __typename
@@ -245,6 +256,11 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
       nextToken
       __typename
     }
+    Comments {
+      nextToken
+      __typename
+    }
+    level
     createdAt
     updatedAt
     __typename
@@ -272,6 +288,11 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
       nextToken
       __typename
     }
+    Comments {
+      nextToken
+      __typename
+    }
+    level
     createdAt
     updatedAt
     __typename

@@ -16,6 +16,7 @@ async function updateResource(input: UpdateResourcesInput) {
         description: input.description,
         link: input.link,
         level: input.level,
+        logo: input.logo,
         pathID: input.pathID,
       },
     },

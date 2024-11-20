@@ -14,6 +14,7 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment($filt
     text
     like
     postID
+    userID
     createdAt
     updatedAt
     __typename
@@ -29,6 +30,7 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment($filt
     text
     like
     postID
+    userID
     createdAt
     updatedAt
     __typename
@@ -44,6 +46,7 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment($filt
     text
     like
     postID
+    userID
     createdAt
     updatedAt
     __typename
@@ -57,16 +60,16 @@ export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: Mo
   onCreatePath(filter: $filter) {
     id
     status
-    Resources {
-      nextToken
-      __typename
-    }
     userID
     Posts {
       nextToken
       __typename
     }
     name
+    Resources {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -80,16 +83,16 @@ export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: Mo
   onUpdatePath(filter: $filter) {
     id
     status
-    Resources {
-      nextToken
-      __typename
-    }
     userID
     Posts {
       nextToken
       __typename
     }
     name
+    Resources {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -103,16 +106,16 @@ export const onDeletePath = /* GraphQL */ `subscription OnDeletePath($filter: Mo
   onDeletePath(filter: $filter) {
     id
     status
-    Resources {
-      nextToken
-      __typename
-    }
     userID
     Posts {
       nextToken
       __typename
     }
     name
+    Resources {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -130,6 +133,7 @@ export const onCreateResources = /* GraphQL */ `subscription OnCreateResources($
     link
     level
     pathID
+    logo
     createdAt
     updatedAt
     __typename
@@ -147,6 +151,7 @@ export const onUpdateResources = /* GraphQL */ `subscription OnUpdateResources($
     link
     level
     pathID
+    logo
     createdAt
     updatedAt
     __typename
@@ -164,6 +169,7 @@ export const onDeleteResources = /* GraphQL */ `subscription OnDeleteResources($
     link
     level
     pathID
+    logo
     createdAt
     updatedAt
     __typename
@@ -188,6 +194,11 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
       nextToken
       __typename
     }
+    Comments {
+      nextToken
+      __typename
+    }
+    level
     createdAt
     updatedAt
     __typename
@@ -212,6 +223,11 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
       nextToken
       __typename
     }
+    Comments {
+      nextToken
+      __typename
+    }
+    level
     createdAt
     updatedAt
     __typename
@@ -236,6 +252,11 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
       nextToken
       __typename
     }
+    Comments {
+      nextToken
+      __typename
+    }
+    level
     createdAt
     updatedAt
     __typename

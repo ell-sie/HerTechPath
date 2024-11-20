@@ -3,6 +3,7 @@ type Comment @model @auth(rules: [{allow: public}]) {
   text: String
   like: Int
   postID: ID! @index(name: "byPost")
+  userID: ID! @index(name: "byUser")
 }
 
 enum Level {
@@ -25,10 +26,10 @@ enum Status {
 type Path @model @auth(rules: [{allow: public}]) {
   id: ID!
   status: Status
-  Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
   userID: ID! @index(name: "byUser")
   Posts: [Post] @hasMany(indexName: "byPath", fields: ["id"])
   name: String
+  Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
 }
 
 type Resources @model @auth(rules: [{allow: public}]) {
@@ -38,6 +39,7 @@ type Resources @model @auth(rules: [{allow: public}]) {
   link: String
   level: Level
   pathID: ID! @index(name: "byPath")
+  logo: String
 }
 
 type User @model @auth(rules: [{allow: public}]) {
@@ -48,6 +50,8 @@ type User @model @auth(rules: [{allow: public}]) {
   email: AWSEmail
   password: String
   Paths: [Path] @hasMany(indexName: "byUser", fields: ["id"])
+  Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
+  level: Level
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
