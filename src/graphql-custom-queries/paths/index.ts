@@ -36,6 +36,12 @@ export const listPaths = /* GraphQL */ `query ListPaths(
             status
             userID
             name
+            Resources {
+            items {
+                title
+            }
+            nextToken
+            }
             createdAt
             updatedAt
         }

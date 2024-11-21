@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { client } from '../../App'
 import { PATHS_QUERY_KEY } from '../../constants/queryKeys'
-import { listPaths } from '../../graphql/queries'
+import { listPaths } from '../../graphql-custom-queries'
 
 async function getPaths() {
   return client.graphql({
@@ -22,8 +22,7 @@ export function usePathsQuery() {
     error,
     data:
       data?.data.listPaths.items.map(path => ({
-        name: path.name,
-        id: path.id,
+        ...path,
       })) || [],
   }
 }

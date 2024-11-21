@@ -148,35 +148,10 @@ export type Path = {
   id: string,
   status?: Status | null,
   userID: string,
-  Posts?: ModelPostConnection | null,
   name?: string | null,
   Resources?: ModelResourcesConnection | null,
   createdAt: string,
   updatedAt: string,
-};
-
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection",
-  items:  Array<Post | null >,
-  nextToken?: string | null,
-};
-
-export type Post = {
-  __typename: "Post",
-  id: string,
-  title: string,
-  bloID: string,
-  description?: string | null,
-  Comments?: ModelCommentConnection | null,
-  pathID: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelCommentConnection = {
-  __typename: "ModelCommentConnection",
-  items:  Array<Comment | null >,
-  nextToken?: string | null,
 };
 
 export type ModelResourcesConnection = {
@@ -193,6 +168,7 @@ export type Resources = {
   link?: string | null,
   level?: Level | null,
   pathID: string,
+  Path?: Path | null,
   logo?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -305,6 +281,30 @@ export type User = {
   level?: Level | null,
   createdAt: string,
   updatedAt: string,
+};
+
+export type ModelPostConnection = {
+  __typename: "ModelPostConnection",
+  items:  Array<Post | null >,
+  nextToken?: string | null,
+};
+
+export type Post = {
+  __typename: "Post",
+  id: string,
+  title: string,
+  bloID: string,
+  description?: string | null,
+  Comments?: ModelCommentConnection | null,
+  pathID: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelCommentConnection = {
+  __typename: "ModelCommentConnection",
+  items:  Array<Comment | null >,
+  nextToken?: string | null,
 };
 
 export type ModelPathConnection = {
@@ -606,10 +606,6 @@ export type CreatePathMutation = {
     id: string,
     status?: Status | null,
     userID: string,
-    Posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
     name?: string | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
@@ -631,10 +627,6 @@ export type UpdatePathMutation = {
     id: string,
     status?: Status | null,
     userID: string,
-    Posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
     name?: string | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
@@ -656,10 +648,6 @@ export type DeletePathMutation = {
     id: string,
     status?: Status | null,
     userID: string,
-    Posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
     name?: string | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
@@ -684,6 +672,15 @@ export type CreateResourcesMutation = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    Path?:  {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     logo?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -704,6 +701,15 @@ export type UpdateResourcesMutation = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    Path?:  {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     logo?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -724,6 +730,15 @@ export type DeleteResourcesMutation = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    Path?:  {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     logo?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -989,10 +1004,6 @@ export type GetPathQuery = {
     id: string,
     status?: Status | null,
     userID: string,
-    Posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
     name?: string | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
@@ -1016,8 +1027,24 @@ export type ListPathsQuery = {
       __typename: "Path",
       id: string,
       status?: Status | null,
+      Resources?:  {
+      __typename: "ModelResourcesConnection",
+      items:  Array< {
+                __typename: "Resources",
+                id: string,
+                title: string,
+                description: string,
+                link: string,
+                level: Level,
+                pathID: string,
+                logo: string,
+                createdAt: string,
+                updatedAt: string,
+              } | null >,
+      nextToken?: string | null,
+    } | null,
       userID: string,
-      name?: string | null,
+      name: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1062,6 +1089,15 @@ export type GetResourcesQuery = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    Path?:  {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     logo?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1329,10 +1365,6 @@ export type OnCreatePathSubscription = {
     id: string,
     status?: Status | null,
     userID: string,
-    Posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
     name?: string | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
@@ -1353,10 +1385,6 @@ export type OnUpdatePathSubscription = {
     id: string,
     status?: Status | null,
     userID: string,
-    Posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
     name?: string | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
@@ -1377,10 +1405,6 @@ export type OnDeletePathSubscription = {
     id: string,
     status?: Status | null,
     userID: string,
-    Posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
     name?: string | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
@@ -1404,6 +1428,15 @@ export type OnCreateResourcesSubscription = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    Path?:  {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     logo?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1423,6 +1456,15 @@ export type OnUpdateResourcesSubscription = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    Path?:  {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     logo?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1442,6 +1484,15 @@ export type OnDeleteResourcesSubscription = {
     link?: string | null,
     level?: Level | null,
     pathID: string,
+    Path?:  {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     logo?: string | null,
     createdAt: string,
     updatedAt: string,

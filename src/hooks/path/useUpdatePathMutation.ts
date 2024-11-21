@@ -19,7 +19,7 @@ async function updatePath(input: UpdatePathInput) {
   })
 }
 
-export function useUpdateClientMutation() {
+export function useUpdatePathMutation() {
   const queryClient = useQueryClient()
   const { isPending, error, mutate } = useMutation({
     mutationFn: updatePath,

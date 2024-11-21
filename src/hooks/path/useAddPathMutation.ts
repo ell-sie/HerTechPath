@@ -20,7 +20,7 @@ async function addPaths(input: CreatePathInput) {
   })
 }
 
-export function useAddResourceMutation() {
+export function useAddPathMutation() {
   const queryClient = useQueryClient()
   const { isPending, error, data, mutate } = useMutation({
     mutationFn: addPaths,

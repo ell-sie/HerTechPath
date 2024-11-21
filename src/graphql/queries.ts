@@ -117,10 +117,6 @@ export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
     id
     status
     userID
-    Posts {
-      nextToken
-      __typename
-    }
     name
     Resources {
       nextToken
@@ -191,6 +187,15 @@ export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
     link
     level
     pathID
+    Path {
+      id
+      status
+      userID
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
     logo
     createdAt
     updatedAt
