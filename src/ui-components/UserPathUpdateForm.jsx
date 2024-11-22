@@ -6,22 +6,16 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  SelectField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextAreaField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getUser } from "../graphql/queries";
-import { updateUser } from "../graphql/mutations";
+import { getUserPath } from "../graphql/queries";
+import { updateUserPath } from "../graphql/mutations";
 const client = generateClient();
-export default function UserUpdateForm(props) {
+export default function UserPathUpdateForm(props) {
   const {
     id: idProp,
-    user: userModelProp,
+    userPath: userPathModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -31,43 +25,39 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    level: "",
-    name: "",
-    email: "",
+    progress: "",
   };
-  const [level, setLevel] = React.useState(initialValues.level);
-  const [name, setName] = React.useState(initialValues.name);
-  const [email, setEmail] = React.useState(initialValues.email);
+  const [progress, setProgress] = React.useState(initialValues.progress);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = userRecord
-      ? { ...initialValues, ...userRecord }
+    const cleanValues = userPathRecord
+      ? { ...initialValues, ...userPathRecord }
       : initialValues;
-    setLevel(cleanValues.level);
-    setName(cleanValues.name);
-    setEmail(cleanValues.email);
+    setProgress(
+      typeof cleanValues.progress === "string" || cleanValues.progress === null
+        ? cleanValues.progress
+        : JSON.stringify(cleanValues.progress)
+    );
     setErrors({});
   };
-  const [userRecord, setUserRecord] = React.useState(userModelProp);
+  const [userPathRecord, setUserPathRecord] = React.useState(userPathModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await client.graphql({
-              query: getUser.replaceAll("__typename", ""),
+              query: getUserPath.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getUser
-        : userModelProp;
-      setUserRecord(record);
+          )?.data?.getUserPath
+        : userPathModelProp;
+      setUserPathRecord(record);
     };
     queryData();
-  }, [idProp, userModelProp]);
-  React.useEffect(resetStateValues, [userRecord]);
+  }, [idProp, userPathModelProp]);
+  React.useEffect(resetStateValues, [userPathRecord]);
   const validations = {
-    level: [],
-    name: [],
-    email: [{ type: "Email" }],
+    progress: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -95,9 +85,7 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          level: level ?? null,
-          name: name ?? null,
-          email: email ?? null,
+          progress: progress ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,10 +116,10 @@ export default function UserUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateUser.replaceAll("__typename", ""),
+            query: updateUserPath.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: userRecord.id,
+                id: userPathRecord.id,
                 ...modelFields,
               },
             },
@@ -146,103 +134,33 @@ export default function UserUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserUpdateForm")}
+      {...getOverrideProps(overrides, "UserPathUpdateForm")}
       {...rest}
     >
-      <SelectField
-        label="Level"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={level}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              level: value,
-              name,
-              email,
-            };
-            const result = onChange(modelFields);
-            value = result?.level ?? value;
-          }
-          if (errors.level?.hasError) {
-            runValidationTasks("level", value);
-          }
-          setLevel(value);
-        }}
-        onBlur={() => runValidationTasks("level", level)}
-        errorMessage={errors.level?.errorMessage}
-        hasError={errors.level?.hasError}
-        {...getOverrideProps(overrides, "level")}
-      >
-        <option
-          children="Beginner"
-          value="BEGINNER"
-          {...getOverrideProps(overrides, "leveloption0")}
-        ></option>
-        <option
-          children="Intermediate"
-          value="INTERMEDIATE"
-          {...getOverrideProps(overrides, "leveloption1")}
-        ></option>
-        <option
-          children="Advanced"
-          value="ADVANCED"
-          {...getOverrideProps(overrides, "leveloption2")}
-        ></option>
-      </SelectField>
-      <TextField
-        label="Name"
+      <TextAreaField
+        label="Progress"
         isRequired={false}
         isReadOnly={false}
-        value={name}
+        value={progress}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              level,
-              name: value,
-              email,
+              progress: value,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.progress ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.progress?.hasError) {
+            runValidationTasks("progress", value);
           }
-          setName(value);
+          setProgress(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
-      <TextField
-        label="Email"
-        isRequired={false}
-        isReadOnly={false}
-        value={email}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              level,
-              name,
-              email: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.email ?? value;
-          }
-          if (errors.email?.hasError) {
-            runValidationTasks("email", value);
-          }
-          setEmail(value);
-        }}
-        onBlur={() => runValidationTasks("email", email)}
-        errorMessage={errors.email?.errorMessage}
-        hasError={errors.email?.hasError}
-        {...getOverrideProps(overrides, "email")}
-      ></TextField>
+        onBlur={() => runValidationTasks("progress", progress)}
+        errorMessage={errors.progress?.errorMessage}
+        hasError={errors.progress?.hasError}
+        {...getOverrideProps(overrides, "progress")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -254,7 +172,7 @@ export default function UserUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || userModelProp)}
+          isDisabled={!(idProp || userPathModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -266,7 +184,7 @@ export default function UserUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || userModelProp) ||
+              !(idProp || userPathModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

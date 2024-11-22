@@ -8,13 +8,165 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
+  getPost(id: $id) {
+    id
+    Comments {
+      nextToken
+      __typename
+    }
+    User {
+      nextToken
+      __typename
+    }
+    title
+    description
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetPostQueryVariables, APITypes.GetPostQuery>;
+export const listPosts = /* GraphQL */ `query ListPosts(
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      description
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
+export const getUserPath = /* GraphQL */ `query GetUserPath($id: ID!) {
+  getUserPath(id: $id) {
+    id
+    Users {
+      nextToken
+      __typename
+    }
+    Paths {
+      nextToken
+      __typename
+    }
+    progress
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetUserPathQueryVariables,
+  APITypes.GetUserPathQuery
+>;
+export const listUserPaths = /* GraphQL */ `query ListUserPaths(
+  $filter: ModelUserPathFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUserPaths(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      progress
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListUserPathsQueryVariables,
+  APITypes.ListUserPathsQuery
+>;
+export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    userpaths {
+      nextToken
+      __typename
+    }
+    posts {
+      nextToken
+      __typename
+    }
+    level
+    name
+    email
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;
+export const listUsers = /* GraphQL */ `query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      level
+      name
+      email
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
+  getPath(id: $id) {
+    id
+    userpathID
+    Resources {
+      nextToken
+      __typename
+    }
+    level
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetPathQueryVariables, APITypes.GetPathQuery>;
+export const listPaths = /* GraphQL */ `query ListPaths(
+  $filter: ModelPathFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPaths(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListPathsQueryVariables, APITypes.ListPathsQuery>;
 export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
   getComment(id: $id) {
     id
-    text
-    like
     postID
-    userID
+    description
     createdAt
     updatedAt
     __typename
@@ -32,10 +184,8 @@ export const listComments = /* GraphQL */ `query ListComments(
   listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      text
-      like
       postID
-      userID
+      description
       createdAt
       updatedAt
       __typename
@@ -48,60 +198,13 @@ export const listComments = /* GraphQL */ `query ListComments(
   APITypes.ListCommentsQueryVariables,
   APITypes.ListCommentsQuery
 >;
-export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
-  getPath(id: $id) {
-    id
-    status
-    userID
-    name
-    Resources {
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetPathQueryVariables, APITypes.GetPathQuery>;
-export const listPaths = /* GraphQL */ `query ListPaths(
-  $filter: ModelPathFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listPaths(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      status
-      userID
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListPathsQueryVariables, APITypes.ListPathsQuery>;
 export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
   getResources(id: $id) {
     id
     title
     description
     link
-    level
     pathID
-    Path {
-      id
-      status
-      userID
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    logo
     createdAt
     updatedAt
     __typename
@@ -122,9 +225,7 @@ export const listResources = /* GraphQL */ `query ListResources(
       title
       description
       link
-      level
       pathID
-      logo
       createdAt
       updatedAt
       __typename
@@ -137,44 +238,128 @@ export const listResources = /* GraphQL */ `query ListResources(
   APITypes.ListResourcesQueryVariables,
   APITypes.ListResourcesQuery
 >;
-export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
-  getUser(id: $id) {
+export const getPostUser = /* GraphQL */ `query GetPostUser($id: ID!) {
+  getPostUser(id: $id) {
     id
-    name
-    posts {
-      nextToken
+    postId
+    userId
+    post {
+      id
+      title
+      description
+      createdAt
+      updatedAt
       __typename
     }
-    role
-    email
-    password
-    Paths {
-      nextToken
+    user {
+      id
+      level
+      name
+      email
+      createdAt
+      updatedAt
       __typename
     }
-    Comments {
-      nextToken
-      __typename
-    }
-    level
     createdAt
     updatedAt
     __typename
   }
 }
-` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;
-export const listUsers = /* GraphQL */ `query ListUsers(
-  $filter: ModelUserFilterInput
+` as GeneratedQuery<
+  APITypes.GetPostUserQueryVariables,
+  APITypes.GetPostUserQuery
+>;
+export const listPostUsers = /* GraphQL */ `query ListPostUsers(
+  $filter: ModelPostUserFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listPostUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      postId
+      userId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListPostUsersQueryVariables,
+  APITypes.ListPostUsersQuery
+>;
+export const getUserPathUser = /* GraphQL */ `query GetUserPathUser($id: ID!) {
+  getUserPathUser(id: $id) {
+    id
+    userPathId
+    userId
+    userPath {
+      id
+      progress
+      createdAt
+      updatedAt
+      __typename
+    }
+    user {
+      id
+      level
       name
-      role
       email
-      password
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetUserPathUserQueryVariables,
+  APITypes.GetUserPathUserQuery
+>;
+export const listUserPathUsers = /* GraphQL */ `query ListUserPathUsers(
+  $filter: ModelUserPathUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUserPathUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userPathId
+      userId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListUserPathUsersQueryVariables,
+  APITypes.ListUserPathUsersQuery
+>;
+export const pathsByUserpathID = /* GraphQL */ `query PathsByUserpathID(
+  $userpathID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPathFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  pathsByUserpathID(
+    userpathID: $userpathID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userpathID
       level
       createdAt
       updatedAt
@@ -184,45 +369,10 @@ export const listUsers = /* GraphQL */ `query ListUsers(
     __typename
   }
 }
-` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
-export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
-  getPost(id: $id) {
-    id
-    title
-    bloID
-    description
-    Comments {
-      nextToken
-      __typename
-    }
-    pathID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetPostQueryVariables, APITypes.GetPostQuery>;
-export const listPosts = /* GraphQL */ `query ListPosts(
-  $filter: ModelPostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      title
-      bloID
-      description
-      pathID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
+` as GeneratedQuery<
+  APITypes.PathsByUserpathIDQueryVariables,
+  APITypes.PathsByUserpathIDQuery
+>;
 export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
   $postID: ID!
   $sortDirection: ModelSortDirection
@@ -239,10 +389,8 @@ export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
   ) {
     items {
       id
-      text
-      like
       postID
-      userID
+      description
       createdAt
       updatedAt
       __typename
@@ -254,69 +402,6 @@ export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
 ` as GeneratedQuery<
   APITypes.CommentsByPostIDQueryVariables,
   APITypes.CommentsByPostIDQuery
->;
-export const commentsByUserID = /* GraphQL */ `query CommentsByUserID(
-  $userID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  commentsByUserID(
-    userID: $userID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      text
-      like
-      postID
-      userID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.CommentsByUserIDQueryVariables,
-  APITypes.CommentsByUserIDQuery
->;
-export const pathsByUserID = /* GraphQL */ `query PathsByUserID(
-  $userID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelPathFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  pathsByUserID(
-    userID: $userID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      status
-      userID
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.PathsByUserIDQueryVariables,
-  APITypes.PathsByUserIDQuery
 >;
 export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
   $pathID: ID!
@@ -337,9 +422,7 @@ export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
       title
       description
       link
-      level
       pathID
-      logo
       createdAt
       updatedAt
       __typename
@@ -352,15 +435,15 @@ export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
   APITypes.ResourcesByPathIDQueryVariables,
   APITypes.ResourcesByPathIDQuery
 >;
-export const postsByBloID = /* GraphQL */ `query PostsByBloID(
-  $bloID: ID!
+export const postUsersByPostId = /* GraphQL */ `query PostUsersByPostId(
+  $postId: ID!
   $sortDirection: ModelSortDirection
-  $filter: ModelPostFilterInput
+  $filter: ModelPostUserFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  postsByBloID(
-    bloID: $bloID
+  postUsersByPostId(
+    postId: $postId
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -368,10 +451,8 @@ export const postsByBloID = /* GraphQL */ `query PostsByBloID(
   ) {
     items {
       id
-      title
-      bloID
-      description
-      pathID
+      postId
+      userId
       createdAt
       updatedAt
       __typename
@@ -381,18 +462,18 @@ export const postsByBloID = /* GraphQL */ `query PostsByBloID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.PostsByBloIDQueryVariables,
-  APITypes.PostsByBloIDQuery
+  APITypes.PostUsersByPostIdQueryVariables,
+  APITypes.PostUsersByPostIdQuery
 >;
-export const postsByPathID = /* GraphQL */ `query PostsByPathID(
-  $pathID: ID!
+export const postUsersByUserId = /* GraphQL */ `query PostUsersByUserId(
+  $userId: ID!
   $sortDirection: ModelSortDirection
-  $filter: ModelPostFilterInput
+  $filter: ModelPostUserFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  postsByPathID(
-    pathID: $pathID
+  postUsersByUserId(
+    userId: $userId
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -400,10 +481,8 @@ export const postsByPathID = /* GraphQL */ `query PostsByPathID(
   ) {
     items {
       id
-      title
-      bloID
-      description
-      pathID
+      postId
+      userId
       createdAt
       updatedAt
       __typename
@@ -413,6 +492,66 @@ export const postsByPathID = /* GraphQL */ `query PostsByPathID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.PostsByPathIDQueryVariables,
-  APITypes.PostsByPathIDQuery
+  APITypes.PostUsersByUserIdQueryVariables,
+  APITypes.PostUsersByUserIdQuery
+>;
+export const userPathUsersByUserPathId = /* GraphQL */ `query UserPathUsersByUserPathId(
+  $userPathId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserPathUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  userPathUsersByUserPathId(
+    userPathId: $userPathId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userPathId
+      userId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.UserPathUsersByUserPathIdQueryVariables,
+  APITypes.UserPathUsersByUserPathIdQuery
+>;
+export const userPathUsersByUserId = /* GraphQL */ `query UserPathUsersByUserId(
+  $userId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserPathUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  userPathUsersByUserId(
+    userId: $userId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userPathId
+      userId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.UserPathUsersByUserIdQueryVariables,
+  APITypes.UserPathUsersByUserIdQuery
 >;

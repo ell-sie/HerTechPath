@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-hertechpath-dev-9748d-authRole",
-      "UnauthRoleArn": "arn:aws:iam::590184131451:role/amplify-hertechpath-dev-9748d-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::590184131451:role/amplify-hertechpath-dev-9748d-authRole",
+      "AuthRoleName": "amplify-hertechpath-dev-9f6db-authRole",
+      "UnauthRoleArn": "arn:aws:iam::533267005837:role/amplify-hertechpath-dev-9f6db-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::533267005837:role/amplify-hertechpath-dev-9f6db-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-hertechpath-dev-9748d-deployment",
-      "UnauthRoleName": "amplify-hertechpath-dev-9748d-unauthRole",
-      "StackName": "amplify-hertechpath-dev-9748d",
-      "StackId": "arn:aws:cloudformation:us-east-2:590184131451:stack/amplify-hertechpath-dev-9748d/c7c96f00-8a3d-11ef-8b04-0af10d9c7e93",
-      "AmplifyAppId": "d3mr7hdatz0fvc"
+      "DeploymentBucketName": "amplify-hertechpath-dev-9f6db-deployment",
+      "UnauthRoleName": "amplify-hertechpath-dev-9f6db-unauthRole",
+      "StackName": "amplify-hertechpath-dev-9f6db",
+      "StackId": "arn:aws:cloudformation:us-east-2:533267005837:stack/amplify-hertechpath-dev-9f6db/1c2abf50-a8e7-11ef-90bb-02c71dbf56ab",
+      "AmplifyAppId": "d15jq0ed820jmn"
     },
     "categories": {
       "auth": {
-        "hertechpathe3c2f87e": {}
+        "hertechpath621978b9": {}
       },
       "api": {
         "hertechpath": {}

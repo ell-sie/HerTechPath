@@ -14,7 +14,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage.tsx";
 import ResourcesPage from "./pages/ResourcePage.tsx";
 
-export const client = generateClient({ authMode: "userPool" });
+export const client = generateClient();
 Amplify.configure(config);
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/discussions" element={<DiscussionPage />} />
                     <Route path="/resources" element={<ResourcesPage />} />
+                    {/* <Route path="/paths" element={<PathsPage />} /> */}
                   </Routes>
                 </div>
               </div>

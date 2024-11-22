@@ -1,21 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Level } from "../API";
 import InputField from "../components/shared/InputField";
-import SelectInput from "../components/shared/SelectInput";
 // import { usePathsQuery } from "../hooks/path/usePathsQuery";
-import { Resource, UpdateResource } from "../pages/ResourcePage";
 import AutoCompleteTextInput from "../components/shared/AutocompleteTextInput";
+import { Resource, UpdateResource } from "../pages/ResourcePage";
 
 const AddEditResourceFormSchema = z.object({
   id: z.string().min(1).optional(),
   title: z.string().trim().min(1, "Please enter a valid Resource title"),
   pathID: z.string().min(1, "Please select a path"),
   link: z.string().url().optional().nullable(),
-  level: z.nativeEnum(Level),
   description: z.string().min(5, "Resource description is too short"),
   isUpdate: z.boolean(),
 });
@@ -33,12 +29,6 @@ export interface AddResourceFormProps {
   };
 }
 
-const levelOptions = [
-  {id: "BEGINNER", label: Level.BEGINNER },
-  { id: "INTERMEDIATE", label: Level.INTERMEDIATE },
-  { id: "ADVANCED", label: Level.ADVANCED },
-];
-
 export default function AddEditResourceForm({
   isUpdate,
   onCloseClick,
@@ -46,19 +36,20 @@ export default function AddEditResourceForm({
   defaultResourceValue,
 }: AddResourceFormProps) {
   // const { data: paths } = usePathsQuery();
-const paths = [
-  {
-    id: "1",
-    name: "Path 1",
-  },
-  {
-    id: "2",
-    name: "Path 2",
-  },
-  {
-    id: "3",
-    name: "Path 3",
-  },];
+  const paths = [
+    {
+      id: "1",
+      name: "Path 1",
+    },
+    {
+      id: "2",
+      name: "Path 2",
+    },
+    {
+      id: "3",
+      name: "Path 3",
+    },
+  ];
   const {
     control,
     handleSubmit,
@@ -70,12 +61,11 @@ const paths = [
       title: defaultResourceValue.title,
       pathID: defaultResourceValue.pathID,
       link: defaultResourceValue.link,
-      level: defaultResourceValue.level,
       description: defaultResourceValue.description,
       isUpdate,
     },
   });
-  
+
   function handleSaveResource(data: AddEditResourceFormData) {
     if (isUpdate && data.id) {
       handlers.handleEditResource(data as UpdateResource);
@@ -106,20 +96,16 @@ const paths = [
               maxRows={3}
             />
             <InputField control={control} label="Link" name="link" />
-            <SelectInput
-              control={control}
-              options={levelOptions}
-              label="Level"
-              name="level"
-            />
-              <AutoCompleteTextInput
+            <AutoCompleteTextInput
               label="Path"
               name="pathID"
               control={control}
-              options={paths.map((client: { id: string; name: string | null | undefined }) => ({
-                label: client.name ?? "Unknown",
-                value: client.id,
-              }))}
+              options={paths.map(
+                (client: { id: string; name: string | null | undefined }) => ({
+                  label: client.name ?? "Unknown",
+                  value: client.id,
+                })
+              )}
             />
           </div>
         </div>

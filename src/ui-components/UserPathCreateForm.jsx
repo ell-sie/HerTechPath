@@ -6,18 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  SelectField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextAreaField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createUser } from "../graphql/mutations";
+import { createUserPath } from "../graphql/mutations";
 const client = generateClient();
-export default function UserCreateForm(props) {
+export default function UserPathCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -29,24 +23,16 @@ export default function UserCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    level: "",
-    name: "",
-    email: "",
+    progress: "",
   };
-  const [level, setLevel] = React.useState(initialValues.level);
-  const [name, setName] = React.useState(initialValues.name);
-  const [email, setEmail] = React.useState(initialValues.email);
+  const [progress, setProgress] = React.useState(initialValues.progress);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setLevel(initialValues.level);
-    setName(initialValues.name);
-    setEmail(initialValues.email);
+    setProgress(initialValues.progress);
     setErrors({});
   };
   const validations = {
-    level: [],
-    name: [],
-    email: [{ type: "Email" }],
+    progress: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -74,9 +60,7 @@ export default function UserCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          level,
-          name,
-          email,
+          progress,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -107,7 +91,7 @@ export default function UserCreateForm(props) {
             }
           });
           await client.graphql({
-            query: createUser.replaceAll("__typename", ""),
+            query: createUserPath.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -127,103 +111,32 @@ export default function UserCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserCreateForm")}
+      {...getOverrideProps(overrides, "UserPathCreateForm")}
       {...rest}
     >
-      <SelectField
-        label="Level"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={level}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              level: value,
-              name,
-              email,
-            };
-            const result = onChange(modelFields);
-            value = result?.level ?? value;
-          }
-          if (errors.level?.hasError) {
-            runValidationTasks("level", value);
-          }
-          setLevel(value);
-        }}
-        onBlur={() => runValidationTasks("level", level)}
-        errorMessage={errors.level?.errorMessage}
-        hasError={errors.level?.hasError}
-        {...getOverrideProps(overrides, "level")}
-      >
-        <option
-          children="Beginner"
-          value="BEGINNER"
-          {...getOverrideProps(overrides, "leveloption0")}
-        ></option>
-        <option
-          children="Intermediate"
-          value="INTERMEDIATE"
-          {...getOverrideProps(overrides, "leveloption1")}
-        ></option>
-        <option
-          children="Advanced"
-          value="ADVANCED"
-          {...getOverrideProps(overrides, "leveloption2")}
-        ></option>
-      </SelectField>
-      <TextField
-        label="Name"
+      <TextAreaField
+        label="Progress"
         isRequired={false}
         isReadOnly={false}
-        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              level,
-              name: value,
-              email,
+              progress: value,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.progress ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.progress?.hasError) {
+            runValidationTasks("progress", value);
           }
-          setName(value);
+          setProgress(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
-      <TextField
-        label="Email"
-        isRequired={false}
-        isReadOnly={false}
-        value={email}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              level,
-              name,
-              email: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.email ?? value;
-          }
-          if (errors.email?.hasError) {
-            runValidationTasks("email", value);
-          }
-          setEmail(value);
-        }}
-        onBlur={() => runValidationTasks("email", email)}
-        errorMessage={errors.email?.errorMessage}
-        hasError={errors.email?.hasError}
-        {...getOverrideProps(overrides, "email")}
-      ></TextField>
+        onBlur={() => runValidationTasks("progress", progress)}
+        errorMessage={errors.progress?.errorMessage}
+        hasError={errors.progress?.hasError}
+        {...getOverrideProps(overrides, "progress")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

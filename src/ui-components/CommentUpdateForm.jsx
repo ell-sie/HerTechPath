@@ -6,22 +6,16 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  SelectField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getUser } from "../graphql/queries";
-import { updateUser } from "../graphql/mutations";
+import { getComment } from "../graphql/queries";
+import { updateComment } from "../graphql/mutations";
 const client = generateClient();
-export default function UserUpdateForm(props) {
+export default function CommentUpdateForm(props) {
   const {
     id: idProp,
-    user: userModelProp,
+    comment: commentModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -31,43 +25,47 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    level: "",
-    name: "",
-    email: "",
+    text: "",
+    like: "",
+    postID: "",
+    userID: "",
   };
-  const [level, setLevel] = React.useState(initialValues.level);
-  const [name, setName] = React.useState(initialValues.name);
-  const [email, setEmail] = React.useState(initialValues.email);
+  const [text, setText] = React.useState(initialValues.text);
+  const [like, setLike] = React.useState(initialValues.like);
+  const [postID, setPostID] = React.useState(initialValues.postID);
+  const [userID, setUserID] = React.useState(initialValues.userID);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = userRecord
-      ? { ...initialValues, ...userRecord }
+    const cleanValues = commentRecord
+      ? { ...initialValues, ...commentRecord }
       : initialValues;
-    setLevel(cleanValues.level);
-    setName(cleanValues.name);
-    setEmail(cleanValues.email);
+    setText(cleanValues.text);
+    setLike(cleanValues.like);
+    setPostID(cleanValues.postID);
+    setUserID(cleanValues.userID);
     setErrors({});
   };
-  const [userRecord, setUserRecord] = React.useState(userModelProp);
+  const [commentRecord, setCommentRecord] = React.useState(commentModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await client.graphql({
-              query: getUser.replaceAll("__typename", ""),
+              query: getComment.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getUser
-        : userModelProp;
-      setUserRecord(record);
+          )?.data?.getComment
+        : commentModelProp;
+      setCommentRecord(record);
     };
     queryData();
-  }, [idProp, userModelProp]);
-  React.useEffect(resetStateValues, [userRecord]);
+  }, [idProp, commentModelProp]);
+  React.useEffect(resetStateValues, [commentRecord]);
   const validations = {
-    level: [],
-    name: [],
-    email: [{ type: "Email" }],
+    text: [],
+    like: [],
+    postID: [{ type: "Required" }],
+    userID: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -95,9 +93,10 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          level: level ?? null,
-          name: name ?? null,
-          email: email ?? null,
+          text: text ?? null,
+          like: like ?? null,
+          postID,
+          userID,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,10 +127,10 @@ export default function UserUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateUser.replaceAll("__typename", ""),
+            query: updateComment.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: userRecord.id,
+                id: commentRecord.id,
                 ...modelFields,
               },
             },
@@ -146,102 +145,120 @@ export default function UserUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserUpdateForm")}
+      {...getOverrideProps(overrides, "CommentUpdateForm")}
       {...rest}
     >
-      <SelectField
-        label="Level"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={level}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              level: value,
-              name,
-              email,
-            };
-            const result = onChange(modelFields);
-            value = result?.level ?? value;
-          }
-          if (errors.level?.hasError) {
-            runValidationTasks("level", value);
-          }
-          setLevel(value);
-        }}
-        onBlur={() => runValidationTasks("level", level)}
-        errorMessage={errors.level?.errorMessage}
-        hasError={errors.level?.hasError}
-        {...getOverrideProps(overrides, "level")}
-      >
-        <option
-          children="Beginner"
-          value="BEGINNER"
-          {...getOverrideProps(overrides, "leveloption0")}
-        ></option>
-        <option
-          children="Intermediate"
-          value="INTERMEDIATE"
-          {...getOverrideProps(overrides, "leveloption1")}
-        ></option>
-        <option
-          children="Advanced"
-          value="ADVANCED"
-          {...getOverrideProps(overrides, "leveloption2")}
-        ></option>
-      </SelectField>
       <TextField
-        label="Name"
+        label="Text"
         isRequired={false}
         isReadOnly={false}
-        value={name}
+        value={text}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              level,
-              name: value,
-              email,
+              text: value,
+              like,
+              postID,
+              userID,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.text ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.text?.hasError) {
+            runValidationTasks("text", value);
           }
-          setName(value);
+          setText(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
+        onBlur={() => runValidationTasks("text", text)}
+        errorMessage={errors.text?.errorMessage}
+        hasError={errors.text?.hasError}
+        {...getOverrideProps(overrides, "text")}
       ></TextField>
       <TextField
-        label="Email"
+        label="Like"
         isRequired={false}
         isReadOnly={false}
-        value={email}
+        type="number"
+        step="any"
+        value={like}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              text,
+              like: value,
+              postID,
+              userID,
+            };
+            const result = onChange(modelFields);
+            value = result?.like ?? value;
+          }
+          if (errors.like?.hasError) {
+            runValidationTasks("like", value);
+          }
+          setLike(value);
+        }}
+        onBlur={() => runValidationTasks("like", like)}
+        errorMessage={errors.like?.errorMessage}
+        hasError={errors.like?.hasError}
+        {...getOverrideProps(overrides, "like")}
+      ></TextField>
+      <TextField
+        label="Post id"
+        isRequired={true}
+        isReadOnly={false}
+        value={postID}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              level,
-              name,
-              email: value,
+              text,
+              like,
+              postID: value,
+              userID,
             };
             const result = onChange(modelFields);
-            value = result?.email ?? value;
+            value = result?.postID ?? value;
           }
-          if (errors.email?.hasError) {
-            runValidationTasks("email", value);
+          if (errors.postID?.hasError) {
+            runValidationTasks("postID", value);
           }
-          setEmail(value);
+          setPostID(value);
         }}
-        onBlur={() => runValidationTasks("email", email)}
-        errorMessage={errors.email?.errorMessage}
-        hasError={errors.email?.hasError}
-        {...getOverrideProps(overrides, "email")}
+        onBlur={() => runValidationTasks("postID", postID)}
+        errorMessage={errors.postID?.errorMessage}
+        hasError={errors.postID?.hasError}
+        {...getOverrideProps(overrides, "postID")}
+      ></TextField>
+      <TextField
+        label="User id"
+        isRequired={true}
+        isReadOnly={false}
+        value={userID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              text,
+              like,
+              postID,
+              userID: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.userID ?? value;
+          }
+          if (errors.userID?.hasError) {
+            runValidationTasks("userID", value);
+          }
+          setUserID(value);
+        }}
+        onBlur={() => runValidationTasks("userID", userID)}
+        errorMessage={errors.userID?.errorMessage}
+        hasError={errors.userID?.hasError}
+        {...getOverrideProps(overrides, "userID")}
       ></TextField>
       <Flex
         justifyContent="space-between"
@@ -254,7 +271,7 @@ export default function UserUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || userModelProp)}
+          isDisabled={!(idProp || commentModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -266,7 +283,7 @@ export default function UserUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || userModelProp) ||
+              !(idProp || commentModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

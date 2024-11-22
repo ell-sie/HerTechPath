@@ -6,22 +6,14 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  SelectField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getUser } from "../graphql/queries";
-import { updateUser } from "../graphql/mutations";
+import { createPost } from "../graphql/mutations";
 const client = generateClient();
-export default function UserUpdateForm(props) {
+export default function PostCreateForm(props) {
   const {
-    id: idProp,
-    user: userModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -31,43 +23,22 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    level: "",
-    name: "",
-    email: "",
+    title: "",
+    description: "",
   };
-  const [level, setLevel] = React.useState(initialValues.level);
-  const [name, setName] = React.useState(initialValues.name);
-  const [email, setEmail] = React.useState(initialValues.email);
+  const [title, setTitle] = React.useState(initialValues.title);
+  const [description, setDescription] = React.useState(
+    initialValues.description
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = userRecord
-      ? { ...initialValues, ...userRecord }
-      : initialValues;
-    setLevel(cleanValues.level);
-    setName(cleanValues.name);
-    setEmail(cleanValues.email);
+    setTitle(initialValues.title);
+    setDescription(initialValues.description);
     setErrors({});
   };
-  const [userRecord, setUserRecord] = React.useState(userModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? (
-            await client.graphql({
-              query: getUser.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getUser
-        : userModelProp;
-      setUserRecord(record);
-    };
-    queryData();
-  }, [idProp, userModelProp]);
-  React.useEffect(resetStateValues, [userRecord]);
   const validations = {
-    level: [],
-    name: [],
-    email: [{ type: "Email" }],
+    title: [],
+    description: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -95,9 +66,8 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          level: level ?? null,
-          name: name ?? null,
-          email: email ?? null,
+          title,
+          description,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,16 +98,18 @@ export default function UserUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateUser.replaceAll("__typename", ""),
+            query: createPost.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: userRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -146,116 +118,71 @@ export default function UserUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserUpdateForm")}
+      {...getOverrideProps(overrides, "PostCreateForm")}
       {...rest}
     >
-      <SelectField
-        label="Level"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={level}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              level: value,
-              name,
-              email,
-            };
-            const result = onChange(modelFields);
-            value = result?.level ?? value;
-          }
-          if (errors.level?.hasError) {
-            runValidationTasks("level", value);
-          }
-          setLevel(value);
-        }}
-        onBlur={() => runValidationTasks("level", level)}
-        errorMessage={errors.level?.errorMessage}
-        hasError={errors.level?.hasError}
-        {...getOverrideProps(overrides, "level")}
-      >
-        <option
-          children="Beginner"
-          value="BEGINNER"
-          {...getOverrideProps(overrides, "leveloption0")}
-        ></option>
-        <option
-          children="Intermediate"
-          value="INTERMEDIATE"
-          {...getOverrideProps(overrides, "leveloption1")}
-        ></option>
-        <option
-          children="Advanced"
-          value="ADVANCED"
-          {...getOverrideProps(overrides, "leveloption2")}
-        ></option>
-      </SelectField>
       <TextField
-        label="Name"
+        label="Title"
         isRequired={false}
         isReadOnly={false}
-        value={name}
+        value={title}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              level,
-              name: value,
-              email,
+              title: value,
+              description,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.title ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.title?.hasError) {
+            runValidationTasks("title", value);
           }
-          setName(value);
+          setTitle(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
+        onBlur={() => runValidationTasks("title", title)}
+        errorMessage={errors.title?.errorMessage}
+        hasError={errors.title?.hasError}
+        {...getOverrideProps(overrides, "title")}
       ></TextField>
       <TextField
-        label="Email"
+        label="Description"
         isRequired={false}
         isReadOnly={false}
-        value={email}
+        value={description}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              level,
-              name,
-              email: value,
+              title,
+              description: value,
             };
             const result = onChange(modelFields);
-            value = result?.email ?? value;
+            value = result?.description ?? value;
           }
-          if (errors.email?.hasError) {
-            runValidationTasks("email", value);
+          if (errors.description?.hasError) {
+            runValidationTasks("description", value);
           }
-          setEmail(value);
+          setDescription(value);
         }}
-        onBlur={() => runValidationTasks("email", email)}
-        errorMessage={errors.email?.errorMessage}
-        hasError={errors.email?.hasError}
-        {...getOverrideProps(overrides, "email")}
+        onBlur={() => runValidationTasks("description", description)}
+        errorMessage={errors.description?.errorMessage}
+        hasError={errors.description?.hasError}
+        {...getOverrideProps(overrides, "description")}
       ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || userModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -265,10 +192,7 @@ export default function UserUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || userModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

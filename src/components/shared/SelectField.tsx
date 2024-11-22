@@ -15,7 +15,7 @@ export default function Tags() {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Where would like to grow?"
+            label="Where would like to grow?"  
             placeholder="Fields"
           />
         )}

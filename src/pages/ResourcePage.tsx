@@ -4,33 +4,34 @@ import { useState } from "react";
 import AddIcon from "../assets/AddIcon";
 import EditIcon from "../assets/EditIcon";
 import DeleteOption from "../components/DeleteOptions";
-import AddEditResourceForm from "../Forms/AddEditResourceForm";
-import Button from "../components/shared/SharedButton";
 import MenuOption from "../components/shared/MenuOption";
+import Button from "../components/shared/SharedButton";
 import SharedModal from "../components/shared/SharedModal";
-import { useAddResourceMutation, useDeleteResourceMutation, useUpdateResourceMutation, useResourcesQuery } from "../hooks/resources";
+import AddEditResourceForm from "../Forms/AddEditResourceForm";
+import {
+  useAddResourceMutation,
+  useDeleteResourceMutation,
+  useResourcesQuery,
+  useUpdateResourceMutation,
+} from "../hooks/resources";
 import MenuAnchorElementProvider from "../providers/MenuAnchorElementProvider";
-import { Level } from "../API";
-
 
 export interface Resource {
   id?: string | undefined;
   title: string;
   description: string;
   link: string | null;
-  level: Level | undefined;
   pathID: string;
 }
 
 export interface UpdateResource extends Resource {
-  id: string; 
+  id: string;
 }
 
 const initialAddResourceData = {
   title: "",
   description: "",
   link: "",
-  level: undefined,
   pathID: "",
 };
 function columns({
@@ -48,13 +49,10 @@ function columns({
       flex: 2,
       cellClassName: "font-bold",
       renderCell: ({ row }) => (
-        <div className="flex items-center">
-          {row.title}
-        </div>
+        <div className="flex items-center">{row.title}</div>
       ),
     },
     { field: "path", headerName: "Path", width: 200 },
-    { field: "level", headerName: "Level", width: 200 },
     { field: "link", headerName: "Link", width: 200 },
     { field: "createdAt" },
     { field: "description", headerName: "Description", minWidth: 100, flex: 1 },
@@ -98,7 +96,7 @@ function ResourcesPage() {
   const addResource = useAddResourceMutation();
   const updateResource = useUpdateResourceMutation();
   const deleteResource = useDeleteResourceMutation();
-
+  console.log(resources);
   const handleClickOpen = () => {
     setOpenModal(true);
   };
@@ -110,7 +108,6 @@ function ResourcesPage() {
       title: row.title,
       description: row.description,
       link: row.link,
-      level: row.level,
       pathID: row.pathID,
     });
     setOpenModal(true);
@@ -137,7 +134,7 @@ function ResourcesPage() {
   };
 
   const handleDeleteResource = (data: { id: string }) => {
-    resources.find((resource) => resource.id === data.id);
+    // resources.find((resource) => resource.id === data.id);
 
     deleteResource.mutate({ id: data.id });
   };
@@ -150,7 +147,7 @@ function ResourcesPage() {
           <Button
             onClick={() => {
               setIsUpdate(false);
-              setDefaultResourceValue({ ...initialAddResourceData});
+              setDefaultResourceValue({ ...initialAddResourceData });
               handleClickOpen();
             }}
             variant="contained"

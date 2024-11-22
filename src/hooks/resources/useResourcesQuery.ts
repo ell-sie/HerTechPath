@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { client } from '../../App'
 import { RESOURCES_QUERY_KEY } from '../../constants/queryKeys'
 import { listResources } from '../../graphql/queries'
-
+import { client } from '../../App'
+ 
 export function useResourcesQuery() {
   const { isPending, error, data } = useQuery({
     queryKey: RESOURCES_QUERY_KEY,

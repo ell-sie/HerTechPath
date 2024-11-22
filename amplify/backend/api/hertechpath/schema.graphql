@@ -2,67 +2,54 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Comment @model @auth(rules: [{allow: public operations: [create, update, delete] }]) {
-  id: ID!
-  text: String
-  like: Int
-  postID: ID! @index(name: "byPost")
-  userID: ID! @index(name: "byUser")
-}
-
-enum Level {
+enum Levels {
   BEGINNER
   INTERMEDIATE
   ADVANCED
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
-enum Status {
-  STARTED
-  INPROGRESS
-  DONE
-}
-
-type Path @model @auth(rules: [{allow: public operations: [create, update, delete] }]) {
+type Post @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
   id: ID!
-  status: Status
-  userID: ID! @index(name: "byUser")
-  name: String
-  Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
+  Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
+  User: [User] @manyToMany(relationName: "PostUser")
+  title: String
+  description: String
 }
 
-type Resources @model @auth(rules: [{allow: public operations: [create, update, delete] }]) {
+type UserPath @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
+  id: ID!
+  Users: [User] @manyToMany(relationName: "UserPathUser")
+  Paths: [Path] @hasMany(indexName: "byUserPath", fields: ["id"])
+  progress: AWSJSON
+}
+
+type User @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
+  id: ID!
+  userpaths: [UserPath] @manyToMany(relationName: "UserPathUser")
+  posts: [Post] @manyToMany(relationName: "PostUser")
+  level: Levels
+  name: String
+  email: AWSEmail
+}
+
+type Path @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
+  id: ID!
+  userpathID: ID! @index(name: "byUserPath")
+  Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
+  level: Levels
+}
+
+type Comment @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
+  id: ID!
+  postID: ID! @index(name: "byPost")
+  description: String!
+}
+
+type Resources @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
   id: ID!
   title: String
   description: String
-  link: String
-  level: Level
-  pathID: ID! @index(name: "byPath")
-  Path: Path @belongsTo(fields: ["pathID"])
-  logo: String
-}
-
-type User @model @auth(rules: [{allow: public operations: [create, update, delete] }]) {
-  id: ID!
-  name: String!
-  posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
-  role: Role
-  email: AWSEmail
-  password: String
-  Paths: [Path] @hasMany(indexName: "byUser", fields: ["id"])
-  Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
-  level: Level
-}
-
-type Post @model @auth(rules: [{allow: public operations: [create, update, delete] }]) {
-  id: ID!
-  title: String!
-  bloID: ID! @index(name: "byUser")
-  description: String
-  Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
+  link: AWSURL
   pathID: ID! @index(name: "byPath")
 }
+ 

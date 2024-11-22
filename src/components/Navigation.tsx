@@ -6,6 +6,7 @@ import MessageIcon from "../assets/MessageIcon";
 import StudyIcon from "../assets/StudyIcon";
 import UserIcon from "../assets/UserIcon";
 import ResourceIcon from "../assets/ResourceIcon";
+import PathIcon from "../assets/PathIcon";
 
 interface NavigationProps {
   singOut?: () => void;
@@ -29,8 +30,11 @@ function Navigation({ singOut }: NavigationProps) {
         <Link to="/discussions">
           <MessageIcon className="size-6" />
         </Link>
-        <Link to="/resources">
+<        Link to="/resources">
           <ResourceIcon className="size-6" />
+        </Link>
+<        Link to="/paths">
+          <PathIcon className="size-6" />
         </Link>
       </div>
       <div>

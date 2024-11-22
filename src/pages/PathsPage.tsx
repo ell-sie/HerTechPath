@@ -26,7 +26,7 @@ import {
 // import withAdminPermission from "../hooks/withAdminPermission";
 import AddEditPathForm from "../Forms/AddEditPathForm";
 import MenuAnchorElementProvider from "../providers/MenuAnchorElementProvider";
-import ErrorPage from "./ErrorPage";
+// import ErrorPage from "./ErrorPage";
 
 export interface Paths {
   id: string | null;
@@ -205,8 +205,8 @@ function PathsPage() {
     setShowModal(true);
   };
 
-  const filteredClients = pathway?.filter((client) =>
-    client?.name?.toLowerCase().includes(searchInput.toLocaleLowerCase())
+  const filteredClients = pathway?.filter((path) =>
+    path?.name?.toLowerCase().includes(searchInput.toLocaleLowerCase())
   );
 
   const handleAddClient = useCallback(
@@ -243,14 +243,14 @@ function PathsPage() {
     [deletePath, pathway]
   );
 
-  if (error) return <ErrorPage />;
+  if (error) return "Error";
 
   return (
     <div className="h-custom-full-screen overflow-y-scroll px-4 pb-5">
-      <div className="flex items-center justify-between rounded-b-2xl bg-black p-6 shadow-md shadow-white15">
-        <h2 className="text-2xl font-semibold text-secondary-800">Path</h2>
+      <div className="flex items-center justify-between rounded-b-2xl bg-white p-6 shadow-md shadow-white15">
+        <h2 className="text-2xl font-semibold text-black">Path</h2>
         <button
-          className="flex gap-2 rounded-lg bg-secondary-800 px-3 py-2 font-medium text-black"
+          className="flex gap-2 rounded-lg bg-black px-3 py-2 font-medium text-white"
           onClick={() => {
             setDefaultPath(initialAddPathData);
             setShowModal(true);
