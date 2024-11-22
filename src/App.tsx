@@ -1,22 +1,21 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navigation from "./components/Navigation";
-import HomePage from "./pages/HomePage";
-import CoursesPage from "./pages/CoursesPage";
-import ProfilePage from "./pages/ProfilePage";
-import DiscussionPage from "./pages/DiscussionPage";
 import { Authenticator } from "@aws-amplify/ui-react";
-import '@aws-amplify/ui-react/styles.css';
-import { Amplify } from "aws-amplify";
-import awsExports from "./aws-exports";
-import { generateClient } from "aws-amplify/api";
+import "@aws-amplify/ui-react/styles.css";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { Amplify } from "aws-amplify";
+import { generateClient } from "aws-amplify/api";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import config from "./amplifyconfiguration.json";
+import Navigation from "./components/Navigation";
 import QueryClient from "./context/QueryClient.ts";
+import CoursesPage from "./pages/CoursesPage.tsx";
+import DiscussionPage from "./pages/DiscussionPage";
+import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage.tsx";
 import ResourcesPage from "./pages/ResourcePage.tsx";
-
 // Graphql client for Amplify
 export const client = generateClient({ authMode: "userPool" });
-Amplify.configure(awsExports);
+Amplify.configure(config);
 
 function App() {
   return (

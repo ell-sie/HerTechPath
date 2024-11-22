@@ -1,56 +1,38 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GraphQLResult } from "aws-amplify/api";
 import { Dispatch, SetStateAction, useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {type Paths, type ListPathsQuery} from "../API";
-import PATHS_QUERY_KEY from "../constants/queryKeys";
-import QueryClient from "../context/QueryClient";
-import {
-  Path,
-  CreatePathData,
-  UpdatePathData,
-} from "../../pages/PathsPage";
-import Button from "../components/shared/SharedButton";
+import { Status } from "../API";
 import InputField from "../components/shared/InputField";
+import SelectInput from "../components/shared/SelectInput";
+import Button from "../components/shared/SharedButton";
+import { CreatePathData, Paths, UpdatePathData } from "../pages/PathsPage";
 
 interface AddEditPathFormProps {
-  defaultPathData: Path;
+  defaultPathData: Paths;
   handlers: {
     setShowModal: Dispatch<SetStateAction<boolean>>;
-    handleAddClient: (data: CreatePathData & { id: string }) => void;
-    handleUpdateClient: (data: UpdatePathData) => void;
+    handleAddPath: (data: CreatePathData & { id: string }) => void;
+    handleUpdatePath: (data: UpdatePathData) => void;
   };
   isUpdate: boolean;
 }
 
-
-const AddEditPathFormSchema = z
-  .object({
-    id: z.string().nullable(),
-    name: z.string().min(1, { message: "Please provide path name" }),
-  })
-  .refine(
-    ({ name, isUpdate, id }) => {
-      const cachedClients = QueryClient.getQueryData<
-        GraphQLResult<ListClientsQuery>
-      >(CLIENTS_QUERY_KEY)?.data.listClients?.items as Clients[];
-
-      if (isUpdate && id) {
-        const isNameUnchangedOrUnique = cachedClients.every(
-          (client) =>
-            client.id === id || client.name.toLowerCase() !== name.toLowerCase()
-        );
-
-        return isNameUnchangedOrUnique;
-      }
-
-      return !isValueInObjectArray(cachedClients, "name", name);
-    },
-    { path: ["name"], message: "Client name already exists" }
-  );
+const AddEditPathFormSchema = z.object({
+  id: z.string().nullable(),
+  name: z.string().min(1, { message: "Please provide path name" }),
+  status: z.nativeEnum(Status).nullable(),
+  userID: z.string(),
+  isUpdate: z.boolean(),
+});
 
 type NewPathFormData = z.infer<typeof AddEditPathFormSchema>;
+
+const statusOptions = [
+  { id: Status.STARTED, label: "Started" },
+  { id: Status.INPROGRESS, label: "In Progress" },
+  { id: Status.DONE, label: "Done" },
+];
 
 export default function AddEditPathForm({
   defaultPathData,
@@ -65,26 +47,19 @@ export default function AddEditPathForm({
   } = useForm<NewPathFormData>({
     resolver: zodResolver(AddEditPathFormSchema),
     defaultValues: {
-      id: defaultClientData.id,
-      name: defaultClientData.name,
-      contactPerson: defaultClientData.contactPerson,
-      email: defaultClientData.email,
-      clientSince: dayjs(defaultClientData.clientSince),
-      description: defaultClientData.description,
-      taxNumber: defaultClientData.taxNumber,
-      country: defaultClientData.country,
-      state: defaultClientData.state,
-      city: defaultClientData.city,
-      address: defaultClientData.address,
-      zipCode: defaultClientData.zipCode,
+      id: defaultPathData.id,
+      name: defaultPathData.name,
+      status: defaultPathData.status,
       isUpdate,
     },
   });
 
-  const onSubmitForm = (clientData: CreateClientData) => {
-    isUpdate && defaultClientData?.id
-      ? handlers.handleUpdateClient({ ...clientData, id: defaultClientData.id })
-      : handlers.handleAddClient({ ...clientData, id: temporaryId });
+  const onSubmitForm = (pathData: Paths) => {
+    if (isUpdate && defaultPathData?.id) {
+      handlers.handleUpdatePath({ ...pathData, id: defaultPathData.id });
+    } else {
+      handlers.handleAddPath({ ...pathData, id: temporaryId });
+    }
   };
 
   return (
@@ -95,65 +70,20 @@ export default function AddEditPathForm({
     >
       <span>{isUpdate ? "Edit Client Information" : "Add Client"}</span>
       <InputField
-        label="Client name"
+        label="Path name"
         control={control}
         name="name"
         size="small"
       />
-      <InputField
-        label="Contact person"
-        control={control}
-        name="contactPerson"
-        size="small"
-      />
-      <InputField
-        label="Email"
-        type="email"
-        control={control}
-        name="email"
-        size="small"
-      />
-      <DatePicker
-        label="Client Since"
-        name="clientSince"
-        control={control}
-        size="small"
-        clearable
-      />
-      <InputField
-        label="Description"
-        control={control}
-        name="description"
-        size="small"
-      />
-      <InputField
-        label="Tax Number"
-        control={control}
-        name="taxNumber"
-        size="small"
-      />
+      <InputField label="User" control={control} name="userID" size="small" />
       <div className="grid grid-cols-2 gap-4">
-        <InputField
-          label="Country"
+        <SelectInput
           control={control}
-          name="country"
-          size="small"
-        />
-        <InputField label="State" control={control} name="state" size="small" />
-        <InputField label="City" control={control} name="city" size="small" />
-        <InputField
-          label="Address"
-          control={control}
-          name="address"
-          size="small"
+          options={statusOptions}
+          label="Status"
+          name="status"
         />
       </div>
-      <InputField
-        label="Zip Code"
-        control={control}
-        name="zipCode"
-        size="small"
-      />
       <div className="mt-3 flex w-full justify-end gap-8 px-5 text-sm font-medium text-white">
         <Button variant="outlined" onClick={() => handlers.setShowModal(false)}>
           Cancel

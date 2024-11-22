@@ -24,9 +24,9 @@ import {
   useUpdatePathMutation,
 } from "../hooks/path";
 // import withAdminPermission from "../hooks/withAdminPermission";
+import AddEditPathForm from "../Forms/AddEditPathForm";
 import MenuAnchorElementProvider from "../providers/MenuAnchorElementProvider";
 import ErrorPage from "./ErrorPage";
-import AddEditPathForm from "../Forms/AddEditPathForm";
 
 export interface Paths {
   id: string | null;
@@ -198,8 +198,9 @@ function PathsPage() {
 
   const changeDefaultPath = (pathId: string) => {
     setDefaultPath(() => {
-      const path = pathway?.find(({ id }) => pathId === id) || initialAddPathData;
-      return {...path}
+      const path =
+        pathway?.find(({ id }) => pathId === id) || initialAddPathData;
+      return { ...path };
     });
     setShowModal(true);
   };
@@ -293,8 +294,8 @@ function PathsPage() {
           defaultPathData={defaultPath}
           handlers={{
             setShowModal,
-            handleAddClient,
-            handleUpdateClient: handleUpdatePath,
+            handleAddPath: handleAddClient,
+            handleUpdatePath: handleUpdatePath,
           }}
           isUpdate={isUpdate}
         />
