@@ -371,12 +371,6 @@ export type ModelCommentFilterInput = {
   not?: ModelCommentFilterInput | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
 export type ModelPathFilterInput = {
   id?: ModelIDInput | null,
   status?: ModelStatusInput | null,
@@ -436,6 +430,12 @@ export type ModelPostFilterInput = {
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelSubscriptionCommentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
@@ -944,56 +944,6 @@ export type ListCommentsQuery = {
   } | null,
 };
 
-export type CommentsByPostIDQueryVariables = {
-  postID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelCommentFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type CommentsByPostIDQuery = {
-  commentsByPostID?:  {
-    __typename: "ModelCommentConnection",
-    items:  Array< {
-      __typename: "Comment",
-      id: string,
-      text?: string | null,
-      like?: number | null,
-      postID: string,
-      userID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type CommentsByUserIDQueryVariables = {
-  userID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelCommentFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type CommentsByUserIDQuery = {
-  commentsByUserID?:  {
-    __typename: "ModelCommentConnection",
-    items:  Array< {
-      __typename: "Comment",
-      id: string,
-      text?: string | null,
-      like?: number | null,
-      postID: string,
-      userID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetPathQueryVariables = {
   id: string,
 };
@@ -1022,30 +972,6 @@ export type ListPathsQueryVariables = {
 
 export type ListPathsQuery = {
   listPaths?:  {
-    __typename: "ModelPathConnection",
-    items:  Array< {
-      __typename: "Path",
-      id: string,
-      status?: Status | null,
-      userID: string,
-      name?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type PathsByUserIDQueryVariables = {
-  userID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelPathFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type PathsByUserIDQuery = {
-  pathsByUserID?:  {
     __typename: "ModelPathConnection",
     items:  Array< {
       __typename: "Path",
@@ -1096,33 +1022,6 @@ export type ListResourcesQueryVariables = {
 
 export type ListResourcesQuery = {
   listResources?:  {
-    __typename: "ModelResourcesConnection",
-    items:  Array< {
-      __typename: "Resources",
-      id: string,
-      title?: string | null,
-      description?: string | null,
-      link?: string | null,
-      level?: Level | null,
-      pathID: string,
-      logo?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ResourcesByPathIDQueryVariables = {
-  pathID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelResourcesFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ResourcesByPathIDQuery = {
-  resourcesByPathID?:  {
     __typename: "ModelResourcesConnection",
     items:  Array< {
       __typename: "Resources",
@@ -1231,6 +1130,107 @@ export type ListPostsQuery = {
       bloID: string,
       description?: string | null,
       pathID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommentsByPostIDQueryVariables = {
+  postID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommentsByPostIDQuery = {
+  commentsByPostID?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      text?: string | null,
+      like?: number | null,
+      postID: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommentsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommentsByUserIDQuery = {
+  commentsByUserID?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      text?: string | null,
+      like?: number | null,
+      postID: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type PathsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPathFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PathsByUserIDQuery = {
+  pathsByUserID?:  {
+    __typename: "ModelPathConnection",
+    items:  Array< {
+      __typename: "Path",
+      id: string,
+      status?: Status | null,
+      userID: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ResourcesByPathIDQueryVariables = {
+  pathID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelResourcesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ResourcesByPathIDQuery = {
+  resourcesByPathID?:  {
+    __typename: "ModelResourcesConnection",
+    items:  Array< {
+      __typename: "Resources",
+      id: string,
+      title?: string | null,
+      description?: string | null,
+      link?: string | null,
+      level?: Level | null,
+      pathID: string,
+      logo?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,

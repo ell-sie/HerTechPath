@@ -48,70 +48,6 @@ export const listComments = /* GraphQL */ `query ListComments(
   APITypes.ListCommentsQueryVariables,
   APITypes.ListCommentsQuery
 >;
-export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
-  $postID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  commentsByPostID(
-    postID: $postID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      text
-      like
-      postID
-      userID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.CommentsByPostIDQueryVariables,
-  APITypes.CommentsByPostIDQuery
->;
-export const commentsByUserID = /* GraphQL */ `query CommentsByUserID(
-  $userID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  commentsByUserID(
-    userID: $userID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      text
-      like
-      postID
-      userID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.CommentsByUserIDQueryVariables,
-  APITypes.CommentsByUserIDQuery
->;
 export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
   getPath(id: $id) {
     id
@@ -148,37 +84,6 @@ export const listPaths = /* GraphQL */ `query ListPaths(
   }
 }
 ` as GeneratedQuery<APITypes.ListPathsQueryVariables, APITypes.ListPathsQuery>;
-export const pathsByUserID = /* GraphQL */ `query PathsByUserID(
-  $userID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelPathFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  pathsByUserID(
-    userID: $userID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      status
-      userID
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.PathsByUserIDQueryVariables,
-  APITypes.PathsByUserIDQuery
->;
 export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
   getResources(id: $id) {
     id
@@ -231,40 +136,6 @@ export const listResources = /* GraphQL */ `query ListResources(
 ` as GeneratedQuery<
   APITypes.ListResourcesQueryVariables,
   APITypes.ListResourcesQuery
->;
-export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
-  $pathID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelResourcesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  resourcesByPathID(
-    pathID: $pathID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      title
-      description
-      link
-      level
-      pathID
-      logo
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ResourcesByPathIDQueryVariables,
-  APITypes.ResourcesByPathIDQuery
 >;
 export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
@@ -352,6 +223,135 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   }
 }
 ` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
+export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
+  $postID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByPostID(
+    postID: $postID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      text
+      like
+      postID
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CommentsByPostIDQueryVariables,
+  APITypes.CommentsByPostIDQuery
+>;
+export const commentsByUserID = /* GraphQL */ `query CommentsByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      text
+      like
+      postID
+      userID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CommentsByUserIDQueryVariables,
+  APITypes.CommentsByUserIDQuery
+>;
+export const pathsByUserID = /* GraphQL */ `query PathsByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPathFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  pathsByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      status
+      userID
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PathsByUserIDQueryVariables,
+  APITypes.PathsByUserIDQuery
+>;
+export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
+  $pathID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelResourcesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  resourcesByPathID(
+    pathID: $pathID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      description
+      link
+      level
+      pathID
+      logo
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ResourcesByPathIDQueryVariables,
+  APITypes.ResourcesByPathIDQuery
+>;
 export const postsByBloID = /* GraphQL */ `query PostsByBloID(
   $bloID: ID!
   $sortDirection: ModelSortDirection

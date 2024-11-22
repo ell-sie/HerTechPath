@@ -13,7 +13,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage.tsx";
 import ResourcesPage from "./pages/ResourcePage.tsx";
-// Graphql client for Amplify
+
 export const client = generateClient({ authMode: "userPool" });
 Amplify.configure(config);
 
