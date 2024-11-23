@@ -1,5 +1,5 @@
 /* tslint:disable */
-/* eslint-disable */
+ 
 // this is an auto generated file. This will be overwritten
 
 import * as APITypes from "../API";
@@ -153,6 +153,15 @@ export const listPaths = /* GraphQL */ `query ListPaths(
       id
       userpathID
       level
+      Resources {
+        items {
+          id
+          title
+          description
+          link
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       __typename

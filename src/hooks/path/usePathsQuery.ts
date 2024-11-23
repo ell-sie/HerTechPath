@@ -23,6 +23,7 @@ export function usePathsQuery() {
     data:
       data?.data.listPaths.items.map(path => ({
         ...path,
+        resources: path.Resources.items || [],
       })) || [],
   }
 }
