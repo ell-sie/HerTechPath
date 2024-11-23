@@ -2,9 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction, useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Status } from "../API";
 import InputField from "../components/shared/InputField";
-import SelectInput from "../components/shared/SelectInput";
 import Button from "../components/shared/SharedButton";
 import { CreatePathData, Paths, UpdatePathData } from "../pages/PathsPage";
 
@@ -21,18 +19,11 @@ interface AddEditPathFormProps {
 const AddEditPathFormSchema = z.object({
   id: z.string().nullable(),
   name: z.string().min(1, { message: "Please provide path name" }),
-  status: z.nativeEnum(Status).nullable(),
-  userID: z.string(),
+  userpathID: z.string(),
   isUpdate: z.boolean(),
 });
 
 type NewPathFormData = z.infer<typeof AddEditPathFormSchema>;
-
-const statusOptions = [
-  { id: Status.STARTED, label: "Started" },
-  { id: Status.INPROGRESS, label: "In Progress" },
-  { id: Status.DONE, label: "Done" },
-];
 
 export default function AddEditPathForm({
   defaultPathData,
@@ -49,7 +40,6 @@ export default function AddEditPathForm({
     defaultValues: {
       id: defaultPathData.id,
       name: defaultPathData.name,
-      status: defaultPathData.status,
       isUpdate,
     },
   });
@@ -75,15 +65,12 @@ export default function AddEditPathForm({
         name="name"
         size="small"
       />
-      <InputField label="User" control={control} name="userID" size="small" />
-      <div className="grid grid-cols-2 gap-4">
-        <SelectInput
-          control={control}
-          options={statusOptions}
-          label="Status"
-          name="status"
-        />
-      </div>
+      <InputField
+        label="User"
+        control={control}
+        name="userpathID"
+        size="small"
+      />
       <div className="mt-3 flex w-full justify-end gap-8 px-5 text-sm font-medium text-white">
         <Button variant="outlined" onClick={() => handlers.setShowModal(false)}>
           Cancel

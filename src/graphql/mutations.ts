@@ -239,6 +239,7 @@ export const createPath = /* GraphQL */ `mutation CreatePath(
 ) {
   createPath(input: $input, condition: $condition) {
     id
+    name
     userpathID
     Resources {
       nextToken
@@ -260,6 +261,7 @@ export const updatePath = /* GraphQL */ `mutation UpdatePath(
 ) {
   updatePath(input: $input, condition: $condition) {
     id
+    name
     userpathID
     Resources {
       nextToken
@@ -281,6 +283,7 @@ export const deletePath = /* GraphQL */ `mutation DeletePath(
 ) {
   deletePath(input: $input, condition: $condition) {
     id
+    name
     userpathID
     Resources {
       nextToken
@@ -357,6 +360,15 @@ export const createResources = /* GraphQL */ `mutation CreateResources(
     description
     link
     pathID
+    Path {
+      id
+      name
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -376,6 +388,15 @@ export const updateResources = /* GraphQL */ `mutation UpdateResources(
     description
     link
     pathID
+    Path {
+      id
+      name
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -395,6 +416,15 @@ export const deleteResources = /* GraphQL */ `mutation DeleteResources(
     description
     link
     pathID
+    Path {
+      id
+      name
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename

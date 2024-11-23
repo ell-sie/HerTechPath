@@ -7,7 +7,7 @@ import {
 } from "@mui/x-data-grid";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import toast from "react-hot-toast";
-import { DeletePathInput, Path, Status } from "../API";
+import { DeletePathInput, Path } from "../API";
 import AddIcon from "../assets/AddIcon";
 import EditIcon from "../assets/EditIcon";
 import DeleteOption from "../components/DeleteOptions";
@@ -31,8 +31,7 @@ import MenuAnchorElementProvider from "../providers/MenuAnchorElementProvider";
 export interface Paths {
   id: string | null;
   name: string;
-  status?: Status | null;
-  userID: string;
+  userpathID: string;
 }
 export type CreatePathData = Omit<Paths, "id">;
 export interface UpdatePathData extends Paths {
@@ -64,8 +63,7 @@ interface ColumnsProps {
 const initialAddPathData = {
   id: null,
   name: "",
-  status: Status.STARTED,
-  userID: "",
+  userpathID: "",
 };
 
 function columns({

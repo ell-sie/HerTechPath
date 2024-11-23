@@ -21,9 +21,9 @@ export function usePathsQuery() {
     isPending,
     error,
     data:
-      data?.data.listPaths.items.map(path => ({
+      data?.data.listPaths
+      .items.map(path => ({
         ...path,
-        resources: path.Resources.items || [],
       })) || [],
   }
 }

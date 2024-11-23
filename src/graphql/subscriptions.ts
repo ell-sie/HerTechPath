@@ -209,6 +209,7 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
 export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: ModelSubscriptionPathFilterInput) {
   onCreatePath(filter: $filter) {
     id
+    name
     userpathID
     Resources {
       nextToken
@@ -227,6 +228,7 @@ export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: Mo
 export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: ModelSubscriptionPathFilterInput) {
   onUpdatePath(filter: $filter) {
     id
+    name
     userpathID
     Resources {
       nextToken
@@ -245,6 +247,7 @@ export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: Mo
 export const onDeletePath = /* GraphQL */ `subscription OnDeletePath($filter: ModelSubscriptionPathFilterInput) {
   onDeletePath(filter: $filter) {
     id
+    name
     userpathID
     Resources {
       nextToken
@@ -309,6 +312,15 @@ export const onCreateResources = /* GraphQL */ `subscription OnCreateResources($
     description
     link
     pathID
+    Path {
+      id
+      name
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -325,6 +337,15 @@ export const onUpdateResources = /* GraphQL */ `subscription OnUpdateResources($
     description
     link
     pathID
+    Path {
+      id
+      name
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -341,6 +362,15 @@ export const onDeleteResources = /* GraphQL */ `subscription OnDeleteResources($
     description
     link
     pathID
+    Path {
+      id
+      name
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename

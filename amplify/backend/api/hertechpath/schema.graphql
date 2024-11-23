@@ -34,6 +34,7 @@ type User @model @auth(rules: [{allow: public, operations: [create, update, dele
 
 type Path @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
   id: ID!
+  name: String!
   userpathID: ID! @index(name: "byUserPath")
   Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
   level: Levels
@@ -51,5 +52,6 @@ type Resources @model @auth(rules: [{allow: public, operations: [create, update,
   description: String
   link: AWSURL
   pathID: ID! @index(name: "byPath")
+  Path: Path @belongsTo(fields: ["pathID"])
 }
  

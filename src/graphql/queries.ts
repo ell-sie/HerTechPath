@@ -1,5 +1,5 @@
 /* tslint:disable */
- 
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 import * as APITypes from "../API";
@@ -131,6 +131,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
 export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
   getPath(id: $id) {
     id
+    name
     userpathID
     Resources {
       nextToken
@@ -151,17 +152,9 @@ export const listPaths = /* GraphQL */ `query ListPaths(
   listPaths(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      name
       userpathID
       level
-      Resources {
-        items {
-          id
-          title
-          description
-          link
-        }
-        nextToken
-      }
       createdAt
       updatedAt
       __typename
@@ -214,6 +207,15 @@ export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
     description
     link
     pathID
+    Path {
+      id
+      name
+      userpathID
+      level
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -368,6 +370,7 @@ export const pathsByUserpathID = /* GraphQL */ `query PathsByUserpathID(
   ) {
     items {
       id
+      name
       userpathID
       level
       createdAt
