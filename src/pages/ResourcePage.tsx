@@ -21,7 +21,6 @@ export interface Resource {
   title: string;
   description: string;
   link: string | null;
-  pathID: string;
 }
 
 export interface UpdateResource extends Resource {
@@ -32,7 +31,6 @@ const initialAddResourceData = {
   title: "",
   description: "",
   link: "",
-  pathID: "",
 };
 function columns({
   handleEditClick,
@@ -52,7 +50,6 @@ function columns({
         <div className="flex items-center">{row.title}</div>
       ),
     },
-    { field: "path", headerName: "Path", width: 200 },
     { field: "link", headerName: "Link", width: 200 },
     { field: "createdAt" },
     { field: "description", headerName: "Description", minWidth: 100, flex: 1 },
@@ -108,7 +105,6 @@ function ResourcesPage() {
       title: row.title,
       description: row.description,
       link: row.link,
-      pathID: row.pathID,
     });
     setOpenModal(true);
   };

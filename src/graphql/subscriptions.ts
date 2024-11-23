@@ -192,10 +192,7 @@ export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: Mo
       updatedAt
       __typename
     }
-    Resources {
-      nextToken
-      __typename
-    }
+    resourcesID
     createdAt
     updatedAt
     pathUserId
@@ -228,10 +225,7 @@ export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: Mo
       updatedAt
       __typename
     }
-    Resources {
-      nextToken
-      __typename
-    }
+    resourcesID
     createdAt
     updatedAt
     pathUserId
@@ -264,10 +258,7 @@ export const onDeletePath = /* GraphQL */ `subscription OnDeletePath($filter: Mo
       updatedAt
       __typename
     }
-    Resources {
-      nextToken
-      __typename
-    }
+    resourcesID
     createdAt
     updatedAt
     pathUserId
@@ -329,7 +320,10 @@ export const onCreateResources = /* GraphQL */ `subscription OnCreateResources($
     title
     description
     link
-    pathID
+    Paths {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -345,7 +339,10 @@ export const onUpdateResources = /* GraphQL */ `subscription OnUpdateResources($
     title
     description
     link
-    pathID
+    Paths {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -361,7 +358,10 @@ export const onDeleteResources = /* GraphQL */ `subscription OnDeleteResources($
     title
     description
     link
-    pathID
+    Paths {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename

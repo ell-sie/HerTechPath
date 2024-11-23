@@ -55,7 +55,7 @@ type Path @model @auth(rules: [{allow: public, operations: [create, update, dele
   id: ID!
   title: String!
   User: User @hasOne
-  Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
+  resourcesID: ID! @index(name: "byResources")
 }
 
 type Comment @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
@@ -70,6 +70,6 @@ type Resources @model @auth(rules: [{allow: public, operations: [create, update,
   title: String
   description: String
   link: AWSURL
-  pathID: ID! @index(name: "byPath")
+  Paths: [Path] @hasMany(indexName: "byResources", fields: ["id"])
 }
  

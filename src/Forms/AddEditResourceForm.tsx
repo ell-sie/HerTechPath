@@ -3,14 +3,11 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import InputField from "../components/shared/InputField";
-import { usePathsQuery } from "../hooks/path/usePathsQuery";
-import AutoCompleteTextInput from "../components/shared/AutocompleteTextInput";
 import { Resource, UpdateResource } from "../pages/ResourcePage";
 
 const AddEditResourceFormSchema = z.object({
   id: z.string().min(1).optional(),
   title: z.string().trim().min(1, "Please enter a valid Resource title"),
-  pathID: z.string().min(1, "Please select a path"),
   link: z.string().url().optional().nullable(),
   description: z.string().min(5, "Resource description is too short"),
   isUpdate: z.boolean(),
@@ -35,7 +32,6 @@ export default function AddEditResourceForm({
   handlers,
   defaultResourceValue,
 }: AddResourceFormProps) {
-  const { data: paths } = usePathsQuery();
   const {
     control,
     handleSubmit,
@@ -45,7 +41,6 @@ export default function AddEditResourceForm({
     defaultValues: {
       id: defaultResourceValue.id,
       title: defaultResourceValue.title,
-      pathID: defaultResourceValue.pathID,
       link: defaultResourceValue.link,
       description: defaultResourceValue.description,
       isUpdate,
@@ -82,17 +77,6 @@ export default function AddEditResourceForm({
               maxRows={3}
             />
             <InputField control={control} label="Link" name="link" />
-            <AutoCompleteTextInput
-              label="Path"
-              name="pathID"
-              control={control}
-              options={paths.map(
-                (client: { id: string; name: string | null | undefined }) => ({
-                  label: client.name ?? "Unknown",
-                  value: client.id,
-                })
-              )}
-            />
           </div>
         </div>
         <div className="mt-10 flex justify-end gap-5">

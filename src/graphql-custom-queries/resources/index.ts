@@ -8,6 +8,7 @@ export type ShortFormResoucesQuery = {
             id: string;
             name: string;
             description: string;
+            link: string;
         }[]
     }
 }
@@ -23,6 +24,7 @@ export const listResources = /* GraphQL */ `query ListResources (
             id
             name
             description
+            link
         }
         nextToken
     }

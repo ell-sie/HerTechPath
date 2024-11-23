@@ -243,11 +243,13 @@ export type DeleteUserInput = {
 export type CreatePathInput = {
   id?: string | null,
   title: string,
+  resourcesID: string,
   pathUserId?: string | null,
 };
 
 export type ModelPathConditionInput = {
   title?: ModelStringInput | null,
+  resourcesID?: ModelIDInput | null,
   and?: Array< ModelPathConditionInput | null > | null,
   or?: Array< ModelPathConditionInput | null > | null,
   not?: ModelPathConditionInput | null,
@@ -277,32 +279,16 @@ export type Path = {
   id: string,
   title: string,
   User?: User | null,
-  Resources?: ModelResourcesConnection | null,
+  resourcesID: string,
   createdAt: string,
   updatedAt: string,
   pathUserId?: string | null,
 };
 
-export type ModelResourcesConnection = {
-  __typename: "ModelResourcesConnection",
-  items:  Array<Resources | null >,
-  nextToken?: string | null,
-};
-
-export type Resources = {
-  __typename: "Resources",
-  id: string,
-  title?: string | null,
-  description?: string | null,
-  link?: string | null,
-  pathID: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
 export type UpdatePathInput = {
   id: string,
   title?: string | null,
+  resourcesID?: string | null,
   pathUserId?: string | null,
 };
 
@@ -344,14 +330,12 @@ export type CreateResourcesInput = {
   title?: string | null,
   description?: string | null,
   link?: string | null,
-  pathID: string,
 };
 
 export type ModelResourcesConditionInput = {
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
   link?: ModelStringInput | null,
-  pathID?: ModelIDInput | null,
   and?: Array< ModelResourcesConditionInput | null > | null,
   or?: Array< ModelResourcesConditionInput | null > | null,
   not?: ModelResourcesConditionInput | null,
@@ -359,12 +343,28 @@ export type ModelResourcesConditionInput = {
   updatedAt?: ModelStringInput | null,
 };
 
+export type Resources = {
+  __typename: "Resources",
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  link?: string | null,
+  Paths?: ModelPathConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelPathConnection = {
+  __typename: "ModelPathConnection",
+  items:  Array<Path | null >,
+  nextToken?: string | null,
+};
+
 export type UpdateResourcesInput = {
   id: string,
   title?: string | null,
   description?: string | null,
   link?: string | null,
-  pathID?: string | null,
 };
 
 export type DeleteResourcesInput = {
@@ -444,6 +444,7 @@ export type ModelUserConnection = {
 export type ModelPathFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  resourcesID?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelPathFilterInput | null > | null,
@@ -452,11 +453,11 @@ export type ModelPathFilterInput = {
   pathUserId?: ModelIDInput | null,
 };
 
-export type ModelPathConnection = {
-  __typename: "ModelPathConnection",
-  items:  Array<Path | null >,
-  nextToken?: string | null,
-};
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
@@ -470,23 +471,22 @@ export type ModelCommentFilterInput = {
   not?: ModelCommentFilterInput | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
 export type ModelResourcesFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
   link?: ModelStringInput | null,
-  pathID?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelResourcesFilterInput | null > | null,
   or?: Array< ModelResourcesFilterInput | null > | null,
   not?: ModelResourcesFilterInput | null,
+};
+
+export type ModelResourcesConnection = {
+  __typename: "ModelResourcesConnection",
+  items:  Array<Resources | null >,
+  nextToken?: string | null,
 };
 
 export type ModelPostUserFilterInput = {
@@ -563,6 +563,7 @@ export type ModelSubscriptionUserFilterInput = {
 export type ModelSubscriptionPathFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
+  resourcesID?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPathFilterInput | null > | null,
@@ -586,7 +587,6 @@ export type ModelSubscriptionResourcesFilterInput = {
   title?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   link?: ModelSubscriptionStringInput | null,
-  pathID?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionResourcesFilterInput | null > | null,
@@ -805,10 +805,7 @@ export type CreatePathMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
+    resourcesID: string,
     createdAt: string,
     updatedAt: string,
     pathUserId?: string | null,
@@ -843,10 +840,7 @@ export type UpdatePathMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
+    resourcesID: string,
     createdAt: string,
     updatedAt: string,
     pathUserId?: string | null,
@@ -881,10 +875,7 @@ export type DeletePathMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
+    resourcesID: string,
     createdAt: string,
     updatedAt: string,
     pathUserId?: string | null,
@@ -954,7 +945,10 @@ export type CreateResourcesMutation = {
     title?: string | null,
     description?: string | null,
     link?: string | null,
-    pathID: string,
+    Paths?:  {
+      __typename: "ModelPathConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -972,7 +966,10 @@ export type UpdateResourcesMutation = {
     title?: string | null,
     description?: string | null,
     link?: string | null,
-    pathID: string,
+    Paths?:  {
+      __typename: "ModelPathConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -990,7 +987,10 @@ export type DeleteResourcesMutation = {
     title?: string | null,
     description?: string | null,
     link?: string | null,
-    pathID: string,
+    Paths?:  {
+      __typename: "ModelPathConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1257,10 +1257,7 @@ export type GetPathQuery = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
+    resourcesID: string,
     createdAt: string,
     updatedAt: string,
     pathUserId?: string | null,
@@ -1280,6 +1277,31 @@ export type ListPathsQuery = {
       __typename: "Path",
       id: string,
       title: string,
+      resourcesID: string,
+      createdAt: string,
+      updatedAt: string,
+      pathUserId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type PathsByResourcesIDQueryVariables = {
+  resourcesID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPathFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PathsByResourcesIDQuery = {
+  pathsByResourcesID?:  {
+    __typename: "ModelPathConnection",
+    items:  Array< {
+      __typename: "Path",
+      id: string,
+      title: string,
+      resourcesID: string,
       createdAt: string,
       updatedAt: string,
       pathUserId?: string | null,
@@ -1385,7 +1407,10 @@ export type GetResourcesQuery = {
     title?: string | null,
     description?: string | null,
     link?: string | null,
-    pathID: string,
+    Paths?:  {
+      __typename: "ModelPathConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1406,32 +1431,6 @@ export type ListResourcesQuery = {
       title?: string | null,
       description?: string | null,
       link?: string | null,
-      pathID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ResourcesByPathIDQueryVariables = {
-  pathID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelResourcesFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ResourcesByPathIDQuery = {
-  resourcesByPathID?:  {
-    __typename: "ModelResourcesConnection",
-    items:  Array< {
-      __typename: "Resources",
-      id: string,
-      title?: string | null,
-      description?: string | null,
-      link?: string | null,
-      pathID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1742,10 +1741,7 @@ export type OnCreatePathSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
+    resourcesID: string,
     createdAt: string,
     updatedAt: string,
     pathUserId?: string | null,
@@ -1779,10 +1775,7 @@ export type OnUpdatePathSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
+    resourcesID: string,
     createdAt: string,
     updatedAt: string,
     pathUserId?: string | null,
@@ -1816,10 +1809,7 @@ export type OnDeletePathSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    Resources?:  {
-      __typename: "ModelResourcesConnection",
-      nextToken?: string | null,
-    } | null,
+    resourcesID: string,
     createdAt: string,
     updatedAt: string,
     pathUserId?: string | null,
@@ -1885,7 +1875,10 @@ export type OnCreateResourcesSubscription = {
     title?: string | null,
     description?: string | null,
     link?: string | null,
-    pathID: string,
+    Paths?:  {
+      __typename: "ModelPathConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1902,7 +1895,10 @@ export type OnUpdateResourcesSubscription = {
     title?: string | null,
     description?: string | null,
     link?: string | null,
-    pathID: string,
+    Paths?:  {
+      __typename: "ModelPathConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1919,7 +1915,10 @@ export type OnDeleteResourcesSubscription = {
     title?: string | null,
     description?: string | null,
     link?: string | null,
-    pathID: string,
+    Paths?:  {
+      __typename: "ModelPathConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,

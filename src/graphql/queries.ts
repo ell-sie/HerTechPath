@@ -126,10 +126,7 @@ export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
       updatedAt
       __typename
     }
-    Resources {
-      nextToken
-      __typename
-    }
+    resourcesID
     createdAt
     updatedAt
     pathUserId
@@ -146,6 +143,7 @@ export const listPaths = /* GraphQL */ `query ListPaths(
     items {
       id
       title
+      resourcesID
       createdAt
       updatedAt
       pathUserId
@@ -156,6 +154,37 @@ export const listPaths = /* GraphQL */ `query ListPaths(
   }
 }
 ` as GeneratedQuery<APITypes.ListPathsQueryVariables, APITypes.ListPathsQuery>;
+export const pathsByResourcesID = /* GraphQL */ `query PathsByResourcesID(
+  $resourcesID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPathFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  pathsByResourcesID(
+    resourcesID: $resourcesID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      resourcesID
+      createdAt
+      updatedAt
+      pathUserId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PathsByResourcesIDQueryVariables,
+  APITypes.PathsByResourcesIDQuery
+>;
 export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
   getComment(id: $id) {
     id
@@ -262,7 +291,10 @@ export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
     title
     description
     link
-    pathID
+    Paths {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -283,7 +315,6 @@ export const listResources = /* GraphQL */ `query ListResources(
       title
       description
       link
-      pathID
       createdAt
       updatedAt
       __typename
@@ -295,38 +326,6 @@ export const listResources = /* GraphQL */ `query ListResources(
 ` as GeneratedQuery<
   APITypes.ListResourcesQueryVariables,
   APITypes.ListResourcesQuery
->;
-export const resourcesByPathID = /* GraphQL */ `query ResourcesByPathID(
-  $pathID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelResourcesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  resourcesByPathID(
-    pathID: $pathID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      title
-      description
-      link
-      pathID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ResourcesByPathIDQueryVariables,
-  APITypes.ResourcesByPathIDQuery
 >;
 export const getPostUser = /* GraphQL */ `query GetPostUser($id: ID!) {
   getPostUser(id: $id) {
