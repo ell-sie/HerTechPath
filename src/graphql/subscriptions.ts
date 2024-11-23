@@ -74,76 +74,9 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost($filter: Mo
   APITypes.OnDeletePostSubscriptionVariables,
   APITypes.OnDeletePostSubscription
 >;
-export const onCreateUserPath = /* GraphQL */ `subscription OnCreateUserPath($filter: ModelSubscriptionUserPathFilterInput) {
-  onCreateUserPath(filter: $filter) {
-    id
-    Users {
-      nextToken
-      __typename
-    }
-    Paths {
-      nextToken
-      __typename
-    }
-    progress
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateUserPathSubscriptionVariables,
-  APITypes.OnCreateUserPathSubscription
->;
-export const onUpdateUserPath = /* GraphQL */ `subscription OnUpdateUserPath($filter: ModelSubscriptionUserPathFilterInput) {
-  onUpdateUserPath(filter: $filter) {
-    id
-    Users {
-      nextToken
-      __typename
-    }
-    Paths {
-      nextToken
-      __typename
-    }
-    progress
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateUserPathSubscriptionVariables,
-  APITypes.OnUpdateUserPathSubscription
->;
-export const onDeleteUserPath = /* GraphQL */ `subscription OnDeleteUserPath($filter: ModelSubscriptionUserPathFilterInput) {
-  onDeleteUserPath(filter: $filter) {
-    id
-    Users {
-      nextToken
-      __typename
-    }
-    Paths {
-      nextToken
-      __typename
-    }
-    progress
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteUserPathSubscriptionVariables,
-  APITypes.OnDeleteUserPathSubscription
->;
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
   onCreateUser(filter: $filter) {
     id
-    userpaths {
-      nextToken
-      __typename
-    }
     posts {
       nextToken
       __typename
@@ -151,6 +84,19 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     level
     name
     email
+    technicalskills
+    softskills
+    shorttermgoals
+    longtermgoals
+    hrsperweek
+    interests
+    feedback
+    challenges
+    motivation
+    Comments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -163,10 +109,6 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
 export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
   onUpdateUser(filter: $filter) {
     id
-    userpaths {
-      nextToken
-      __typename
-    }
     posts {
       nextToken
       __typename
@@ -174,6 +116,19 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
     level
     name
     email
+    technicalskills
+    softskills
+    shorttermgoals
+    longtermgoals
+    hrsperweek
+    interests
+    feedback
+    challenges
+    motivation
+    Comments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -186,10 +141,6 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
 export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
   onDeleteUser(filter: $filter) {
     id
-    userpaths {
-      nextToken
-      __typename
-    }
     posts {
       nextToken
       __typename
@@ -197,6 +148,19 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     level
     name
     email
+    technicalskills
+    softskills
+    shorttermgoals
+    longtermgoals
+    hrsperweek
+    interests
+    feedback
+    challenges
+    motivation
+    Comments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -209,15 +173,32 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
 export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: ModelSubscriptionPathFilterInput) {
   onCreatePath(filter: $filter) {
     id
-    name
-    userpathID
+    title
+    User {
+      id
+      level
+      name
+      email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
+      createdAt
+      updatedAt
+      __typename
+    }
     Resources {
       nextToken
       __typename
     }
-    level
     createdAt
     updatedAt
+    pathUserId
     __typename
   }
 }
@@ -228,15 +209,32 @@ export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: Mo
 export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: ModelSubscriptionPathFilterInput) {
   onUpdatePath(filter: $filter) {
     id
-    name
-    userpathID
+    title
+    User {
+      id
+      level
+      name
+      email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
+      createdAt
+      updatedAt
+      __typename
+    }
     Resources {
       nextToken
       __typename
     }
-    level
     createdAt
     updatedAt
+    pathUserId
     __typename
   }
 }
@@ -247,15 +245,32 @@ export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: Mo
 export const onDeletePath = /* GraphQL */ `subscription OnDeletePath($filter: ModelSubscriptionPathFilterInput) {
   onDeletePath(filter: $filter) {
     id
-    name
-    userpathID
+    title
+    User {
+      id
+      level
+      name
+      email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
+      createdAt
+      updatedAt
+      __typename
+    }
     Resources {
       nextToken
       __typename
     }
-    level
     createdAt
     updatedAt
+    pathUserId
     __typename
   }
 }
@@ -268,6 +283,7 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment($filt
     id
     postID
     description
+    userID
     createdAt
     updatedAt
     __typename
@@ -282,6 +298,7 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment($filt
     id
     postID
     description
+    userID
     createdAt
     updatedAt
     __typename
@@ -296,6 +313,7 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment($filt
     id
     postID
     description
+    userID
     createdAt
     updatedAt
     __typename
@@ -312,15 +330,6 @@ export const onCreateResources = /* GraphQL */ `subscription OnCreateResources($
     description
     link
     pathID
-    Path {
-      id
-      name
-      userpathID
-      level
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -337,15 +346,6 @@ export const onUpdateResources = /* GraphQL */ `subscription OnUpdateResources($
     description
     link
     pathID
-    Path {
-      id
-      name
-      userpathID
-      level
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -362,15 +362,6 @@ export const onDeleteResources = /* GraphQL */ `subscription OnDeleteResources($
     description
     link
     pathID
-    Path {
-      id
-      name
-      userpathID
-      level
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -398,6 +389,15 @@ export const onCreatePostUser = /* GraphQL */ `subscription OnCreatePostUser($fi
       level
       name
       email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
       createdAt
       updatedAt
       __typename
@@ -429,6 +429,15 @@ export const onUpdatePostUser = /* GraphQL */ `subscription OnUpdatePostUser($fi
       level
       name
       email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
       createdAt
       updatedAt
       __typename
@@ -460,6 +469,15 @@ export const onDeletePostUser = /* GraphQL */ `subscription OnDeletePostUser($fi
       level
       name
       email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
       createdAt
       updatedAt
       __typename
@@ -472,100 +490,4 @@ export const onDeletePostUser = /* GraphQL */ `subscription OnDeletePostUser($fi
 ` as GeneratedSubscription<
   APITypes.OnDeletePostUserSubscriptionVariables,
   APITypes.OnDeletePostUserSubscription
->;
-export const onCreateUserPathUser = /* GraphQL */ `subscription OnCreateUserPathUser(
-  $filter: ModelSubscriptionUserPathUserFilterInput
-) {
-  onCreateUserPathUser(filter: $filter) {
-    id
-    userPathId
-    userId
-    userPath {
-      id
-      progress
-      createdAt
-      updatedAt
-      __typename
-    }
-    user {
-      id
-      level
-      name
-      email
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateUserPathUserSubscriptionVariables,
-  APITypes.OnCreateUserPathUserSubscription
->;
-export const onUpdateUserPathUser = /* GraphQL */ `subscription OnUpdateUserPathUser(
-  $filter: ModelSubscriptionUserPathUserFilterInput
-) {
-  onUpdateUserPathUser(filter: $filter) {
-    id
-    userPathId
-    userId
-    userPath {
-      id
-      progress
-      createdAt
-      updatedAt
-      __typename
-    }
-    user {
-      id
-      level
-      name
-      email
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateUserPathUserSubscriptionVariables,
-  APITypes.OnUpdateUserPathUserSubscription
->;
-export const onDeleteUserPathUser = /* GraphQL */ `subscription OnDeleteUserPathUser(
-  $filter: ModelSubscriptionUserPathUserFilterInput
-) {
-  onDeleteUserPathUser(filter: $filter) {
-    id
-    userPathId
-    userId
-    userPath {
-      id
-      progress
-      createdAt
-      updatedAt
-      __typename
-    }
-    user {
-      id
-      level
-      name
-      email
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteUserPathUserSubscriptionVariables,
-  APITypes.OnDeleteUserPathUserSubscription
 >;

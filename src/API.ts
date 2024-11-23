@@ -80,6 +80,7 @@ export type Comment = {
   id: string,
   postID: string,
   description: string,
+  userID: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -104,74 +105,20 @@ export type PostUser = {
 export type User = {
   __typename: "User",
   id: string,
-  userpaths?: ModelUserPathUserConnection | null,
   posts?: ModelPostUserConnection | null,
   level?: Levels | null,
   name?: string | null,
   email?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelUserPathUserConnection = {
-  __typename: "ModelUserPathUserConnection",
-  items:  Array<UserPathUser | null >,
-  nextToken?: string | null,
-};
-
-export type UserPathUser = {
-  __typename: "UserPathUser",
-  id: string,
-  userPathId: string,
-  userId: string,
-  userPath: UserPath,
-  user: User,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UserPath = {
-  __typename: "UserPath",
-  id: string,
-  Users?: ModelUserPathUserConnection | null,
-  Paths?: ModelPathConnection | null,
-  progress?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelPathConnection = {
-  __typename: "ModelPathConnection",
-  items:  Array<Path | null >,
-  nextToken?: string | null,
-};
-
-export type Path = {
-  __typename: "Path",
-  id: string,
-  name: string,
-  description: string,
-  userpathID: string,
-  Resources?: ModelResourcesConnection | null,
-  level?: Levels | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelResourcesConnection = {
-  __typename: "ModelResourcesConnection",
-  items:  Array<Resources | null >,
-  nextToken?: string | null,
-};
-
-export type Resources = {
-  __typename: "Resources",
-  id: string,
-  title?: string | null,
-  description?: string | null,
-  link?: string | null,
-  pathID: string,
-  Path?: Path | null,
+  technicalskills?: TechSkills | null,
+  softskills?: SoftSkills | null,
+  shorttermgoals?: string | null,
+  longtermgoals?: string | null,
+  hrsperweek?: Interests | null,
+  interests?: Interests | null,
+  feedback?: string | null,
+  challenges?: string | null,
+  motivation?: string | null,
+  Comments?: ModelCommentConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -180,6 +127,30 @@ export enum Levels {
   BEGINNER = "BEGINNER",
   INTERMEDIATE = "INTERMEDIATE",
   ADVANCED = "ADVANCED",
+}
+
+
+export enum TechSkills {
+  JAVASCRIPT = "JAVASCRIPT",
+  TYPESCRIPT = "TYPESCRIPT",
+  REACTJS = "REACTJS",
+  FLUTTER = "FLUTTER",
+  PYTHON = "PYTHON",
+  JAVA = "JAVA",
+}
+
+
+export enum SoftSkills {
+  TEAMWORK = "TEAMWORK",
+  COMMUNICATION = "COMMUNICATION",
+  LEADERSHIP = "LEADERSHIP",
+}
+
+
+export enum Interests {
+  WEBDEVELOPMENT = "WEBDEVELOPMENT",
+  INTERVIEWSKILLS = "INTERVIEWSKILLS",
+  MACHINELEARNING = "MACHINELEARNING",
 }
 
 
@@ -193,40 +164,35 @@ export type DeletePostInput = {
   id: string,
 };
 
-export type CreateUserPathInput = {
-  id?: string | null,
-  progress?: string | null,
-};
-
-export type ModelUserPathConditionInput = {
-  progress?: ModelStringInput | null,
-  and?: Array< ModelUserPathConditionInput | null > | null,
-  or?: Array< ModelUserPathConditionInput | null > | null,
-  not?: ModelUserPathConditionInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type UpdateUserPathInput = {
-  id: string,
-  progress?: string | null,
-};
-
-export type DeleteUserPathInput = {
-  id: string,
-};
-
 export type CreateUserInput = {
   id?: string | null,
   level?: Levels | null,
   name?: string | null,
   email?: string | null,
+  technicalskills?: TechSkills | null,
+  softskills?: SoftSkills | null,
+  shorttermgoals?: string | null,
+  longtermgoals?: string | null,
+  hrsperweek?: Interests | null,
+  interests?: Interests | null,
+  feedback?: string | null,
+  challenges?: string | null,
+  motivation?: string | null,
 };
 
 export type ModelUserConditionInput = {
   level?: ModelLevelsInput | null,
   name?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  technicalskills?: ModelTechSkillsInput | null,
+  softskills?: ModelSoftSkillsInput | null,
+  shorttermgoals?: ModelStringInput | null,
+  longtermgoals?: ModelStringInput | null,
+  hrsperweek?: ModelInterestsInput | null,
+  interests?: ModelInterestsInput | null,
+  feedback?: ModelStringInput | null,
+  challenges?: ModelStringInput | null,
+  motivation?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
@@ -239,11 +205,35 @@ export type ModelLevelsInput = {
   ne?: Levels | null,
 };
 
+export type ModelTechSkillsInput = {
+  eq?: TechSkills | null,
+  ne?: TechSkills | null,
+};
+
+export type ModelSoftSkillsInput = {
+  eq?: SoftSkills | null,
+  ne?: SoftSkills | null,
+};
+
+export type ModelInterestsInput = {
+  eq?: Interests | null,
+  ne?: Interests | null,
+};
+
 export type UpdateUserInput = {
   id: string,
   level?: Levels | null,
   name?: string | null,
   email?: string | null,
+  technicalskills?: TechSkills | null,
+  softskills?: SoftSkills | null,
+  shorttermgoals?: string | null,
+  longtermgoals?: string | null,
+  hrsperweek?: Interests | null,
+  interests?: Interests | null,
+  feedback?: string | null,
+  challenges?: string | null,
+  motivation?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -252,21 +242,18 @@ export type DeleteUserInput = {
 
 export type CreatePathInput = {
   id?: string | null,
-  name: string,
-  description: string,
-  userpathID: string,
-  level?: Levels | null,
+  title: string,
+  pathUserId?: string | null,
 };
 
 export type ModelPathConditionInput = {
-  name?: ModelStringInput | null,
-  userpathID?: ModelIDInput | null,
-  level?: ModelLevelsInput | null,
+  title?: ModelStringInput | null,
   and?: Array< ModelPathConditionInput | null > | null,
   or?: Array< ModelPathConditionInput | null > | null,
   not?: ModelPathConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  pathUserId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -285,11 +272,38 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type Path = {
+  __typename: "Path",
+  id: string,
+  title: string,
+  User?: User | null,
+  Resources?: ModelResourcesConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  pathUserId?: string | null,
+};
+
+export type ModelResourcesConnection = {
+  __typename: "ModelResourcesConnection",
+  items:  Array<Resources | null >,
+  nextToken?: string | null,
+};
+
+export type Resources = {
+  __typename: "Resources",
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  link?: string | null,
+  pathID: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export type UpdatePathInput = {
   id: string,
-  name?: string | null,
-  userpathID?: string | null,
-  level?: Levels | null,
+  title?: string | null,
+  pathUserId?: string | null,
 };
 
 export type DeletePathInput = {
@@ -300,11 +314,13 @@ export type CreateCommentInput = {
   id?: string | null,
   postID: string,
   description: string,
+  userID: string,
 };
 
 export type ModelCommentConditionInput = {
   postID?: ModelIDInput | null,
   description?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelCommentConditionInput | null > | null,
   or?: Array< ModelCommentConditionInput | null > | null,
   not?: ModelCommentConditionInput | null,
@@ -316,6 +332,7 @@ export type UpdateCommentInput = {
   id: string,
   postID?: string | null,
   description?: string | null,
+  userID?: string | null,
 };
 
 export type DeleteCommentInput = {
@@ -380,32 +397,6 @@ export type DeletePostUserInput = {
   id: string,
 };
 
-export type CreateUserPathUserInput = {
-  id?: string | null,
-  userPathId: string,
-  userId: string,
-};
-
-export type ModelUserPathUserConditionInput = {
-  userPathId?: ModelIDInput | null,
-  userId?: ModelIDInput | null,
-  and?: Array< ModelUserPathUserConditionInput | null > | null,
-  or?: Array< ModelUserPathUserConditionInput | null > | null,
-  not?: ModelUserPathUserConditionInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type UpdateUserPathUserInput = {
-  id: string,
-  userPathId?: string | null,
-  userId?: string | null,
-};
-
-export type DeleteUserPathUserInput = {
-  id: string,
-};
-
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -423,27 +414,20 @@ export type ModelPostConnection = {
   nextToken?: string | null,
 };
 
-export type ModelUserPathFilterInput = {
-  id?: ModelIDInput | null,
-  progress?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelUserPathFilterInput | null > | null,
-  or?: Array< ModelUserPathFilterInput | null > | null,
-  not?: ModelUserPathFilterInput | null,
-};
-
-export type ModelUserPathConnection = {
-  __typename: "ModelUserPathConnection",
-  items:  Array<UserPath | null >,
-  nextToken?: string | null,
-};
-
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   level?: ModelLevelsInput | null,
   name?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  technicalskills?: ModelTechSkillsInput | null,
+  softskills?: ModelSoftSkillsInput | null,
+  shorttermgoals?: ModelStringInput | null,
+  longtermgoals?: ModelStringInput | null,
+  hrsperweek?: ModelInterestsInput | null,
+  interests?: ModelInterestsInput | null,
+  feedback?: ModelStringInput | null,
+  challenges?: ModelStringInput | null,
+  motivation?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
@@ -459,26 +443,38 @@ export type ModelUserConnection = {
 
 export type ModelPathFilterInput = {
   id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  userpathID?: ModelIDInput | null,
-  level?: ModelLevelsInput | null,
+  title?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelPathFilterInput | null > | null,
   or?: Array< ModelPathFilterInput | null > | null,
   not?: ModelPathFilterInput | null,
+  pathUserId?: ModelIDInput | null,
+};
+
+export type ModelPathConnection = {
+  __typename: "ModelPathConnection",
+  items:  Array<Path | null >,
+  nextToken?: string | null,
 };
 
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
   postID?: ModelIDInput | null,
   description?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelCommentFilterInput | null > | null,
   or?: Array< ModelCommentFilterInput | null > | null,
   not?: ModelCommentFilterInput | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelResourcesFilterInput = {
   id?: ModelIDInput | null,
@@ -503,23 +499,6 @@ export type ModelPostUserFilterInput = {
   or?: Array< ModelPostUserFilterInput | null > | null,
   not?: ModelPostUserFilterInput | null,
 };
-
-export type ModelUserPathUserFilterInput = {
-  id?: ModelIDInput | null,
-  userPathId?: ModelIDInput | null,
-  userId?: ModelIDInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelUserPathUserFilterInput | null > | null,
-  or?: Array< ModelUserPathUserFilterInput | null > | null,
-  not?: ModelUserPathUserFilterInput | null,
-};
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelSubscriptionPostFilterInput = {
   id?: ModelSubscriptionIDInput | null,
@@ -561,20 +540,20 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionUserPathFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  progress?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionUserPathFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserPathFilterInput | null > | null,
-};
-
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   level?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
+  technicalskills?: ModelSubscriptionStringInput | null,
+  softskills?: ModelSubscriptionStringInput | null,
+  shorttermgoals?: ModelSubscriptionStringInput | null,
+  longtermgoals?: ModelSubscriptionStringInput | null,
+  hrsperweek?: ModelSubscriptionStringInput | null,
+  interests?: ModelSubscriptionStringInput | null,
+  feedback?: ModelSubscriptionStringInput | null,
+  challenges?: ModelSubscriptionStringInput | null,
+  motivation?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
@@ -583,19 +562,19 @@ export type ModelSubscriptionUserFilterInput = {
 
 export type ModelSubscriptionPathFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  userpathID?: ModelSubscriptionIDInput | null,
-  level?: ModelSubscriptionStringInput | null,
+  title?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPathFilterInput | null > | null,
   or?: Array< ModelSubscriptionPathFilterInput | null > | null,
+  pathUserId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionCommentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   postID?: ModelSubscriptionIDInput | null,
   description?: ModelSubscriptionStringInput | null,
+  userID?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
@@ -622,16 +601,6 @@ export type ModelSubscriptionPostUserFilterInput = {
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPostUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostUserFilterInput | null > | null,
-};
-
-export type ModelSubscriptionUserPathUserFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userPathId?: ModelSubscriptionIDInput | null,
-  userId?: ModelSubscriptionIDInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionUserPathUserFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserPathUserFilterInput | null > | null,
 };
 
 export type CreatePostMutationVariables = {
@@ -706,75 +675,6 @@ export type DeletePostMutation = {
   } | null,
 };
 
-export type CreateUserPathMutationVariables = {
-  input: CreateUserPathInput,
-  condition?: ModelUserPathConditionInput | null,
-};
-
-export type CreateUserPathMutation = {
-  createUserPath?:  {
-    __typename: "UserPath",
-    id: string,
-    Users?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
-    Paths?:  {
-      __typename: "ModelPathConnection",
-      nextToken?: string | null,
-    } | null,
-    progress?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateUserPathMutationVariables = {
-  input: UpdateUserPathInput,
-  condition?: ModelUserPathConditionInput | null,
-};
-
-export type UpdateUserPathMutation = {
-  updateUserPath?:  {
-    __typename: "UserPath",
-    id: string,
-    Users?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
-    Paths?:  {
-      __typename: "ModelPathConnection",
-      nextToken?: string | null,
-    } | null,
-    progress?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteUserPathMutationVariables = {
-  input: DeleteUserPathInput,
-  condition?: ModelUserPathConditionInput | null,
-};
-
-export type DeleteUserPathMutation = {
-  deleteUserPath?:  {
-    __typename: "UserPath",
-    id: string,
-    Users?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
-    Paths?:  {
-      __typename: "ModelPathConnection",
-      nextToken?: string | null,
-    } | null,
-    progress?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type CreateUserMutationVariables = {
   input: CreateUserInput,
   condition?: ModelUserConditionInput | null,
@@ -784,10 +684,6 @@ export type CreateUserMutation = {
   createUser?:  {
     __typename: "User",
     id: string,
-    userpaths?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
     posts?:  {
       __typename: "ModelPostUserConnection",
       nextToken?: string | null,
@@ -795,6 +691,19 @@ export type CreateUserMutation = {
     level?: Levels | null,
     name?: string | null,
     email?: string | null,
+    technicalskills?: TechSkills | null,
+    softskills?: SoftSkills | null,
+    shorttermgoals?: string | null,
+    longtermgoals?: string | null,
+    hrsperweek?: Interests | null,
+    interests?: Interests | null,
+    feedback?: string | null,
+    challenges?: string | null,
+    motivation?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -809,10 +718,6 @@ export type UpdateUserMutation = {
   updateUser?:  {
     __typename: "User",
     id: string,
-    userpaths?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
     posts?:  {
       __typename: "ModelPostUserConnection",
       nextToken?: string | null,
@@ -820,6 +725,19 @@ export type UpdateUserMutation = {
     level?: Levels | null,
     name?: string | null,
     email?: string | null,
+    technicalskills?: TechSkills | null,
+    softskills?: SoftSkills | null,
+    shorttermgoals?: string | null,
+    longtermgoals?: string | null,
+    hrsperweek?: Interests | null,
+    interests?: Interests | null,
+    feedback?: string | null,
+    challenges?: string | null,
+    motivation?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -834,10 +752,6 @@ export type DeleteUserMutation = {
   deleteUser?:  {
     __typename: "User",
     id: string,
-    userpaths?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
     posts?:  {
       __typename: "ModelPostUserConnection",
       nextToken?: string | null,
@@ -845,6 +759,19 @@ export type DeleteUserMutation = {
     level?: Levels | null,
     name?: string | null,
     email?: string | null,
+    technicalskills?: TechSkills | null,
+    softskills?: SoftSkills | null,
+    shorttermgoals?: string | null,
+    longtermgoals?: string | null,
+    hrsperweek?: Interests | null,
+    interests?: Interests | null,
+    feedback?: string | null,
+    challenges?: string | null,
+    motivation?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -859,15 +786,32 @@ export type CreatePathMutation = {
   createPath?:  {
     __typename: "Path",
     id: string,
-    name: string,
-    userpathID: string,
+    title: string,
+    User?:  {
+      __typename: "User",
+      id: string,
+      level?: Levels | null,
+      name?: string | null,
+      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
       nextToken?: string | null,
     } | null,
-    level?: Levels | null,
     createdAt: string,
     updatedAt: string,
+    pathUserId?: string | null,
   } | null,
 };
 
@@ -880,15 +824,32 @@ export type UpdatePathMutation = {
   updatePath?:  {
     __typename: "Path",
     id: string,
-    name: string,
-    userpathID: string,
+    title: string,
+    User?:  {
+      __typename: "User",
+      id: string,
+      level?: Levels | null,
+      name?: string | null,
+      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
       nextToken?: string | null,
     } | null,
-    level?: Levels | null,
     createdAt: string,
     updatedAt: string,
+    pathUserId?: string | null,
   } | null,
 };
 
@@ -901,15 +862,32 @@ export type DeletePathMutation = {
   deletePath?:  {
     __typename: "Path",
     id: string,
-    name: string,
-    userpathID: string,
+    title: string,
+    User?:  {
+      __typename: "User",
+      id: string,
+      level?: Levels | null,
+      name?: string | null,
+      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
       nextToken?: string | null,
     } | null,
-    level?: Levels | null,
     createdAt: string,
     updatedAt: string,
+    pathUserId?: string | null,
   } | null,
 };
 
@@ -924,6 +902,7 @@ export type CreateCommentMutation = {
     id: string,
     postID: string,
     description: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -940,6 +919,7 @@ export type UpdateCommentMutation = {
     id: string,
     postID: string,
     description: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -956,6 +936,7 @@ export type DeleteCommentMutation = {
     id: string,
     postID: string,
     description: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -974,15 +955,6 @@ export type CreateResourcesMutation = {
     description?: string | null,
     link?: string | null,
     pathID: string,
-    Path?:  {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1001,15 +973,6 @@ export type UpdateResourcesMutation = {
     description?: string | null,
     link?: string | null,
     pathID: string,
-    Path?:  {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1028,15 +991,6 @@ export type DeleteResourcesMutation = {
     description?: string | null,
     link?: string | null,
     pathID: string,
-    Path?:  {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1067,6 +1021,15 @@ export type CreatePostUserMutation = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -1100,6 +1063,15 @@ export type UpdatePostUserMutation = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -1133,102 +1105,15 @@ export type DeletePostUserMutation = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateUserPathUserMutationVariables = {
-  input: CreateUserPathUserInput,
-  condition?: ModelUserPathUserConditionInput | null,
-};
-
-export type CreateUserPathUserMutation = {
-  createUserPathUser?:  {
-    __typename: "UserPathUser",
-    id: string,
-    userPathId: string,
-    userId: string,
-    userPath:  {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    user:  {
-      __typename: "User",
-      id: string,
-      level?: Levels | null,
-      name?: string | null,
-      email?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateUserPathUserMutationVariables = {
-  input: UpdateUserPathUserInput,
-  condition?: ModelUserPathUserConditionInput | null,
-};
-
-export type UpdateUserPathUserMutation = {
-  updateUserPathUser?:  {
-    __typename: "UserPathUser",
-    id: string,
-    userPathId: string,
-    userId: string,
-    userPath:  {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    user:  {
-      __typename: "User",
-      id: string,
-      level?: Levels | null,
-      name?: string | null,
-      email?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteUserPathUserMutationVariables = {
-  input: DeleteUserPathUserInput,
-  condition?: ModelUserPathUserConditionInput | null,
-};
-
-export type DeleteUserPathUserMutation = {
-  deleteUserPathUser?:  {
-    __typename: "UserPathUser",
-    id: string,
-    userPathId: string,
-    userId: string,
-    userPath:  {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    user:  {
-      __typename: "User",
-      id: string,
-      level?: Levels | null,
-      name?: string | null,
-      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -1281,48 +1166,6 @@ export type ListPostsQuery = {
   } | null,
 };
 
-export type GetUserPathQueryVariables = {
-  id: string,
-};
-
-export type GetUserPathQuery = {
-  getUserPath?:  {
-    __typename: "UserPath",
-    id: string,
-    Users?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
-    Paths?:  {
-      __typename: "ModelPathConnection",
-      nextToken?: string | null,
-    } | null,
-    progress?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListUserPathsQueryVariables = {
-  filter?: ModelUserPathFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUserPathsQuery = {
-  listUserPaths?:  {
-    __typename: "ModelUserPathConnection",
-    items:  Array< {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -1331,10 +1174,6 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     id: string,
-    userpaths?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
     posts?:  {
       __typename: "ModelPostUserConnection",
       nextToken?: string | null,
@@ -1342,6 +1181,19 @@ export type GetUserQuery = {
     level?: Levels | null,
     name?: string | null,
     email?: string | null,
+    technicalskills?: TechSkills | null,
+    softskills?: SoftSkills | null,
+    shorttermgoals?: string | null,
+    longtermgoals?: string | null,
+    hrsperweek?: Interests | null,
+    interests?: Interests | null,
+    feedback?: string | null,
+    challenges?: string | null,
+    motivation?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1362,6 +1214,15 @@ export type ListUsersQuery = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1377,15 +1238,32 @@ export type GetPathQuery = {
   getPath?:  {
     __typename: "Path",
     id: string,
-    name: string,
-    userpathID: string,
+    title: string,
+    User?:  {
+      __typename: "User",
+      id: string,
+      level?: Levels | null,
+      name?: string | null,
+      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
       nextToken?: string | null,
     } | null,
-    level?: Levels | null,
     createdAt: string,
     updatedAt: string,
+    pathUserId?: string | null,
   } | null,
 };
 
@@ -1401,26 +1279,10 @@ export type ListPathsQuery = {
     items:  Array< {
       __typename: "Path",
       id: string,
-      name: string,
-      userpathID: string,
-      description: string,
-      level?: Levels | null,
-      Resources?: {
-        __typename: "ModelResourcesConnection",
-        items:  Array< {
-          __typename: "Resources",
-          id: string,
-          title?: string | null,
-          description?: string | null,
-          link?: string | null,
-          pathID: string,
-          createdAt: string,
-          updatedAt: string,
-        } | null >,
-        nextToken?: string | null,
-      },
+      title: string,
       createdAt: string,
       updatedAt: string,
+      pathUserId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1436,6 +1298,7 @@ export type GetCommentQuery = {
     id: string,
     postID: string,
     description: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1455,6 +1318,55 @@ export type ListCommentsQuery = {
       id: string,
       postID: string,
       description: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommentsByPostIDQueryVariables = {
+  postID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommentsByPostIDQuery = {
+  commentsByPostID?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      postID: string,
+      description: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommentsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommentsByUserIDQuery = {
+  commentsByUserID?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      postID: string,
+      description: string,
+      userID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1474,15 +1386,6 @@ export type GetResourcesQuery = {
     description?: string | null,
     link?: string | null,
     pathID: string,
-    Path?:  {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1496,6 +1399,31 @@ export type ListResourcesQueryVariables = {
 
 export type ListResourcesQuery = {
   listResources?:  {
+    __typename: "ModelResourcesConnection",
+    items:  Array< {
+      __typename: "Resources",
+      id: string,
+      title?: string | null,
+      description?: string | null,
+      link?: string | null,
+      pathID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ResourcesByPathIDQueryVariables = {
+  pathID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelResourcesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ResourcesByPathIDQuery = {
+  resourcesByPathID?:  {
     __typename: "ModelResourcesConnection",
     items:  Array< {
       __typename: "Resources",
@@ -1535,6 +1463,15 @@ export type GetPostUserQuery = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -1557,130 +1494,6 @@ export type ListPostUsersQuery = {
       id: string,
       postId: string,
       userId: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetUserPathUserQueryVariables = {
-  id: string,
-};
-
-export type GetUserPathUserQuery = {
-  getUserPathUser?:  {
-    __typename: "UserPathUser",
-    id: string,
-    userPathId: string,
-    userId: string,
-    userPath:  {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    user:  {
-      __typename: "User",
-      id: string,
-      level?: Levels | null,
-      name?: string | null,
-      email?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListUserPathUsersQueryVariables = {
-  filter?: ModelUserPathUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUserPathUsersQuery = {
-  listUserPathUsers?:  {
-    __typename: "ModelUserPathUserConnection",
-    items:  Array< {
-      __typename: "UserPathUser",
-      id: string,
-      userPathId: string,
-      userId: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type PathsByUserpathIDQueryVariables = {
-  userpathID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelPathFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type PathsByUserpathIDQuery = {
-  pathsByUserpathID?:  {
-    __typename: "ModelPathConnection",
-    items:  Array< {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type CommentsByPostIDQueryVariables = {
-  postID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelCommentFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type CommentsByPostIDQuery = {
-  commentsByPostID?:  {
-    __typename: "ModelCommentConnection",
-    items:  Array< {
-      __typename: "Comment",
-      id: string,
-      postID: string,
-      description: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ResourcesByPathIDQueryVariables = {
-  pathID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelResourcesFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ResourcesByPathIDQuery = {
-  resourcesByPathID?:  {
-    __typename: "ModelResourcesConnection",
-    items:  Array< {
-      __typename: "Resources",
-      id: string,
-      title?: string | null,
-      description?: string | null,
-      link?: string | null,
-      pathID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1726,52 +1539,6 @@ export type PostUsersByUserIdQuery = {
       __typename: "PostUser",
       id: string,
       postId: string,
-      userId: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type UserPathUsersByUserPathIdQueryVariables = {
-  userPathId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserPathUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserPathUsersByUserPathIdQuery = {
-  userPathUsersByUserPathId?:  {
-    __typename: "ModelUserPathUserConnection",
-    items:  Array< {
-      __typename: "UserPathUser",
-      id: string,
-      userPathId: string,
-      userId: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type UserPathUsersByUserIdQueryVariables = {
-  userId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserPathUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserPathUsersByUserIdQuery = {
-  userPathUsersByUserId?:  {
-    __typename: "ModelUserPathUserConnection",
-    items:  Array< {
-      __typename: "UserPathUser",
-      id: string,
-      userPathId: string,
       userId: string,
       createdAt: string,
       updatedAt: string,
@@ -1849,72 +1616,6 @@ export type OnDeletePostSubscription = {
   } | null,
 };
 
-export type OnCreateUserPathSubscriptionVariables = {
-  filter?: ModelSubscriptionUserPathFilterInput | null,
-};
-
-export type OnCreateUserPathSubscription = {
-  onCreateUserPath?:  {
-    __typename: "UserPath",
-    id: string,
-    Users?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
-    Paths?:  {
-      __typename: "ModelPathConnection",
-      nextToken?: string | null,
-    } | null,
-    progress?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateUserPathSubscriptionVariables = {
-  filter?: ModelSubscriptionUserPathFilterInput | null,
-};
-
-export type OnUpdateUserPathSubscription = {
-  onUpdateUserPath?:  {
-    __typename: "UserPath",
-    id: string,
-    Users?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
-    Paths?:  {
-      __typename: "ModelPathConnection",
-      nextToken?: string | null,
-    } | null,
-    progress?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteUserPathSubscriptionVariables = {
-  filter?: ModelSubscriptionUserPathFilterInput | null,
-};
-
-export type OnDeleteUserPathSubscription = {
-  onDeleteUserPath?:  {
-    __typename: "UserPath",
-    id: string,
-    Users?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
-    Paths?:  {
-      __typename: "ModelPathConnection",
-      nextToken?: string | null,
-    } | null,
-    progress?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
 };
@@ -1923,10 +1624,6 @@ export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
     id: string,
-    userpaths?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
     posts?:  {
       __typename: "ModelPostUserConnection",
       nextToken?: string | null,
@@ -1934,6 +1631,19 @@ export type OnCreateUserSubscription = {
     level?: Levels | null,
     name?: string | null,
     email?: string | null,
+    technicalskills?: TechSkills | null,
+    softskills?: SoftSkills | null,
+    shorttermgoals?: string | null,
+    longtermgoals?: string | null,
+    hrsperweek?: Interests | null,
+    interests?: Interests | null,
+    feedback?: string | null,
+    challenges?: string | null,
+    motivation?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1947,10 +1657,6 @@ export type OnUpdateUserSubscription = {
   onUpdateUser?:  {
     __typename: "User",
     id: string,
-    userpaths?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
     posts?:  {
       __typename: "ModelPostUserConnection",
       nextToken?: string | null,
@@ -1958,6 +1664,19 @@ export type OnUpdateUserSubscription = {
     level?: Levels | null,
     name?: string | null,
     email?: string | null,
+    technicalskills?: TechSkills | null,
+    softskills?: SoftSkills | null,
+    shorttermgoals?: string | null,
+    longtermgoals?: string | null,
+    hrsperweek?: Interests | null,
+    interests?: Interests | null,
+    feedback?: string | null,
+    challenges?: string | null,
+    motivation?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1971,10 +1690,6 @@ export type OnDeleteUserSubscription = {
   onDeleteUser?:  {
     __typename: "User",
     id: string,
-    userpaths?:  {
-      __typename: "ModelUserPathUserConnection",
-      nextToken?: string | null,
-    } | null,
     posts?:  {
       __typename: "ModelPostUserConnection",
       nextToken?: string | null,
@@ -1982,6 +1697,19 @@ export type OnDeleteUserSubscription = {
     level?: Levels | null,
     name?: string | null,
     email?: string | null,
+    technicalskills?: TechSkills | null,
+    softskills?: SoftSkills | null,
+    shorttermgoals?: string | null,
+    longtermgoals?: string | null,
+    hrsperweek?: Interests | null,
+    interests?: Interests | null,
+    feedback?: string | null,
+    challenges?: string | null,
+    motivation?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1995,15 +1723,32 @@ export type OnCreatePathSubscription = {
   onCreatePath?:  {
     __typename: "Path",
     id: string,
-    name: string,
-    userpathID: string,
+    title: string,
+    User?:  {
+      __typename: "User",
+      id: string,
+      level?: Levels | null,
+      name?: string | null,
+      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
       nextToken?: string | null,
     } | null,
-    level?: Levels | null,
     createdAt: string,
     updatedAt: string,
+    pathUserId?: string | null,
   } | null,
 };
 
@@ -2015,15 +1760,32 @@ export type OnUpdatePathSubscription = {
   onUpdatePath?:  {
     __typename: "Path",
     id: string,
-    name: string,
-    userpathID: string,
+    title: string,
+    User?:  {
+      __typename: "User",
+      id: string,
+      level?: Levels | null,
+      name?: string | null,
+      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
       nextToken?: string | null,
     } | null,
-    level?: Levels | null,
     createdAt: string,
     updatedAt: string,
+    pathUserId?: string | null,
   } | null,
 };
 
@@ -2035,15 +1797,32 @@ export type OnDeletePathSubscription = {
   onDeletePath?:  {
     __typename: "Path",
     id: string,
-    name: string,
-    userpathID: string,
+    title: string,
+    User?:  {
+      __typename: "User",
+      id: string,
+      level?: Levels | null,
+      name?: string | null,
+      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     Resources?:  {
       __typename: "ModelResourcesConnection",
       nextToken?: string | null,
     } | null,
-    level?: Levels | null,
     createdAt: string,
     updatedAt: string,
+    pathUserId?: string | null,
   } | null,
 };
 
@@ -2057,6 +1836,7 @@ export type OnCreateCommentSubscription = {
     id: string,
     postID: string,
     description: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2072,6 +1852,7 @@ export type OnUpdateCommentSubscription = {
     id: string,
     postID: string,
     description: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2087,6 +1868,7 @@ export type OnDeleteCommentSubscription = {
     id: string,
     postID: string,
     description: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2104,15 +1886,6 @@ export type OnCreateResourcesSubscription = {
     description?: string | null,
     link?: string | null,
     pathID: string,
-    Path?:  {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2130,15 +1903,6 @@ export type OnUpdateResourcesSubscription = {
     description?: string | null,
     link?: string | null,
     pathID: string,
-    Path?:  {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2156,15 +1920,6 @@ export type OnDeleteResourcesSubscription = {
     description?: string | null,
     link?: string | null,
     pathID: string,
-    Path?:  {
-      __typename: "Path",
-      id: string,
-      name: string,
-      userpathID: string,
-      level?: Levels | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2194,6 +1949,15 @@ export type OnCreatePostUserSubscription = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -2226,6 +1990,15 @@ export type OnUpdatePostUserSubscription = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     },
@@ -2258,99 +2031,15 @@ export type OnDeletePostUserSubscription = {
       level?: Levels | null,
       name?: string | null,
       email?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateUserPathUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserPathUserFilterInput | null,
-};
-
-export type OnCreateUserPathUserSubscription = {
-  onCreateUserPathUser?:  {
-    __typename: "UserPathUser",
-    id: string,
-    userPathId: string,
-    userId: string,
-    userPath:  {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    user:  {
-      __typename: "User",
-      id: string,
-      level?: Levels | null,
-      name?: string | null,
-      email?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateUserPathUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserPathUserFilterInput | null,
-};
-
-export type OnUpdateUserPathUserSubscription = {
-  onUpdateUserPathUser?:  {
-    __typename: "UserPathUser",
-    id: string,
-    userPathId: string,
-    userId: string,
-    userPath:  {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    user:  {
-      __typename: "User",
-      id: string,
-      level?: Levels | null,
-      name?: string | null,
-      email?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteUserPathUserSubscriptionVariables = {
-  filter?: ModelSubscriptionUserPathUserFilterInput | null,
-};
-
-export type OnDeleteUserPathUserSubscription = {
-  onDeleteUserPathUser?:  {
-    __typename: "UserPathUser",
-    id: string,
-    userPathId: string,
-    userId: string,
-    userPath:  {
-      __typename: "UserPath",
-      id: string,
-      progress?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    user:  {
-      __typename: "User",
-      id: string,
-      level?: Levels | null,
-      name?: string | null,
-      email?: string | null,
+      technicalskills?: TechSkills | null,
+      softskills?: SoftSkills | null,
+      shorttermgoals?: string | null,
+      longtermgoals?: string | null,
+      hrsperweek?: Interests | null,
+      interests?: Interests | null,
+      feedback?: string | null,
+      challenges?: string | null,
+      motivation?: string | null,
       createdAt: string,
       updatedAt: string,
     },

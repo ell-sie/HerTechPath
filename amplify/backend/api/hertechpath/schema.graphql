@@ -1,6 +1,23 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+enum Interests {
+  WEBDEVELOPMENT
+  INTERVIEWSKILLS
+  MACHINELEARNING
+}
+
+enum SoftSkills {
+  TEAMWORK
+  COMMUNICATION
+  LEADERSHIP
+}
+
+enum TechSkills {
+  JAVASCRIPT
+  TYPESCRIPT
+  REACTJS
+  FLUTTER
+  PYTHON
+  JAVA
+}
 
 enum Levels {
   BEGINNER
@@ -16,35 +33,36 @@ type Post @model @auth(rules: [{allow: public, operations: [create, update, dele
   description: String
 }
 
-type UserPath @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
-  id: ID!
-  Users: [User] @manyToMany(relationName: "UserPathUser")
-  Paths: [Path] @hasMany(indexName: "byUserPath", fields: ["id"])
-  progress: AWSJSON
-}
-
 type User @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
   id: ID!
-  userpaths: [UserPath] @manyToMany(relationName: "UserPathUser")
   posts: [Post] @manyToMany(relationName: "PostUser")
   level: Levels
   name: String
   email: AWSEmail
+  technicalskills: TechSkills
+  softskills: SoftSkills
+  shorttermgoals: String
+  longtermgoals: String
+  hrsperweek: Interests
+  interests: Interests
+  feedback: String
+  challenges: String
+  motivation: String
+  Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type Path @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
   id: ID!
-  name: String!
-  userpathID: ID! @index(name: "byUserPath")
-  description: String!
+  title: String!
+  User: User @hasOne
   Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
-  level: Levels
 }
 
 type Comment @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
   id: ID!
   postID: ID! @index(name: "byPost")
   description: String!
+  userID: ID! @index(name: "byUser")
 }
 
 type Resources @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
@@ -53,6 +71,5 @@ type Resources @model @auth(rules: [{allow: public, operations: [create, update,
   description: String
   link: AWSURL
   pathID: ID! @index(name: "byPath")
-  Path: Path @belongsTo(fields: ["pathID"])
 }
  

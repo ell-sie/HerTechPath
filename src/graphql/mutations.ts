@@ -83,88 +83,12 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
   APITypes.DeletePostMutationVariables,
   APITypes.DeletePostMutation
 >;
-export const createUserPath = /* GraphQL */ `mutation CreateUserPath(
-  $input: CreateUserPathInput!
-  $condition: ModelUserPathConditionInput
-) {
-  createUserPath(input: $input, condition: $condition) {
-    id
-    Users {
-      nextToken
-      __typename
-    }
-    Paths {
-      nextToken
-      __typename
-    }
-    progress
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateUserPathMutationVariables,
-  APITypes.CreateUserPathMutation
->;
-export const updateUserPath = /* GraphQL */ `mutation UpdateUserPath(
-  $input: UpdateUserPathInput!
-  $condition: ModelUserPathConditionInput
-) {
-  updateUserPath(input: $input, condition: $condition) {
-    id
-    Users {
-      nextToken
-      __typename
-    }
-    Paths {
-      nextToken
-      __typename
-    }
-    progress
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateUserPathMutationVariables,
-  APITypes.UpdateUserPathMutation
->;
-export const deleteUserPath = /* GraphQL */ `mutation DeleteUserPath(
-  $input: DeleteUserPathInput!
-  $condition: ModelUserPathConditionInput
-) {
-  deleteUserPath(input: $input, condition: $condition) {
-    id
-    Users {
-      nextToken
-      __typename
-    }
-    Paths {
-      nextToken
-      __typename
-    }
-    progress
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteUserPathMutationVariables,
-  APITypes.DeleteUserPathMutation
->;
 export const createUser = /* GraphQL */ `mutation CreateUser(
   $input: CreateUserInput!
   $condition: ModelUserConditionInput
 ) {
   createUser(input: $input, condition: $condition) {
     id
-    userpaths {
-      nextToken
-      __typename
-    }
     posts {
       nextToken
       __typename
@@ -172,6 +96,19 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     level
     name
     email
+    technicalskills
+    softskills
+    shorttermgoals
+    longtermgoals
+    hrsperweek
+    interests
+    feedback
+    challenges
+    motivation
+    Comments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -187,10 +124,6 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
 ) {
   updateUser(input: $input, condition: $condition) {
     id
-    userpaths {
-      nextToken
-      __typename
-    }
     posts {
       nextToken
       __typename
@@ -198,6 +131,19 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     level
     name
     email
+    technicalskills
+    softskills
+    shorttermgoals
+    longtermgoals
+    hrsperweek
+    interests
+    feedback
+    challenges
+    motivation
+    Comments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -213,10 +159,6 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
 ) {
   deleteUser(input: $input, condition: $condition) {
     id
-    userpaths {
-      nextToken
-      __typename
-    }
     posts {
       nextToken
       __typename
@@ -224,6 +166,19 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     level
     name
     email
+    technicalskills
+    softskills
+    shorttermgoals
+    longtermgoals
+    hrsperweek
+    interests
+    feedback
+    challenges
+    motivation
+    Comments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -239,16 +194,32 @@ export const createPath = /* GraphQL */ `mutation CreatePath(
 ) {
   createPath(input: $input, condition: $condition) {
     id
-    name
-    description
-    userpathID
+    title
+    User {
+      id
+      level
+      name
+      email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
+      createdAt
+      updatedAt
+      __typename
+    }
     Resources {
       nextToken
       __typename
     }
-    level
     createdAt
     updatedAt
+    pathUserId
     __typename
   }
 }
@@ -262,15 +233,32 @@ export const updatePath = /* GraphQL */ `mutation UpdatePath(
 ) {
   updatePath(input: $input, condition: $condition) {
     id
-    name
-    userpathID
+    title
+    User {
+      id
+      level
+      name
+      email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
+      createdAt
+      updatedAt
+      __typename
+    }
     Resources {
       nextToken
       __typename
     }
-    level
     createdAt
     updatedAt
+    pathUserId
     __typename
   }
 }
@@ -284,15 +272,32 @@ export const deletePath = /* GraphQL */ `mutation DeletePath(
 ) {
   deletePath(input: $input, condition: $condition) {
     id
-    name
-    userpathID
+    title
+    User {
+      id
+      level
+      name
+      email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
+      createdAt
+      updatedAt
+      __typename
+    }
     Resources {
       nextToken
       __typename
     }
-    level
     createdAt
     updatedAt
+    pathUserId
     __typename
   }
 }
@@ -308,6 +313,7 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
     id
     postID
     description
+    userID
     createdAt
     updatedAt
     __typename
@@ -325,6 +331,7 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
     id
     postID
     description
+    userID
     createdAt
     updatedAt
     __typename
@@ -342,6 +349,7 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
     id
     postID
     description
+    userID
     createdAt
     updatedAt
     __typename
@@ -361,15 +369,6 @@ export const createResources = /* GraphQL */ `mutation CreateResources(
     description
     link
     pathID
-    Path {
-      id
-      name
-      userpathID
-      level
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -389,15 +388,6 @@ export const updateResources = /* GraphQL */ `mutation UpdateResources(
     description
     link
     pathID
-    Path {
-      id
-      name
-      userpathID
-      level
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -417,15 +407,6 @@ export const deleteResources = /* GraphQL */ `mutation DeleteResources(
     description
     link
     pathID
-    Path {
-      id
-      name
-      userpathID
-      level
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -456,6 +437,15 @@ export const createPostUser = /* GraphQL */ `mutation CreatePostUser(
       level
       name
       email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
       createdAt
       updatedAt
       __typename
@@ -490,6 +480,15 @@ export const updatePostUser = /* GraphQL */ `mutation UpdatePostUser(
       level
       name
       email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
       createdAt
       updatedAt
       __typename
@@ -524,6 +523,15 @@ export const deletePostUser = /* GraphQL */ `mutation DeletePostUser(
       level
       name
       email
+      technicalskills
+      softskills
+      shorttermgoals
+      longtermgoals
+      hrsperweek
+      interests
+      feedback
+      challenges
+      motivation
       createdAt
       updatedAt
       __typename
@@ -536,103 +544,4 @@ export const deletePostUser = /* GraphQL */ `mutation DeletePostUser(
 ` as GeneratedMutation<
   APITypes.DeletePostUserMutationVariables,
   APITypes.DeletePostUserMutation
->;
-export const createUserPathUser = /* GraphQL */ `mutation CreateUserPathUser(
-  $input: CreateUserPathUserInput!
-  $condition: ModelUserPathUserConditionInput
-) {
-  createUserPathUser(input: $input, condition: $condition) {
-    id
-    userPathId
-    userId
-    userPath {
-      id
-      progress
-      createdAt
-      updatedAt
-      __typename
-    }
-    user {
-      id
-      level
-      name
-      email
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateUserPathUserMutationVariables,
-  APITypes.CreateUserPathUserMutation
->;
-export const updateUserPathUser = /* GraphQL */ `mutation UpdateUserPathUser(
-  $input: UpdateUserPathUserInput!
-  $condition: ModelUserPathUserConditionInput
-) {
-  updateUserPathUser(input: $input, condition: $condition) {
-    id
-    userPathId
-    userId
-    userPath {
-      id
-      progress
-      createdAt
-      updatedAt
-      __typename
-    }
-    user {
-      id
-      level
-      name
-      email
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateUserPathUserMutationVariables,
-  APITypes.UpdateUserPathUserMutation
->;
-export const deleteUserPathUser = /* GraphQL */ `mutation DeleteUserPathUser(
-  $input: DeleteUserPathUserInput!
-  $condition: ModelUserPathUserConditionInput
-) {
-  deleteUserPathUser(input: $input, condition: $condition) {
-    id
-    userPathId
-    userId
-    userPath {
-      id
-      progress
-      createdAt
-      updatedAt
-      __typename
-    }
-    user {
-      id
-      level
-      name
-      email
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteUserPathUserMutationVariables,
-  APITypes.DeleteUserPathUserMutation
 >;
