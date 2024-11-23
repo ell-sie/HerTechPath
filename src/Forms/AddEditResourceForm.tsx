@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import InputField from "../components/shared/InputField";
-// import { usePathsQuery } from "../hooks/path/usePathsQuery";
+import { usePathsQuery } from "../hooks/path/usePathsQuery";
 import AutoCompleteTextInput from "../components/shared/AutocompleteTextInput";
 import { Resource, UpdateResource } from "../pages/ResourcePage";
 
@@ -35,21 +35,7 @@ export default function AddEditResourceForm({
   handlers,
   defaultResourceValue,
 }: AddResourceFormProps) {
-  // const { data: paths } = usePathsQuery();
-  const paths = [
-    {
-      id: "1",
-      name: "Path 1",
-    },
-    {
-      id: "2",
-      name: "Path 2",
-    },
-    {
-      id: "3",
-      name: "Path 3",
-    },
-  ];
+  const { data: paths } = usePathsQuery();
   const {
     control,
     handleSubmit,

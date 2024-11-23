@@ -150,6 +150,7 @@ export type Path = {
   __typename: "Path",
   id: string,
   name: string,
+  description: string,
   userpathID: string,
   Resources?: ModelResourcesConnection | null,
   level?: Levels | null,
@@ -252,6 +253,7 @@ export type DeleteUserInput = {
 export type CreatePathInput = {
   id?: string | null,
   name: string,
+  description: string,
   userpathID: string,
   level?: Levels | null,
 };
@@ -1401,6 +1403,7 @@ export type ListPathsQuery = {
       id: string,
       name: string,
       userpathID: string,
+      description: string,
       level?: Levels | null,
       Resources?: {
         __typename: "ModelResourcesConnection",

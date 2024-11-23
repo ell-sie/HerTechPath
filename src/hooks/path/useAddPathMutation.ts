@@ -3,18 +3,19 @@ import toast from 'react-hot-toast'
 import { CreatePathInput, } from '../../API'
 import { client } from '../../App'
 import { PATHS_QUERY_KEY } from '../../constants/queryKeys'
-import { createPaths } from '../../graphql-custom-queries'
+import { createPath } from '../../graphql/mutations'
 
 
 async function addPaths(input: CreatePathInput) {
   return client.graphql({
-    query: createPaths,
+    query: createPath,
     variables: {
       input: {
         id: input.id,
         name: input.name,
-        userID: input.userID,
-        status: input.status,
+        description: input.name,
+        userpathID: input.userpathID,
+        level: input.level,
       },
     },
   })

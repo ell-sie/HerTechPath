@@ -31,7 +31,7 @@ interface PathCardProps extends Path {
 export default function PathCard({
   id,
   name,
-  status,
+  description,
   Resources,
   handlers,
   deletingPath,
@@ -41,7 +41,7 @@ export default function PathCard({
   return (
     <Card
       className={classNames(
-        "h-fit rounded-lg border border-gray-200 bg-white p-6",
+        "h-fit rounded-lg border border-slate-900 bg-black p-6",
         {
           "animate-pulse": id.length < 6 || deletingPath?.id === id,
         }
@@ -90,11 +90,11 @@ export default function PathCard({
                 className="relative rotate-180"
                 onClick={() => setAccordionExpanded((prevstate) => !prevstate)}
               >
-                <ArrowIcon className="size-6 rotate-90 text-secondary-800" />
+                <ArrowIcon className="size-6 rotate-90 text-white" />
               </div>
             }
           >
-            <div className="w-full text-xl font-bold text-secondary-800">
+            <div className="w-full text-xl font-bold text-white">
               {name}
             </div>
             <div className="flex gap-1 overflow-x-auto text-sm">
@@ -126,7 +126,7 @@ export default function PathCard({
               <span className="font-normal">{name || "Unknown"}</span>
             </span>
             <span>
-              Status: <span className="font-normal">{status}</span>
+              Description: <span className="font-normal">{description}</span>
             </span>
           </AccordionDetails>
         </Accordion>

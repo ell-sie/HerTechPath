@@ -13,6 +13,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage.tsx";
 import ResourcesPage from "./pages/ResourcePage.tsx";
+import PathsPage from "./pages/PathsPage";
 
 export const client = generateClient();
 Amplify.configure(config);
@@ -34,7 +35,7 @@ function App() {
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/discussions" element={<DiscussionPage />} />
                     <Route path="/resources" element={<ResourcesPage />} />
-                    {/* <Route path="/paths" element={<PathsPage />} /> */}
+                    <Route path="/paths" element={<PathsPage />} />
                   </Routes>
                 </div>
               </div>

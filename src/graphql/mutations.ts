@@ -240,6 +240,7 @@ export const createPath = /* GraphQL */ `mutation CreatePath(
   createPath(input: $input, condition: $condition) {
     id
     name
+    description
     userpathID
     Resources {
       nextToken

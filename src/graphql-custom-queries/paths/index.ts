@@ -16,8 +16,8 @@ export type ShortFormPathQuery = {
     listPaths: {
         items: {
             id: string;
-            status: string;
-            userID: string;
+            description: string;
+            userpathID: string;
             name: string;
             createdAt: string;
             updatedAt: string;
@@ -33,9 +33,10 @@ export const listPaths = /* GraphQL */ `query ListPaths(
     listPaths(filter: $filter, limit: $limit, nextToken: $nextToken) {
         items {
             id
-            status
-            userID
+            
             name
+            description
+            userpathID
             Resources {
             items {
                 title

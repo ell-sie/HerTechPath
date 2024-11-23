@@ -26,12 +26,15 @@ import {
 // import withAdminPermission from "../hooks/withAdminPermission";
 import AddEditPathForm from "../Forms/AddEditPathForm";
 import MenuAnchorElementProvider from "../providers/MenuAnchorElementProvider";
+import { Levels } from "../API";
 // import ErrorPage from "./ErrorPage";
 
 export interface Paths {
   id: string | null;
   name: string;
+  description: string;
   userpathID: string;
+  level: Levels | null | undefined;
 }
 export type CreatePathData = Omit<Paths, "id">;
 export interface UpdatePathData extends Paths {
@@ -63,7 +66,9 @@ interface ColumnsProps {
 const initialAddPathData = {
   id: null,
   name: "",
+  description: "",
   userpathID: "",
+  level: null,
 };
 
 function columns({
@@ -76,13 +81,15 @@ function columns({
       field: "name",
       headerName: "Path Name",
       cellClassName: "font-bold",
-      minWidth: 100,
+      minWidth: 500,
     },
-    { field: "status", headerName: "Status", minWidth: 100 },
+    { field: "description", headerName: "Description", minWidth: 400 },
+    { field: "userPathID", headerName: "Assigned Users", minWidth: 400 },
+    { field: "level", headerName: "Level", minWidth: 400 },
     {
       field: "actions",
       headerName: "Actions",
-      width: 70,
+      width: 200,
       renderCell: ({ row }: GridRenderCellParams) => (
         <MenuAnchorElementProvider>
           <MenuOption>
@@ -198,7 +205,7 @@ function PathsPage() {
     setDefaultPath(() => {
       const path =
         pathway?.find(({ id }) => pathId === id) || initialAddPathData;
-      return { ...path };
+      return { ...path, level: path.level ?? null };
     });
     setShowModal(true);
   };
@@ -207,7 +214,7 @@ function PathsPage() {
     path?.name?.toLowerCase().includes(searchInput.toLocaleLowerCase())
   );
 
-  const handleAddClient = useCallback(
+  const handleAddPath = useCallback(
     (data: CreatePathData) => {
       addPath.mutate({
         ...data,
@@ -289,13 +296,15 @@ function PathsPage() {
       </div>
       <SharedModal openModal={showModal} setOpenModal={setShowModal}>
         <AddEditPathForm
-          defaultPathData={defaultPath}
-          handlers={{
-            setShowModal,
-            handleAddPath: handleAddClient,
-            handleUpdatePath: handleUpdatePath,
-          }}
+          defaultPathValue={defaultPath}
           isUpdate={isUpdate}
+          handlers={{
+            handleAddPath: handleAddPath,
+            handleEditPath: handleUpdatePath,
+          }}
+          isOpen={showModal}
+          onOpenClick={() => setShowModal(true)}
+          onCloseClick={() => setShowModal(false)}
         />
       </SharedModal>
     </div>

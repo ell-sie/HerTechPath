@@ -36,6 +36,7 @@ type Path @model @auth(rules: [{allow: public, operations: [create, update, dele
   id: ID!
   name: String!
   userpathID: ID! @index(name: "byUserPath")
+  description: String!
   Resources: [Resources] @hasMany(indexName: "byPath", fields: ["id"])
   level: Levels
 }
