@@ -14,6 +14,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage.tsx";
 import ResourcesPage from "./pages/ResourcePage.tsx";
+import AuthProvider from "./providers/AuthProvider.tsx";
 
 export const client = generateClient();
 Amplify.configure(config);
@@ -23,7 +24,7 @@ function App() {
     <QueryClientProvider client={QueryClient}>
       <Authenticator>
         {({ signOut }) => (
-          <>
+          <AuthProvider>
             <Router>
               <div className="grid grid-cols-10 h-screen gap-10 ml-48 w-full">
                 <Navigation singOut={signOut} />
@@ -40,7 +41,7 @@ function App() {
                 </div>
               </div>
             </Router>
-          </>
+          </AuthProvider>
         )}
       </Authenticator>
     </QueryClientProvider>
