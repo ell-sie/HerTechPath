@@ -13,6 +13,8 @@ async function addResources(input: CreateResourcesInput) {
         title: input.title,
         description: input.description,
         link: input.link,
+        author: input.author,
+        hours: input.hours,
       },
     },
   })

@@ -4,50 +4,54 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import InputField from "../components/shared/InputField";
 import SelectInput from "../components/shared/SelectInput";
-
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import { Interests, Levels, SoftSkills, TechSkills } from "../API";
+import { useAddUserMutation } from "../hooks/users/useAddUsersMutation"; // Adjust path as necessary
 
-// Define the validation schema
 const RegistrationFormSchema = z.object({
+  id: z.string().min(1).optional(),
   name: z.string().trim().min(1, "Please enter your name"),
   email: z.string().email("Please enter a valid email"),
-  technicalSkills: z
-    .array(z.string())
-    .min(1, "Please select at least one technical skill"),
-  softSkills: z
-    .array(z.string())
-    .min(1, "Please select at least one soft skill"),
-  shortTermGoals: z.string().min(1, "Please specify your short-term goals"),
-  longTermGoals: z.string().min(1, "Please specify your long-term goals"),
-  learningPreferences: z.array(z.string()).optional(),
-  timeCommitment: z.number().min(1, "Please specify hours per week"),
-  subjectInterests: z.array(z.string()).optional(),
-  feedbackStyle: z.string().optional(),
+  technicalskills: z.array(z.nativeEnum(TechSkills)).min(1, "Please select at least one skill"),
+  softskills: z.array(z.nativeEnum(SoftSkills)).min(1, "Please select at least one skill"),
+  shorttermgoals: z.string().min(1, "Please specify your short-term goals"),
+  longtermgoals: z.string().min(1, "Please specify your long-term goals"),
+  interests: z.array(z.nativeEnum(Interests)).min(1, "Please select at least one interest"),
+  hrsperweek: z.number().min(1, "Please specify hours per week"),
+  feedback: z.string().optional(),
   challenges: z.string().optional(),
-  motivationFactors: z.string().optional(),
-  level: z.string().optional(),
+  motivation: z.string().optional(),
+  level: z.nativeEnum(Levels),
 });
 
 type RegistrationFormData = z.infer<typeof RegistrationFormSchema>;
 
 const technicalSkillOptions = [
-  { id: "JAVA", label: "Java" },
-  { id: "PYTHON", label: "Python" },
-  { id: "JAVASCRIPT", label: "JavaScript" },
+  { id: TechSkills.JAVA, label: "Java" },
+  { id: TechSkills.PYTHON, label: "Python" },
+  { id: TechSkills.JAVASCRIPT, label: "JavaScript" },
+  { id: TechSkills.REACTJS, label: "React" },
+  { id: TechSkills.TYPESCRIPT, label: "Typescript" },
 ];
 
 const softSkillOptions = [
-  { id: "COMMUNICATION", label: "Communication" },
-  { id: "TEAMWORK", label: "Teamwork" },
-  { id: "LEADERSHIP", label: "Leadership" },
+  { id: SoftSkills.COMMUNICATION, label: "Communication" },
+  { id: SoftSkills.TEAMWORK, label: "Team work" },
+  { id: SoftSkills.LEADERSHIP, label: "Leadership" },
 ];
 
 const levelOptions = [
-  { id: "BEGINNER", label: "Beginner" },
-  { id: "INTERMEDIATE", label: "Intermediate" },
-  { id: "ADVANCED", label: "Advanced" },
+  { id: Levels.BEGINNER, label: "Beginner" },
+  { id: Levels.INTERMEDIATE, label: "Intermediate" },
+  { id: Levels.ADVANCED, label: "Advanced" },
+];
+
+const interestsOptions = [
+  { id: Interests.WEBDEVELOPMENT, label: "Web Development" },
+  { id: Interests.INTERVIEWSKILLS, label: "Interview Skills" },
+  { id: Interests.MACHINELEARNING, label: "Machine Learning" },
 ];
 
 export default function RegistrationForm() {
@@ -61,22 +65,45 @@ export default function RegistrationForm() {
     defaultValues: {
       name: "",
       email: "",
-      technicalSkills: [],
-      softSkills: [],
-      shortTermGoals: "",
-      longTermGoals: "",
-      learningPreferences: [],
-      timeCommitment: 1,
-      subjectInterests: [],
-      feedbackStyle: "",
+      level: Levels.BEGINNER,
+      technicalskills: [],
+      softskills: [],
+      shorttermgoals: "",
+      longtermgoals: "",
+      hrsperweek: 1,
+      interests: [],
+      feedback: "",
       challenges: "",
-      motivationFactors: "",
+      motivation: "",
     },
   });
 
-  function handleRegister(data: RegistrationFormData) {
-    console.log("Registration Data:", data);
-    // Handle registration logic here (e.g., API call)
+  // Use the custom hook for adding users
+  const { mutate, isPending, error } = useAddUserMutation();
+
+  async function handleRegister(data: RegistrationFormData) {
+    try {
+      await mutate({
+        name: data.name,
+        email: data.email,
+        technicalskills: data.technicalskills,
+        softskills: data.softskills,
+        shorttermgoals: data.shorttermgoals,
+        longtermgoals: data.longtermgoals,
+        hrsperweek: data.hrsperweek,
+        interests: data.interests,
+        feedback: data.feedback,
+        challenges: data.challenges,
+        motivation: data.motivation,
+        level: data.level,
+      });
+
+      console.log("Registration successful");
+
+      // Optionally redirect or show success message here
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
   }
 
   return (
@@ -95,7 +122,7 @@ export default function RegistrationForm() {
               getOptionLabel={(option) => option.label}
               onChange={(event, value) => {
                 setValue(
-                  "technicalSkills",
+                  "technicalskills",
                   value.map((v) => v.id)
                 );
               }}
@@ -118,7 +145,7 @@ export default function RegistrationForm() {
               getOptionLabel={(option) => option.label}
               onChange={(event, value) => {
                 setValue(
-                  "softSkills",
+                  "softskills",
                   value.map((v) => v.id)
                 );
               }}
@@ -137,12 +164,12 @@ export default function RegistrationForm() {
           <InputField
             control={control}
             label="Short-Term Goals"
-            name="shortTermGoals"
+            name="shorttermgoals"
           />
           <InputField
             control={control}
             label="Long-Term Goals"
-            name="longTermGoals"
+            name="longtermgoals"
           />
 
           {/* Time Commitment */}
@@ -150,22 +177,18 @@ export default function RegistrationForm() {
             control={control}
             type="number"
             label="Hours per Week for Learning"
-            name="timeCommitment"
+            name="hrsperweek"
           />
 
           {/* Subject Interests */}
           <Stack spacing={3}>
             <Autocomplete
               multiple
-              options={[
-                { id: "DATA_SCIENCE", label: "Data Science" },
-                { id: "WEB_DEVELOPMENT", label: "Web Development" },
-                { id: "MACHINE_LEARNING", label: "Machine Learning" },
-              ]}
+              options={interestsOptions}
               getOptionLabel={(option) => option.label}
               onChange={(event, value) => {
                 setValue(
-                  "subjectInterests",
+                  "interests",
                   value.map((v) => v.id)
                 );
               }}
@@ -184,7 +207,7 @@ export default function RegistrationForm() {
           <InputField
             control={control}
             label="Preferred Feedback Style (e.g., Peer Review)"
-            name="feedbackStyle"
+            name="feedback"
           />
 
           {/* Current Challenges */}
@@ -198,7 +221,7 @@ export default function RegistrationForm() {
           <InputField
             control={control}
             label="Motivation for Learning (e.g., Career Advancement)"
-            name="motivationFactors"
+            name="motivation"
           />
 
           {/* Level Selection */}
@@ -209,26 +232,25 @@ export default function RegistrationForm() {
             name="level"
           />
         </div>
+
+        {/* Submit Buttons */}
         <div className="mt-10 flex justify-end gap-5">
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              // Handle cancel action here if needed
-              console.log("Cancelled");
-            }}
-          >
+          <Button variant="outlined" color="primary">
             Cancel
           </Button>
+
           <Button
             variant="contained"
             color="primary"
             type="submit"
-            disabled={isSubmitSuccessful}
+            disabled={isSubmitSuccessful || isPending}
           >
             Register
           </Button>
         </div>
+
+        {/* Error Handling */}
+        {error && <p className="text-red-500">{error.message}</p>}
       </div>
     </form>
   );

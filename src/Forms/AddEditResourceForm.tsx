@@ -10,6 +10,8 @@ const AddEditResourceFormSchema = z.object({
   title: z.string().trim().min(1, "Please enter a valid Resource title"),
   link: z.string().url().optional().nullable(),
   description: z.string().min(5, "Resource description is too short"),
+  author: z.string().min(1, "Please enter the author of the resource"),
+  hours: z.number().min(1, "Please enter the number of hours the resource will take"),
   isUpdate: z.boolean(),
 });
 
@@ -43,6 +45,8 @@ export default function AddEditResourceForm({
       title: defaultResourceValue.title,
       link: defaultResourceValue.link,
       description: defaultResourceValue.description,
+      author: defaultResourceValue.author,
+      hours: defaultResourceValue.hours,
       isUpdate,
     },
   });

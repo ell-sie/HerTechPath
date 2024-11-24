@@ -324,6 +324,8 @@ export const onCreateResources = /* GraphQL */ `subscription OnCreateResources($
       nextToken
       __typename
     }
+    author
+    hours
     createdAt
     updatedAt
     __typename
@@ -343,6 +345,8 @@ export const onUpdateResources = /* GraphQL */ `subscription OnUpdateResources($
       nextToken
       __typename
     }
+    author
+    hours
     createdAt
     updatedAt
     __typename
@@ -362,6 +366,8 @@ export const onDeleteResources = /* GraphQL */ `subscription OnDeleteResources($
       nextToken
       __typename
     }
+    author
+    hours
     createdAt
     updatedAt
     __typename

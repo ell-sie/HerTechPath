@@ -12,7 +12,7 @@ async function addPaths(input: CreatePathInput) {
     variables: {
       input: {
         id: input.id,
-        name: input.name,
+        title: input.title,
         description: input.name,
         userpathID: input.userpathID,
         level: input.level,

@@ -7,10 +7,6 @@ function RegistrationPage() {
       <div className="text-2xl font-bold font-poppins border-b-2 border-b-black py-4">
         Looking for a path? Register below
       </div>
-      {/* <MultilineTextFields label="Full name" placeholder="Full name" />
-      <MultilineTextFields label="Email" placeholder="Email" />
-      <Tags />
-      <Level /> */}
       <RegistrationForm />
       <div className="w-1/4">
         <Button>Request path</Button>

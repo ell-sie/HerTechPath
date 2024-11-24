@@ -39,12 +39,12 @@ type User @model @auth(rules: [{allow: public, operations: [create, update, dele
   level: Levels
   name: String
   email: AWSEmail
-  technicalskills: TechSkills
-  softskills: SoftSkills
+  technicalskills: [TechSkills]
+  softskills: [SoftSkills]
   shorttermgoals: String
   longtermgoals: String
-  hrsperweek: Interests
-  interests: Interests
+  hrsperweek: Int
+  interests: [Interests]
   feedback: String
   challenges: String
   motivation: String
@@ -71,5 +71,7 @@ type Resources @model @auth(rules: [{allow: public, operations: [create, update,
   description: String
   link: AWSURL
   Paths: [Path] @hasMany(indexName: "byResources", fields: ["id"])
+  author: String
+  hours: Int
 }
  

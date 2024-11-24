@@ -295,6 +295,8 @@ export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
       nextToken
       __typename
     }
+    author
+    hours
     createdAt
     updatedAt
     __typename
@@ -315,6 +317,8 @@ export const listResources = /* GraphQL */ `query ListResources(
       title
       description
       link
+      author
+      hours
       createdAt
       updatedAt
       __typename

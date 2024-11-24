@@ -21,6 +21,8 @@ export interface Resource {
   title: string;
   description: string;
   link: string | null;
+  author: string;
+  hours: number;
 }
 
 export interface UpdateResource extends Resource {
@@ -31,6 +33,8 @@ const initialAddResourceData = {
   title: "",
   description: "",
   link: "",
+  author: "",
+  hours: 0,
 };
 function columns({
   handleEditClick,
@@ -53,6 +57,8 @@ function columns({
     { field: "link", headerName: "Link", width: 200 },
     { field: "createdAt" },
     { field: "description", headerName: "Description", minWidth: 100, flex: 1 },
+    { field: "author", headerName: "Author", minWidth: 100, flex: 1 },
+    { field: "hours", headerName: "Hours", minWidth: 100, flex: 1 },
     {
       field: "actions",
       headerName: "Actions",
@@ -105,6 +111,8 @@ function ResourcesPage() {
       title: row.title,
       description: row.description,
       link: row.link,
+      author: row.author,
+      hours: row.hours,
     });
     setOpenModal(true);
   };

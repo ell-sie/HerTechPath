@@ -363,6 +363,8 @@ export const createResources = /* GraphQL */ `mutation CreateResources(
       nextToken
       __typename
     }
+    author
+    hours
     createdAt
     updatedAt
     __typename
@@ -385,6 +387,8 @@ export const updateResources = /* GraphQL */ `mutation UpdateResources(
       nextToken
       __typename
     }
+    author
+    hours
     createdAt
     updatedAt
     __typename
@@ -407,6 +411,8 @@ export const deleteResources = /* GraphQL */ `mutation DeleteResources(
       nextToken
       __typename
     }
+    author
+    hours
     createdAt
     updatedAt
     __typename
