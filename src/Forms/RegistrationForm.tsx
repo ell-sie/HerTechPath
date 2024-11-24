@@ -396,7 +396,7 @@ export default function RegistrationForm() {
               multiple
               options={technicalSkillOptions}
               getOptionLabel={(option) => option.label}
-              onChange={(event, value) => {
+              onChange={(_event, value) => {
                 setValue(
                   "technicalskills",
                   value.map((v) => v.id)
@@ -418,7 +418,7 @@ export default function RegistrationForm() {
               multiple
               options={softSkillOptions}
               getOptionLabel={(option) => option.label}
-              onChange={(event, value) => {
+              onChange={(_event, value) => {
                 setValue(
                   "softskills",
                   value.map((v) => v.id)
@@ -457,7 +457,7 @@ export default function RegistrationForm() {
               multiple
               options={interestsOptions}
               getOptionLabel={(option) => option.label}
-              onChange={(event, value) => {
+              onChange={(_event, value) => {
                 setValue(
                   "interests",
                   value.map((v) => v.id)

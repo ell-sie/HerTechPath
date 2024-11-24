@@ -12,8 +12,6 @@ async function updateComment(input: UpdateCommentInput) {
     variables: {
       input: {
         id: input.id,
-        text: input.text,
-        like: input.like,
         postID: input.postID,
         userID: input.userID,
       },
