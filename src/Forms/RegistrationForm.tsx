@@ -8,7 +8,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Interests, Levels, SoftSkills, TechSkills } from "../API";
-import { useAddUserMutation } from "../hooks/users/useAddUsersMutation"; // Adjust path as necessary
+import { useAddUserMutation } from "../hooks/users/useAddUsersMutation";
 
 const RegistrationFormSchema = z.object({
   id: z.string().min(1).optional(),
@@ -19,7 +19,7 @@ const RegistrationFormSchema = z.object({
   shorttermgoals: z.string().min(1, "Please specify your short-term goals"),
   longtermgoals: z.string().min(1, "Please specify your long-term goals"),
   interests: z.array(z.nativeEnum(Interests)).min(1, "Please select at least one interest"),
-  hrsperweek: z.number().min(1, "Please specify hours per week"),
+  hrsperweek: z.string().min(1, "Please specify hours per week"),
   feedback: z.string().optional(),
   challenges: z.string().optional(),
   motivation: z.string().optional(),
@@ -70,7 +70,7 @@ export default function RegistrationForm() {
       softskills: [],
       shorttermgoals: "",
       longtermgoals: "",
-      hrsperweek: 1,
+      hrsperweek: "",
       interests: [],
       feedback: "",
       challenges: "",
@@ -175,7 +175,6 @@ export default function RegistrationForm() {
           {/* Time Commitment */}
           <InputField
             control={control}
-            type="number"
             label="Hours per Week for Learning"
             name="hrsperweek"
           />
@@ -234,7 +233,7 @@ export default function RegistrationForm() {
         </div>
 
         {/* Submit Buttons */}
-        <div className="mt-10 flex justify-end gap-5">
+        <div className="mt-10 flex justify-between w-full gap-5">
           <Button variant="outlined" color="primary">
             Cancel
           </Button>

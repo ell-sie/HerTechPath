@@ -7,6 +7,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import config from "./amplifyconfiguration.json";
 import Navigation from "./components/Navigation";
 import QueryClient from "./context/QueryClient.ts";
+import CourseDetailPage from "./pages/CourseDetailPage";
 import CoursesPage from "./pages/CoursesPage.tsx";
 import DiscussionPage from "./pages/DiscussionPage";
 import HomePage from "./pages/HomePage";
@@ -31,6 +32,7 @@ function App() {
                     <Route path="/" element={<RegistrationPage />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/courses" element={<CoursesPage />} />
+                    <Route path="/course/:id" element={<CourseDetailPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/discussions" element={<DiscussionPage />} />
                     <Route path="/resources" element={<ResourcesPage />} />

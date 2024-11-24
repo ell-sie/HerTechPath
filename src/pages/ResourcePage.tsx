@@ -22,7 +22,7 @@ export interface Resource {
   description: string;
   link: string | null;
   author: string;
-  hours: number;
+  hours: string;
 }
 
 export interface UpdateResource extends Resource {
@@ -34,7 +34,7 @@ const initialAddResourceData = {
   description: "",
   link: "",
   author: "",
-  hours: 0,
+  hours: "",
 };
 function columns({
   handleEditClick,

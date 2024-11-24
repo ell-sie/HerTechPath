@@ -11,7 +11,7 @@ const AddEditResourceFormSchema = z.object({
   link: z.string().url().optional().nullable(),
   description: z.string().min(5, "Resource description is too short"),
   author: z.string().min(1, "Please enter the author of the resource"),
-  hours: z.number().min(1, "Please enter the number of hours the resource will take"),
+  hours: z.string().min(1, "Please enter the number of hours the resource will take"),
   isUpdate: z.boolean(),
 });
 
@@ -81,6 +81,12 @@ export default function AddEditResourceForm({
               maxRows={3}
             />
             <InputField control={control} label="Link" name="link" />
+            <InputField control={control} label="Author" name="author" />
+            <InputField
+              control={control}
+              label="Hours the resource will take"
+              name="hours"
+            />
           </div>
         </div>
         <div className="mt-10 flex justify-end gap-5">
