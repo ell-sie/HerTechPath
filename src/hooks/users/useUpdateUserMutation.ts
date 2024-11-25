@@ -24,6 +24,7 @@ async function updateUserInfo(input: UpdateUserInput) {
         challenges: input.challenges,
         motivation: input.motivation,
         level: input.level,
+        userId: input.userId,
       },
     },
   })

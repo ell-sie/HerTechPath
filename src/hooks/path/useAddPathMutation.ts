@@ -13,7 +13,9 @@ async function addPaths(input: CreatePathInput) {
       input: {
         id: input.id,
         title: input.title,
-        resourcesID: input.resourcesID,
+        description: input.description,
+        resources: input.resources,
+        pathUserId: input.pathUserId,
       },
     },
   })

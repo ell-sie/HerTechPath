@@ -1,3 +1,12 @@
+type PathResources {
+  id: ID
+  title: String
+  description: String
+  link: AWSURL
+  author: String
+  hours: String
+}
+
 enum Interests {
   WEBDEVELOPMENT
   INTERVIEWSKILLS
@@ -49,13 +58,16 @@ type User @model @auth(rules: [{allow: public, operations: [create, update, dele
   challenges: String
   motivation: String
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
+  userId: String
 }
 
 type Path @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
   id: ID!
   title: String!
   User: User @hasOne
-  resourcesID: ID! @index(name: "byResources")
+  description: String
+  resources: [PathResources]
+  pathUserId: String
 }
 
 type Comment @model @auth(rules: [{allow: public, operations: [create, update, delete, read]}]) {
@@ -70,7 +82,6 @@ type Resources @model @auth(rules: [{allow: public, operations: [create, update,
   title: String
   description: String
   link: AWSURL
-  Paths: [Path] @hasMany(indexName: "byResources", fields: ["id"])
   author: String
   hours: String
 }

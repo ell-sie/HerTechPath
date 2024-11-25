@@ -69,6 +69,7 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
       nextToken
       __typename
     }
+    userId
     createdAt
     updatedAt
     __typename
@@ -95,6 +96,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
@@ -122,14 +124,24 @@ export const getPath = /* GraphQL */ `query GetPath($id: ID!) {
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
     }
-    resourcesID
+    description
+    resources {
+      id
+      title
+      description
+      link
+      author
+      hours
+      __typename
+    }
+    pathUserId
     createdAt
     updatedAt
-    pathUserId
     __typename
   }
 }
@@ -143,10 +155,10 @@ export const listPaths = /* GraphQL */ `query ListPaths(
     items {
       id
       title
-      resourcesID
+      description
+      pathUserId
       createdAt
       updatedAt
-      pathUserId
       __typename
     }
     nextToken
@@ -154,37 +166,6 @@ export const listPaths = /* GraphQL */ `query ListPaths(
   }
 }
 ` as GeneratedQuery<APITypes.ListPathsQueryVariables, APITypes.ListPathsQuery>;
-export const pathsByResourcesID = /* GraphQL */ `query PathsByResourcesID(
-  $resourcesID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelPathFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  pathsByResourcesID(
-    resourcesID: $resourcesID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      title
-      resourcesID
-      createdAt
-      updatedAt
-      pathUserId
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.PathsByResourcesIDQueryVariables,
-  APITypes.PathsByResourcesIDQuery
->;
 export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
   getComment(id: $id) {
     id
@@ -291,10 +272,6 @@ export const getResources = /* GraphQL */ `query GetResources($id: ID!) {
     title
     description
     link
-    Paths {
-      nextToken
-      __typename
-    }
     author
     hours
     createdAt
@@ -358,6 +335,7 @@ export const getPostUser = /* GraphQL */ `query GetPostUser($id: ID!) {
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename

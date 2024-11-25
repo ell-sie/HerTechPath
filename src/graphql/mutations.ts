@@ -109,6 +109,7 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
       nextToken
       __typename
     }
+    userId
     createdAt
     updatedAt
     __typename
@@ -144,6 +145,7 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
       nextToken
       __typename
     }
+    userId
     createdAt
     updatedAt
     __typename
@@ -179,6 +181,7 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
       nextToken
       __typename
     }
+    userId
     createdAt
     updatedAt
     __typename
@@ -209,14 +212,24 @@ export const createPath = /* GraphQL */ `mutation CreatePath(
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
     }
-    resourcesID
+    description
+    resources {
+      id
+      title
+      description
+      link
+      author
+      hours
+      __typename
+    }
+    pathUserId
     createdAt
     updatedAt
-    pathUserId
     __typename
   }
 }
@@ -245,14 +258,24 @@ export const updatePath = /* GraphQL */ `mutation UpdatePath(
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
     }
-    resourcesID
+    description
+    resources {
+      id
+      title
+      description
+      link
+      author
+      hours
+      __typename
+    }
+    pathUserId
     createdAt
     updatedAt
-    pathUserId
     __typename
   }
 }
@@ -281,14 +304,24 @@ export const deletePath = /* GraphQL */ `mutation DeletePath(
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
     }
-    resourcesID
+    description
+    resources {
+      id
+      title
+      description
+      link
+      author
+      hours
+      __typename
+    }
+    pathUserId
     createdAt
     updatedAt
-    pathUserId
     __typename
   }
 }
@@ -359,10 +392,6 @@ export const createResources = /* GraphQL */ `mutation CreateResources(
     title
     description
     link
-    Paths {
-      nextToken
-      __typename
-    }
     author
     hours
     createdAt
@@ -383,10 +412,6 @@ export const updateResources = /* GraphQL */ `mutation UpdateResources(
     title
     description
     link
-    Paths {
-      nextToken
-      __typename
-    }
     author
     hours
     createdAt
@@ -407,10 +432,6 @@ export const deleteResources = /* GraphQL */ `mutation DeleteResources(
     title
     description
     link
-    Paths {
-      nextToken
-      __typename
-    }
     author
     hours
     createdAt
@@ -452,6 +473,7 @@ export const createPostUser = /* GraphQL */ `mutation CreatePostUser(
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
@@ -495,6 +517,7 @@ export const updatePostUser = /* GraphQL */ `mutation UpdatePostUser(
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
@@ -538,6 +561,7 @@ export const deletePostUser = /* GraphQL */ `mutation DeletePostUser(
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename

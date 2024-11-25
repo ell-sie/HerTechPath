@@ -1,11 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useResourcesQuery } from "../hooks/resources";
+import Button from "../components/shared/Button";
 
 function CourseDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { data: resources } = useResourcesQuery();
 
   const resource = resources?.find((resource) => resource.id === id);
+
+  const handlePreviousClick = () => {
+    navigate(-1);
+  }
 
   if (!resource) {
     return <p>Resource not found.</p>;
@@ -35,7 +41,12 @@ function CourseDetailPage() {
           />
         )}
       </div>
-      <div className="font-roboto font-semibold text-xl">Mark as done</div>
+      <div className="flex justify-between w-full">
+        <Button onClick={handlePreviousClick}>
+          Previous
+        </Button>
+        {/* <div className="font-roboto font-semibold text-xl">Mark as done</div> */}
+      </div>
     </div>
   );
 }

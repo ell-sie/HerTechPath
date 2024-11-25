@@ -24,6 +24,7 @@ async function addUsers(input: CreateUserInput) {
         challenges: input.challenges,
         motivation: input.motivation,
         level: input.level,
+        userId: input.userId,
       },
     },
   })

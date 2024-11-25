@@ -97,6 +97,7 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
       nextToken
       __typename
     }
+    userId
     createdAt
     updatedAt
     __typename
@@ -129,6 +130,7 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
       nextToken
       __typename
     }
+    userId
     createdAt
     updatedAt
     __typename
@@ -161,6 +163,7 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
       nextToken
       __typename
     }
+    userId
     createdAt
     updatedAt
     __typename
@@ -188,14 +191,24 @@ export const onCreatePath = /* GraphQL */ `subscription OnCreatePath($filter: Mo
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
     }
-    resourcesID
+    description
+    resources {
+      id
+      title
+      description
+      link
+      author
+      hours
+      __typename
+    }
+    pathUserId
     createdAt
     updatedAt
-    pathUserId
     __typename
   }
 }
@@ -221,14 +234,24 @@ export const onUpdatePath = /* GraphQL */ `subscription OnUpdatePath($filter: Mo
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
     }
-    resourcesID
+    description
+    resources {
+      id
+      title
+      description
+      link
+      author
+      hours
+      __typename
+    }
+    pathUserId
     createdAt
     updatedAt
-    pathUserId
     __typename
   }
 }
@@ -254,14 +277,24 @@ export const onDeletePath = /* GraphQL */ `subscription OnDeletePath($filter: Mo
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
     }
-    resourcesID
+    description
+    resources {
+      id
+      title
+      description
+      link
+      author
+      hours
+      __typename
+    }
+    pathUserId
     createdAt
     updatedAt
-    pathUserId
     __typename
   }
 }
@@ -320,10 +353,6 @@ export const onCreateResources = /* GraphQL */ `subscription OnCreateResources($
     title
     description
     link
-    Paths {
-      nextToken
-      __typename
-    }
     author
     hours
     createdAt
@@ -341,10 +370,6 @@ export const onUpdateResources = /* GraphQL */ `subscription OnUpdateResources($
     title
     description
     link
-    Paths {
-      nextToken
-      __typename
-    }
     author
     hours
     createdAt
@@ -362,10 +387,6 @@ export const onDeleteResources = /* GraphQL */ `subscription OnDeleteResources($
     title
     description
     link
-    Paths {
-      nextToken
-      __typename
-    }
     author
     hours
     createdAt
@@ -404,6 +425,7 @@ export const onCreatePostUser = /* GraphQL */ `subscription OnCreatePostUser($fi
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
@@ -444,6 +466,7 @@ export const onUpdatePostUser = /* GraphQL */ `subscription OnUpdatePostUser($fi
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename
@@ -484,6 +507,7 @@ export const onDeletePostUser = /* GraphQL */ `subscription OnDeletePostUser($fi
       feedback
       challenges
       motivation
+      userId
       createdAt
       updatedAt
       __typename

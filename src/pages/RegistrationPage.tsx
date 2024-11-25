@@ -1,4 +1,3 @@
-import Button from "../components/shared/Button";
 import RegistrationForm from "../Forms/RegistrationForm";
 
 function RegistrationPage() {
@@ -8,9 +7,6 @@ function RegistrationPage() {
         Looking for a path? Register below
       </div>
       <RegistrationForm />
-      <div className="w-1/4">
-        <Button>Request path</Button>
-      </div>
     </div>
   );
 }

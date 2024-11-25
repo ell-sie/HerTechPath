@@ -18,7 +18,6 @@ import AuthProvider from "./providers/AuthProvider.tsx";
 
 export const client = generateClient();
 Amplify.configure(config);
-
 function App() {
   return (
     <QueryClientProvider client={QueryClient}>
