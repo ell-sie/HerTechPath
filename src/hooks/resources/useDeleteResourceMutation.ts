@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import { client } from '../../App'
 import { DeleteResourcesInput } from '../../API'
 import { RESOURCES_QUERY_KEY } from '../../constants/queryKeys'
-import { deleteResources } from '../../graphql-custom-queries'
+import { deleteResources } from '../../graphql/mutations'
 
 
 

@@ -3,8 +3,7 @@ import toast from 'react-hot-toast'
 import { CreateResourcesInput } from '../../API'
 import { client } from '../../App'
 import { RESOURCES_QUERY_KEY } from '../../constants/queryKeys'
-import { createResources } from '../../graphql-custom-queries'
-
+import { createResources } from '../../graphql/mutations'
 async function addResources(input: CreateResourcesInput) {
   return client.graphql({
     query: createResources,

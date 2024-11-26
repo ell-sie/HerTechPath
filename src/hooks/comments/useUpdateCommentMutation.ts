@@ -1,14 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { client } from '../../App'
-import { updateComments } from '../../graphql-custom-queries'
 import { UpdateCommentInput } from '../../API'
+import { client } from '../../App'
 import { COMMENTS_QUERY_KEY } from '../../constants/queryKeys'
+import { updateComment } from '../../graphql/mutations'
 
-
-
-async function updateComment(input: UpdateCommentInput) {
+async function updateComments(input: UpdateCommentInput) {
   return client.graphql({
-    query: updateComments,
+    query: updateComment,
     variables: {
       input: {
         id: input.id,
@@ -19,10 +17,10 @@ async function updateComment(input: UpdateCommentInput) {
   })
 }
 
-export function useUpdateResourceMutation() {
+export function useUpdateCommentMutation() {
   const queryClient = useQueryClient()
   const { isPending, error, mutate } = useMutation({
-    mutationFn: updateComment,
+    mutationFn: updateComments,
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: COMMENTS_QUERY_KEY })
     },

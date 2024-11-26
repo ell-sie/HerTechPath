@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { client } from '../../App'
-import { updateResources } from '../../graphql-custom-queries'
+import { updateResources } from '../../graphql/mutations'
 import { UpdateResourcesInput } from '../../API'
 import { RESOURCES_QUERY_KEY } from '../../constants/queryKeys'
 

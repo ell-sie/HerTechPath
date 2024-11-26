@@ -3,7 +3,7 @@ import { client } from '../../App'
 import { COMMENTS_QUERY_KEY } from '../../constants/queryKeys'
 import { listComments } from '../../graphql/queries'
 
-export function usePostsQuery() {
+export function useCommentsQuery() {
   const { isPending, error, data } = useQuery({
     queryKey: COMMENTS_QUERY_KEY,
     queryFn: () => client.graphql({ query: listComments }),

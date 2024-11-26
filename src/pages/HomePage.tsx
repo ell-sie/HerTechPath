@@ -23,17 +23,14 @@ function HomePage() {
   const currentPath = paths?.find((path) => path.pathUserId === user?.id);
   const resources = currentPath?.resources;
 
-  // State to track the current resource index
   const [currentResourceIndex, setCurrentResourceIndex] = useState(0);
 
-  // Function to go to the next resource
   const handleNext = () => {
     if (resources && currentResourceIndex < resources.length - 1) {
       setCurrentResourceIndex(currentResourceIndex + 1);
     }
   };
 
-  // Function to go to the previous resource
   const handlePrevious = () => {
     if (currentResourceIndex > 0) {
       setCurrentResourceIndex(currentResourceIndex - 1);
@@ -44,7 +41,6 @@ function HomePage() {
     return <div>Loading...</div>;
   }
 
-  // Get the current resource based on the index
   const currentResource = resources?.[currentResourceIndex] ?? null;
 
   return (

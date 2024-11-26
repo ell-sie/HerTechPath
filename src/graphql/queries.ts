@@ -156,15 +156,15 @@ export const listPaths = /* GraphQL */ `query ListPaths(
       id
       title
       description
-      pathUserId
       resources {
-          id
-          title
-          description
-          link
-          author
-          hours
+        id
+        title
+        description
+        link
+        author
+        hours
       }
+      pathUserId
       createdAt
       updatedAt
       __typename
