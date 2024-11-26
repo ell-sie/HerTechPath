@@ -99,55 +99,59 @@ function DiscussionTemplate({
     <div className="bg-primary-100 border border-b-4 border-primary-100 rounded-2xl flex flex-col gap-4 p-4">
       <div className="flex justify-between w-full">
         <div></div>
-          <MenuAnchorElementProvider>
-            <MenuOption>
-              <MenuItem
-                onClick={() => setIsEditing(!isEditing)}
-                className="flex gap-2"
-              >
-                <EditIcon className="size-5" />
-                {isEditing ? "Cancel" : "Edit"}
-              </MenuItem>
-              <DeleteOption
-                handleDelete={handleDeletePost}
-                payload={{
-                  id,
-                }}
-                alertText={`Are you sure you want to delete this post?`}
-              />
-            </MenuOption>
-          </MenuAnchorElementProvider>
+        <MenuAnchorElementProvider>
+          <MenuOption>
+            <MenuItem
+              onClick={() => setIsEditing(!isEditing)}
+              className="flex gap-2"
+            >
+              <EditIcon className="size-5" />
+              {isEditing ? "Cancel" : "Edit"}
+            </MenuItem>
+            <DeleteOption
+              handleDelete={handleDeletePost}
+              payload={{
+                id,
+              }}
+              alertText={`Are you sure you want to delete this post?`}
+            />
+          </MenuOption>
+        </MenuAnchorElementProvider>
       </div>
 
       <div className="flex justify-between items-center gap-4">
-        <div className="bg-black p-4 border-black rounded-full">
-          <UserIcon className="size-12 text-white" />
-        </div>
-
-        <div className="flex justify-between items-center w-full p-4">
-          <div className="flex flex-col">
-            {isEditing ? (
-              <>
-                <input
-                  type="text"
-                  value={editedTitle}
-                  onChange={(e) => setEditedTitle(e.target.value)}
-                  className="border border-gray-300 rounded-lg py-2 px-4"
-                />
-                <textarea
-                  value={editedDiscussion}
-                  onChange={(e) => setEditedDiscussion(e.target.value)}
-                  className="border border-gray-300 rounded-lg py-2 px-4"
-                  rows={3}
-                />
-                <Button onClick={handleEditSubmit}>Save Changes</Button>
-              </>
-            ) : (
-              <>
-                <p className="font-poppins font-bold text-lg">{title}</p>
-                <p className="font-roboto font-light">{Discussion}</p>
-              </>
-            )}
+        <div className="flex justify-between items-center w-full p-8">
+          <div className="flex items-center gap-8">
+            <div className="bg-black p-4 border-black rounded-full">
+              <UserIcon className="size-12 text-white" />
+            </div>
+            <div className="flex flex-col gap-4 p-4">
+              {isEditing ? (
+                <>
+                  <input
+                    type="text"
+                    value={editedTitle}
+                    onChange={(e) => setEditedTitle(e.target.value)}
+                    className="border border-gray-300 rounded-lg py-2 px-4"
+                  />
+                  <textarea
+                    value={editedDiscussion}
+                    onChange={(e) => setEditedDiscussion(e.target.value)}
+                    className="border border-gray-300 rounded-lg py-2 px-4"
+                    rows={3}
+                  />
+                  <div className="flex justify-between w-full">
+                    <Button onClick={handleEditSubmit}>Save Changes</Button>
+                    <div></div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="font-poppins font-bold text-lg">{title}</p>
+                  <p className="font-roboto font-light">{Discussion}</p>
+                </>
+              )}
+            </div>
           </div>
 
           {!showInput ? (
@@ -161,7 +165,10 @@ function DiscussionTemplate({
                 className="border border-gray-300 rounded-lg py-2 px-4"
                 rows={3}
               />
-              <Button onClick={handleSubmitComment}>Save Comment</Button>
+              <div className="flex justify-between items-center w-full">
+                <Button onClick={handleSubmitComment}>Save</Button>
+                <Button onClick={() => setShowInput(false)}>Cancel</Button>
+              </div>
             </div>
           )}
         </div>

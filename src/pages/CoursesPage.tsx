@@ -4,8 +4,11 @@ import CourseCard from "../components/shared/CourseCard";
 import SearchBar from "../components/shared/SearchBar";
 import { usePathsQuery } from "../hooks/path";
 import { useAuthContext } from "../providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function CoursesPage() {
+  const navigate = useNavigate();
+
   const {
     user: { user },
   } = useAuthContext();
@@ -32,16 +35,12 @@ function CoursesPage() {
       <div className="flex flex-col gap-8 p-4">
         <div className="flex justify-between w-full">
           <div className="text-6xl font-bold font-poppins">My courses</div>
-          <div className="flex text-stone-400 items-center gap-4">
+          <button onClick={ () => navigate("/home")} className="flex text-stone-400 items-center gap-4">
             <p className="">See all</p>
             <ArrowRightIcon className="size-6 " />
-          </div>
+          </button>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-10 text-stone-400 font-poppins font-bold w-3/4">
-            <p className="text-black">All Courses</p>
-            <p>Completed</p>
-          </div>
           <div className="flex flex-col gap-10">
             {isPending
               ? "Loading..."

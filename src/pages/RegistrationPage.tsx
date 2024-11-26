@@ -4,7 +4,7 @@ function RegistrationPage() {
   return (
     <div className="flex flex-col justify-between gap-5 py-10">
       <div className="text-2xl font-bold font-poppins border-b-2 border-b-black py-4">
-        Looking for a path? Register below
+        Looking for a path? Update your profile below
       </div>
       <RegistrationForm />
     </div>
