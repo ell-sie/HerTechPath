@@ -1,16 +1,23 @@
+import { useState } from "react";
 import ArrowRightIcon from "../assets/ArrowRightIcon";
 import CourseCard from "../components/shared/CourseCard";
 import SearchBar from "../components/shared/SearchBar";
-import { useResourcesQuery } from "../hooks/resources";
-import { useState } from "react";
+import { usePathsQuery } from "../hooks/path";
+import { useAuthContext } from "../providers/AuthProvider";
 
 function CoursesPage() {
-  const { data: resources, isPending } = useResourcesQuery();
+  const {
+    user: { user },
+  } = useAuthContext();
+
+  const { data: paths, isPending } = usePathsQuery();
+
+  const currentPath = paths?.find((path) => path.pathUserId === user?.id);
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredResources = resources?.filter((resource) => {
-    return resource.title?.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredResources = currentPath?.resources?.filter((resource) => {
+    return resource?.title?.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   return (
@@ -40,11 +47,11 @@ function CoursesPage() {
               ? "Loading..."
               : filteredResources?.map((resource) => (
                   <CourseCard
-                    key={resource.id || resource.createdAt}
-                    title={resource.title ?? "Untitled"}
-                    author={resource.author ?? "Unknown"}
-                    hours={resource.hours ?? "N/A"}
-                    id={resource.id}
+                    key={ resource?.id}
+                    title={resource?.title ?? "Untitled"}
+                    author={resource?.author ?? "Unknown"}
+                    hours={resource?.hours ?? "N/A"}
+                    id={resource?.id ?? "unknown-id"}
                   />
                 ))}
           </div>
