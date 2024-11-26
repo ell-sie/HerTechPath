@@ -11,7 +11,6 @@ import CourseDetailPage from "./pages/CourseDetailPage";
 import CoursesPage from "./pages/CoursesPage.tsx";
 import DiscussionPage from "./pages/DiscussionPage";
 import HomePage from "./pages/HomePage";
-import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage.tsx";
 import ResourcesPage from "./pages/ResourcePage.tsx";
 import AuthProvider from "./providers/AuthProvider.tsx";
@@ -33,7 +32,7 @@ function App() {
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/courses" element={<CoursesPage />} />
                     <Route path="/course/:id" element={<CourseDetailPage />} />
-                    <Route path="/profile" element={<ProfilePage />} />
+                    {/* <Route path="/profile" element={<ProfilePage />} /> */}
                     <Route path="/discussions" element={<DiscussionPage />} />
                     <Route path="/resources" element={<ResourcesPage />} />
                   </Routes>

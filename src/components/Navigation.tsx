@@ -4,9 +4,9 @@ import HomeIcon from "../assets/HomeIcon";
 import LogoutIcon from "../assets/LogoutIcon";
 import MessageIcon from "../assets/MessageIcon";
 import StudyIcon from "../assets/StudyIcon";
-import UserIcon from "../assets/UserIcon";
+// import UserIcon from "../assets/UserIcon";
 import ResourceIcon from "../assets/ResourceIcon";
-import PathIcon from "../assets/PathIcon";
+// import PathIcon from "../assets/PathIcon";
 import RegistrationIcon from "../assets/RegistrationIcon";
 import useAutoUserDispatch from "../hooks/useAutoUserDispatch";
 
@@ -29,18 +29,18 @@ function Navigation({ singOut }: NavigationProps) {
         <Link to="/courses">
           <StudyIcon className="size-6" />
         </Link>
-        <Link to="/profile">
+        {/* <Link to="/profile">
           <UserIcon className="size-6" />
-        </Link>
+        </Link> */}
         <Link to="/discussions">
           <MessageIcon className="size-6" />
         </Link>
         <Link to="/resources">
           <ResourceIcon className="size-6" />
         </Link>
-        <Link to="/paths">
+        {/* <Link to="/paths">
           <PathIcon className="size-6" />
-        </Link>
+        </Link> */}
       </div>
       <div>
         {/* Check if logout exists before calling it */}
