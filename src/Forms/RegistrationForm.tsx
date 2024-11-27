@@ -21,6 +21,7 @@ import { useAddUserMutation } from "../hooks/users/useAddUsersMutation";
 import { useUpdateUserMutation } from "../hooks/users/useUpdateUserMutation";
 import { useUsersQuery } from "../hooks/users/useUsersQuery";
 import { useAuthContext } from "../providers/AuthProvider";
+import Spinner from "../assets/Spinner";
 
 const ProfileUpdateSchema = z.object({
   // Ensure ID is required
@@ -364,18 +365,21 @@ export default function RegistrationForm() {
           {error && <p className="text-red-500">{error.message}</p>}
         </div>
       </form>
-      <div className="w-1/4 ml-[600px] animate-bounce">
-        {isGeneratingPath ? (
-          <p>Generating path...</p>
-        ) : (
-          <SharedButton
-            variant="contained"
-            color="primary"
-            onClick={generatePath}
-          >
-            Request path
-          </SharedButton>
-        )}
+      <div className="flex flex-col justify-between items-center">
+        <div></div>
+        <div className="w-1/4 animate-bounce">
+          {isGeneratingPath ? (
+            <>Generating Path <Spinner className="size-8" /></>
+          ) : (
+            <SharedButton
+              variant="contained"
+              color="primary"
+              onClick={generatePath}
+            >
+              Request path
+            </SharedButton>
+          )}
+        </div>
       </div>
     </>
   );

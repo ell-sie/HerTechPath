@@ -1,13 +1,20 @@
 import DiscussionTemplate from "../components/DiscussionTemplate";
 import PostInput from "../components/shared/PostInput";
 import { usePostsQuery } from "../hooks/post/usePostsQuery";
+import Spinner from "../assets/Spinner";
 
 export default function DiscussionPage() {
   const { isPending, error, data: posts } = usePostsQuery();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return (
+      <div className=" flex flex-col items-center p-40">
+        <div></div>
+        <Spinner className="size-10" />
+      </div>
+    );
   }
+
 
   if (error) {
     return <div>Error loading posts: {error.message}</div>;

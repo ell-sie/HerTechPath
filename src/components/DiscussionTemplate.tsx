@@ -120,10 +120,10 @@ function DiscussionTemplate({
       </div>
 
       <div className="flex justify-between items-center gap-4">
-        <div className="flex justify-between items-center w-full p-8">
+        <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-8">
             <div className="bg-black p-4 border-black rounded-full">
-              <UserIcon className="size-12 text-white" />
+              <UserIcon className="size-12 text-yellow-400" />
             </div>
             <div className="flex flex-col gap-4 p-4">
               {isEditing ? (
@@ -132,12 +132,12 @@ function DiscussionTemplate({
                     type="text"
                     value={editedTitle}
                     onChange={(e) => setEditedTitle(e.target.value)}
-                    className="border border-gray-300 rounded-lg py-2 px-4"
+                    className="border border-gray-300 rounded-lg py-2 px-4 w-[400px]"
                   />
                   <textarea
                     value={editedDiscussion}
                     onChange={(e) => setEditedDiscussion(e.target.value)}
-                    className="border border-gray-300 rounded-lg py-2 px-4"
+                    className="border border-gray-300 rounded-lg py-2 px-4 w-[400px]"
                     rows={3}
                   />
                   <div className="flex justify-between w-full">
@@ -162,7 +162,7 @@ function DiscussionTemplate({
                 value={commentDescription}
                 onChange={handleInputChange}
                 placeholder="Add your comment here..."
-                className="border border-gray-300 rounded-lg py-2 px-4"
+                className="border border-gray-300 rounded-lg py-2 px-4 w-[400px] h-[50px]"
                 rows={3}
               />
               <div className="flex justify-between items-center w-full">

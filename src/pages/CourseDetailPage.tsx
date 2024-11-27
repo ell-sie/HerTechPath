@@ -14,21 +14,21 @@ function CourseDetailPage() {
   }
 
   if (!resource) {
-    return <p>Resource not found.</p>;
+    return <p>Resource loading.....</p>;
   }
 
   return (
     <div className="flex flex-col justify-between gap-10 h-screen py-10">
       <div className="flex flex-col items-center gap-20">
         <div className="flex justify-between w-full">
-          <div className="text-6xl font-bold font-poppins">
+          <div className="text-3xl font-bold font-poppins">
             {resource.title}
           </div>
-          <p className="text-stone-400 text-xl font-roboto">
+          <p className="text-stone-600 text-lg font-roboto">
             Made by {resource.author}
           </p>
         </div>
-        <div className="text-2xl font-roboto font-light">
+        <div className="text-xl font-roboto font-light">
           {resource.description}
         </div>
       </div>
@@ -37,7 +37,7 @@ function CourseDetailPage() {
           <iframe
             src={resource.link}
             allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-            className="w-full h-full"
+            className="w-full h-[500px]"
           />
         )}
       </div>

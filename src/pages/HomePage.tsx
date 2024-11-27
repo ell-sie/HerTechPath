@@ -8,6 +8,7 @@ import CurrentCourseCard from "../components/shared/CurrentCourseCard";
 import { usePathsQuery } from "../hooks/path";
 import { useUsersQuery } from "../hooks/users/useUsersQuery";
 import { useAuthContext } from "../providers/AuthProvider";
+import Spinner from "../assets/Spinner";
 
 function HomePage() {
   const {
@@ -38,7 +39,12 @@ function HomePage() {
   };
 
   if (isPending || isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className=" flex flex-col items-center p-40">
+        <div></div>
+        <Spinner className="size-10" />
+      </div>
+    ); 
   }
 
   const currentResource = resources?.[currentResourceIndex] ?? null;
